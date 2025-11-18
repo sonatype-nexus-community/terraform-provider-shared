@@ -123,6 +123,74 @@ func OptionalStringWithLengthBetween(description string, minLength, maxLength in
 	}
 }
 
+// RequiredStringWithLengthAtLeast returns a required string attribute with minimum length validation
+func RequiredStringWithLengthAtLeast(description string, minLength int) schema.StringAttribute {
+	return schema.StringAttribute{
+		Description: description,
+		Required:    true,
+		Validators: []validator.String{
+			stringvalidator.LengthAtLeast(minLength),
+		},
+	}
+}
+
+// OptionalStringWithLengthAtLeast returns an optional string attribute with minimum length validation
+func OptionalStringWithLengthAtLeast(description string, minLength int) schema.StringAttribute {
+	return schema.StringAttribute{
+		Description: description,
+		Optional:    true,
+		Validators: []validator.String{
+			stringvalidator.LengthAtLeast(minLength),
+		},
+	}
+}
+
+// RequiredStringWithLengthAtMost returns a required string attribute with maximum length validation
+func RequiredStringWithLengthAtMost(description string, maxLength int) schema.StringAttribute {
+	return schema.StringAttribute{
+		Description: description,
+		Required:    true,
+		Validators: []validator.String{
+			stringvalidator.LengthAtMost(maxLength),
+		},
+	}
+}
+
+// OptionalStringWithLengthAtMost returns an optional string attribute with maximum length validation
+func OptionalStringWithLengthAtMost(description string, maxLength int) schema.StringAttribute {
+	return schema.StringAttribute{
+		Description: description,
+		Optional:    true,
+		Validators: []validator.String{
+			stringvalidator.LengthAtMost(maxLength),
+		},
+	}
+}
+
+// OptionalSensitiveStringWithLengthAtLeast returns an optional sensitive string attribute with minimum length validation
+func OptionalSensitiveStringWithLengthAtLeast(description string, minLength int) schema.StringAttribute {
+	return schema.StringAttribute{
+		Description: description,
+		Optional:    true,
+		Sensitive:   true,
+		Validators: []validator.String{
+			stringvalidator.LengthAtLeast(minLength),
+		},
+	}
+}
+
+// RequiredSensitiveStringWithLengthAtLeast returns a required sensitive string attribute with minimum length validation
+func RequiredSensitiveStringWithLengthAtLeast(description string, minLength int) schema.StringAttribute {
+	return schema.StringAttribute{
+		Description: description,
+		Required:    true,
+		Sensitive:   true,
+		Validators: []validator.String{
+			stringvalidator.LengthAtLeast(minLength),
+		},
+	}
+}
+
 // RequiredStringWithRegexAndLength returns a required string attribute with regex and length validation
 func RequiredStringWithRegexAndLength(description string, pattern *regexp.Regexp, errorMsg string, minLength, maxLength int) schema.StringAttribute {
 	return schema.StringAttribute{

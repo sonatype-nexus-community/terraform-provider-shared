@@ -104,6 +104,54 @@ func TestOptionalStringWithLengthBetween(t *testing.T) {
 	}
 }
 
+func TestRequiredStringWithLengthAtLeast(t *testing.T) {
+	attr := RequiredStringWithLengthAtLeast("test description", 1)
+
+	if !attr.IsRequired() || attr.IsOptional() {
+		t.Fatal("RequiredStringWithLengthAtLeast should return a required attribute")
+	}
+}
+
+func TestOptionalStringWithLengthAtLeast(t *testing.T) {
+	attr := OptionalStringWithLengthAtLeast("test description", 1)
+
+	if !attr.IsOptional() || attr.IsRequired() {
+		t.Fatal("OptionalStringWithLengthAtLeast should return an optional attribute")
+	}
+}
+
+func TestRequiredStringWithLengthAtMost(t *testing.T) {
+	attr := RequiredStringWithLengthAtMost("test description", 100)
+
+	if !attr.IsRequired() || attr.IsOptional() {
+		t.Fatal("RequiredStringWithLengthAtMost should return a required attribute")
+	}
+}
+
+func TestOptionalStringWithLengthAtMost(t *testing.T) {
+	attr := OptionalStringWithLengthAtMost("test description", 100)
+
+	if !attr.IsOptional() || attr.IsRequired() {
+		t.Fatal("OptionalStringWithLengthAtMost should return an optional attribute")
+	}
+}
+
+func TestOptionalSensitiveStringWithLengthAtLeast(t *testing.T) {
+	attr := OptionalSensitiveStringWithLengthAtLeast("test description", 1)
+
+	if !attr.IsOptional() || attr.IsRequired() {
+		t.Fatal("OptionalSensitiveStringWithLengthAtLeast should return an optional attribute")
+	}
+}
+
+func TestRequiredSensitiveStringWithLengthAtLeast(t *testing.T) {
+	attr := RequiredSensitiveStringWithLengthAtLeast("test description", 1)
+
+	if !attr.IsRequired() || attr.IsOptional() {
+		t.Fatal("RequiredSensitiveStringWithLengthAtLeast should return a required attribute")
+	}
+}
+
 func TestRequiredStringWithRegexAndLength(t *testing.T) {
 	pattern := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
 	attr := RequiredStringWithRegexAndLength("test description", pattern, "must be alphanumeric", 1, 100)
