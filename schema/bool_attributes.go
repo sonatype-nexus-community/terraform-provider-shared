@@ -77,3 +77,12 @@ func RequiredBoolWithDefault(description string, defaultValue bool) schema.BoolA
 		Default:     booldefault.StaticBool(defaultValue),
 	}
 }
+
+// ComputedBoolWithDefault returns a computed boolean attribute with a default value
+func ComputedBoolWithDefault(description string, defaultValue bool) schema.BoolAttribute {
+	return schema.BoolAttribute{
+		Description: description,
+		Computed:    true,
+		Default:     booldefault.StaticBool(defaultValue),
+	}
+}
