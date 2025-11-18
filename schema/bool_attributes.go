@@ -17,39 +17,44 @@
 package schema
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 )
 
-// RequiredBool returns a required boolean attribute
-func RequiredBool(description string) schema.BoolAttribute {
-	return schema.BoolAttribute{
+// ========================================
+// Resource Schema Functions
+// ========================================
+
+// ResourceRequiredBool returns a required boolean attribute
+func ResourceRequiredBool(description string) resourceschema.BoolAttribute {
+	return resourceschema.BoolAttribute{
 		Description: description,
 		Required:    true,
 	}
 }
 
-// OptionalBool returns an optional boolean attribute
-func OptionalBool(description string) schema.BoolAttribute {
-	return schema.BoolAttribute{
+// ResourceOptionalBool returns an optional boolean attribute
+func ResourceOptionalBool(description string) resourceschema.BoolAttribute {
+	return resourceschema.BoolAttribute{
 		Description: description,
 		Optional:    true,
 	}
 }
 
-// ComputedBool returns a computed boolean attribute
-func ComputedBool(description string) schema.BoolAttribute {
-	return schema.BoolAttribute{
+// ResourceComputedBool returns a computed boolean attribute
+func ResourceComputedBool(description string) resourceschema.BoolAttribute {
+	return resourceschema.BoolAttribute{
 		Description: description,
 		Computed:    true,
 	}
 }
 
-// OptionalBoolWithDefault returns an optional boolean attribute with a default value
-func OptionalBoolWithDefault(description string, defaultValue bool) schema.BoolAttribute {
-	return schema.BoolAttribute{
+// ResourceOptionalBoolWithDefault returns an optional boolean attribute with a default value
+func ResourceOptionalBoolWithDefault(description string, defaultValue bool) resourceschema.BoolAttribute {
+	return resourceschema.BoolAttribute{
 		Description: description,
 		Optional:    true,
 		Computed:    true,
@@ -57,9 +62,9 @@ func OptionalBoolWithDefault(description string, defaultValue bool) schema.BoolA
 	}
 }
 
-// ComputedOptionalBool returns a computed optional boolean (persists state for unknown)
-func ComputedOptionalBool(description string) schema.BoolAttribute {
-	return schema.BoolAttribute{
+// ResourceComputedOptionalBool returns a computed optional boolean (persists state for unknown)
+func ResourceComputedOptionalBool(description string) resourceschema.BoolAttribute {
+	return resourceschema.BoolAttribute{
 		Description: description,
 		Optional:    true,
 		Computed:    true,
@@ -69,20 +74,40 @@ func ComputedOptionalBool(description string) schema.BoolAttribute {
 	}
 }
 
-// RequiredBoolWithDefault returns a required boolean attribute with a default value
-func RequiredBoolWithDefault(description string, defaultValue bool) schema.BoolAttribute {
-	return schema.BoolAttribute{
+// ResourceRequiredBoolWithDefault returns a required boolean attribute with a default value
+func ResourceRequiredBoolWithDefault(description string, defaultValue bool) resourceschema.BoolAttribute {
+	return resourceschema.BoolAttribute{
 		Description: description,
 		Required:    true,
 		Default:     booldefault.StaticBool(defaultValue),
 	}
 }
 
-// ComputedBoolWithDefault returns a computed boolean attribute with a default value
-func ComputedBoolWithDefault(description string, defaultValue bool) schema.BoolAttribute {
-	return schema.BoolAttribute{
+// ResourceComputedBoolWithDefault returns a computed boolean attribute with a default value
+func ResourceComputedBoolWithDefault(description string, defaultValue bool) resourceschema.BoolAttribute {
+	return resourceschema.BoolAttribute{
 		Description: description,
 		Computed:    true,
 		Default:     booldefault.StaticBool(defaultValue),
+	}
+}
+
+// ========================================
+// Data Source Schema Functions
+// ========================================
+
+// DataSourceComputedBool returns a computed boolean attribute for data sources
+func DataSourceComputedBool(description string) datasourceschema.BoolAttribute {
+	return datasourceschema.BoolAttribute{
+		Description: description,
+		Computed:    true,
+	}
+}
+
+// DataSourceOptionalBool returns an optional boolean attribute for data sources
+func DataSourceOptionalBool(description string) datasourceschema.BoolAttribute {
+	return datasourceschema.BoolAttribute{
+		Description: description,
+		Optional:    true,
 	}
 }

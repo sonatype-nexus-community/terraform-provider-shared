@@ -18,92 +18,97 @@ package schema
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
 
-// StandardID returns a standard computed ID attribute
-func StandardID() schema.StringAttribute {
-	return schema.StringAttribute{
+// ========================================
+// Resource Schema Functions
+// ========================================
+
+// ResourceStandardID returns a standard computed ID attribute
+func ResourceStandardID() resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: "Internal ID of the resource",
 		Computed:    true,
 	}
 }
 
-// Timestamp returns a standard computed timestamp attribute for tracking last updates
-func Timestamp() schema.StringAttribute {
-	return schema.StringAttribute{
+// ResourceTimestamp returns a standard computed timestamp attribute for tracking last updates
+func ResourceTimestamp() resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: "String representation of the date/time the resource was last changed",
 		Computed:    true,
 	}
 }
 
-// RequiredString returns a required string attribute with the given description
-func RequiredString(description string) schema.StringAttribute {
-	return schema.StringAttribute{
+// ResourceRequiredString returns a required string attribute with the given description
+func ResourceRequiredString(description string) resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: description,
 		Required:    true,
 	}
 }
 
-// OptionalString returns an optional string attribute with the given description
-func OptionalString(description string) schema.StringAttribute {
-	return schema.StringAttribute{
+// ResourceOptionalString returns an optional string attribute with the given description
+func ResourceOptionalString(description string) resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: description,
 		Optional:    true,
 	}
 }
 
-// ComputedString returns a computed string attribute with the given description
-func ComputedString(description string) schema.StringAttribute {
-	return schema.StringAttribute{
+// ResourceComputedString returns a computed string attribute with the given description
+func ResourceComputedString(description string) resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: description,
 		Computed:    true,
 	}
 }
 
-// ComputedStringWithDefault returns a computed string attribute with a default value
-func ComputedStringWithDefault(description string, defaultValue string) schema.StringAttribute {
-	return schema.StringAttribute{
+// ResourceComputedStringWithDefault returns a computed string attribute with a default value
+func ResourceComputedStringWithDefault(description string, defaultValue string) resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: description,
 		Computed:    true,
 		Default:     stringdefault.StaticString(defaultValue),
 	}
 }
 
-// SensitiveString returns an optional sensitive string attribute with the given description
-func SensitiveString(description string) schema.StringAttribute {
-	return schema.StringAttribute{
+// ResourceSensitiveString returns an optional sensitive string attribute with the given description
+func ResourceSensitiveString(description string) resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: description,
 		Optional:    true,
 		Sensitive:   true,
 	}
 }
 
-// SensitiveRequiredString returns a required sensitive string attribute
-func SensitiveRequiredString(description string) schema.StringAttribute {
-	return schema.StringAttribute{
+// ResourceSensitiveRequiredString returns a required sensitive string attribute
+func ResourceSensitiveRequiredString(description string) resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: description,
 		Required:    true,
 		Sensitive:   true,
 	}
 }
 
-// ComputedSensitiveString returns a computed sensitive string attribute
-func ComputedSensitiveString(description string) schema.StringAttribute {
-	return schema.StringAttribute{
+// ResourceComputedSensitiveString returns a computed sensitive string attribute
+func ResourceComputedSensitiveString(description string) resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: description,
 		Computed:    true,
 		Sensitive:   true,
 	}
 }
 
-// StringWithDefault returns an optional string attribute with a default value
-func StringWithDefault(description string, defaultValue string) schema.StringAttribute {
-	return schema.StringAttribute{
+// ResourceStringWithDefault returns an optional string attribute with a default value
+func ResourceStringWithDefault(description string, defaultValue string) resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: description,
 		Optional:    true,
 		Computed:    true,
@@ -111,9 +116,9 @@ func StringWithDefault(description string, defaultValue string) schema.StringAtt
 	}
 }
 
-// StringEnum returns a string attribute with enum validation
-func StringEnum(description string, enumValues ...string) schema.StringAttribute {
-	return schema.StringAttribute{
+// ResourceStringEnum returns a string attribute with enum validation
+func ResourceStringEnum(description string, enumValues ...string) resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: description,
 		Optional:    true,
 		Validators: []validator.String{
@@ -122,9 +127,9 @@ func StringEnum(description string, enumValues ...string) schema.StringAttribute
 	}
 }
 
-// RequiredStringEnum returns a required string attribute with enum validation
-func RequiredStringEnum(description string, enumValues ...string) schema.StringAttribute {
-	return schema.StringAttribute{
+// ResourceRequiredStringEnum returns a required string attribute with enum validation
+func ResourceRequiredStringEnum(description string, enumValues ...string) resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: description,
 		Required:    true,
 		Validators: []validator.String{
@@ -133,9 +138,9 @@ func RequiredStringEnum(description string, enumValues ...string) schema.StringA
 	}
 }
 
-// StringEnumWithDefault returns an optional string attribute with enum validation and a default value
-func StringEnumWithDefault(description string, defaultValue string, enumValues ...string) schema.StringAttribute {
-	return schema.StringAttribute{
+// ResourceStringEnumWithDefault returns an optional string attribute with enum validation and a default value
+func ResourceStringEnumWithDefault(description string, defaultValue string, enumValues ...string) resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: description,
 		Optional:    true,
 		Computed:    true,
@@ -146,9 +151,9 @@ func StringEnumWithDefault(description string, defaultValue string, enumValues .
 	}
 }
 
-// ComputedOptionalString returns a computed optional string (persists state for unknown)
-func ComputedOptionalString(description string) schema.StringAttribute {
-	return schema.StringAttribute{
+// ResourceComputedOptionalString returns a computed optional string (persists state for unknown)
+func ResourceComputedOptionalString(description string) resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: description,
 		Optional:    true,
 		Computed:    true,
@@ -159,12 +164,61 @@ func ComputedOptionalString(description string) schema.StringAttribute {
 }
 
 // ResourceIDAttribute returns a string attribute commonly used for referencing other resources
-func ResourceIDAttribute(description string) schema.StringAttribute {
-	return schema.StringAttribute{
+func ResourceIDAttribute(description string) resourceschema.StringAttribute {
+	return resourceschema.StringAttribute{
 		Description: description,
 		Required:    true,
 		PlanModifiers: []planmodifier.String{
 			stringplanmodifier.RequiresReplace(),
+		},
+	}
+}
+
+// ========================================
+// Data Source Schema Functions
+// ========================================
+
+// DataSourceComputedString returns a computed string attribute for data sources
+func DataSourceComputedString(description string) datasourceschema.StringAttribute {
+	return datasourceschema.StringAttribute{
+		Description: description,
+		Computed:    true,
+	}
+}
+
+// DataSourceOptionalString returns an optional string attribute for data sources
+func DataSourceOptionalString(description string) datasourceschema.StringAttribute {
+	return datasourceschema.StringAttribute{
+		Description: description,
+		Optional:    true,
+	}
+}
+
+// DataSourceComputedSensitiveString returns a computed sensitive string attribute for data sources
+func DataSourceComputedSensitiveString(description string) datasourceschema.StringAttribute {
+	return datasourceschema.StringAttribute{
+		Description: description,
+		Computed:    true,
+		Sensitive:   true,
+	}
+}
+
+// DataSourceSensitiveString returns an optional sensitive string attribute for data sources
+func DataSourceSensitiveString(description string) datasourceschema.StringAttribute {
+	return datasourceschema.StringAttribute{
+		Description: description,
+		Optional:    true,
+		Sensitive:   true,
+	}
+}
+
+// DataSourceStringEnum returns a string attribute with enum validation for data sources
+func DataSourceStringEnum(description string, enumValues ...string) datasourceschema.StringAttribute {
+	return datasourceschema.StringAttribute{
+		Description: description,
+		Optional:    true,
+		Validators: []validator.String{
+			stringvalidator.OneOf(enumValues...),
 		},
 	}
 }

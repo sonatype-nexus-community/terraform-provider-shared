@@ -17,46 +17,51 @@
 package schema
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 )
 
-// RequiredInt64 returns a required int64 attribute
-func RequiredInt64(description string) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ========================================
+// Resource Schema Functions
+// ========================================
+
+// ResourceRequiredInt64 returns a required int64 attribute
+func ResourceRequiredInt64(description string) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Required:    true,
 	}
 }
 
-// OptionalInt64 returns an optional int64 attribute
-func OptionalInt64(description string) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceOptionalInt64 returns an optional int64 attribute
+func ResourceOptionalInt64(description string) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Optional:    true,
 	}
 }
 
-// ComputedInt64 returns a computed int64 attribute
-func ComputedInt64(description string) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceComputedInt64 returns a computed int64 attribute
+func ResourceComputedInt64(description string) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Computed:    true,
 	}
 }
 
-// ComputedInt64WithDefault returns a computed int64 attribute with a default value
-func ComputedInt64WithDefault(description string, defaultValue int64) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceComputedInt64WithDefault returns a computed int64 attribute with a default value
+func ResourceComputedInt64WithDefault(description string, defaultValue int64) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Computed:    true,
 		Default:     int64default.StaticInt64(defaultValue),
 	}
 }
 
-// OptionalInt64WithDefault returns an optional int64 attribute with a default value
-func OptionalInt64WithDefault(description string, defaultValue int64) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceOptionalInt64WithDefault returns an optional int64 attribute with a default value
+func ResourceOptionalInt64WithDefault(description string, defaultValue int64) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Optional:    true,
 		Computed:    true,
@@ -64,34 +69,34 @@ func OptionalInt64WithDefault(description string, defaultValue int64) schema.Int
 	}
 }
 
-// RequiredInt64WithDefault returns a required int64 attribute with a default value
-func RequiredInt64WithDefault(description string, defaultValue int64) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceRequiredInt64WithDefault returns a required int64 attribute with a default value
+func ResourceRequiredInt64WithDefault(description string, defaultValue int64) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Required:    true,
 		Default:     int64default.StaticInt64(defaultValue),
 	}
 }
 
-// RequiredInt32 returns a required int32 attribute
-func RequiredInt32(description string) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceRequiredInt32 returns a required int32 attribute
+func ResourceRequiredInt32(description string) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Required:    true,
 	}
 }
 
-// OptionalInt32 returns an optional int32 attribute
-func OptionalInt32(description string) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceOptionalInt32 returns an optional int32 attribute
+func ResourceOptionalInt32(description string) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Optional:    true,
 	}
 }
 
-// OptionalInt32WithDefault returns an optional int32 attribute with a default value
-func OptionalInt32WithDefault(description string, defaultValue int32) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceOptionalInt32WithDefault returns an optional int32 attribute with a default value
+func ResourceOptionalInt32WithDefault(description string, defaultValue int32) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Optional:    true,
 		Computed:    true,
@@ -99,34 +104,34 @@ func OptionalInt32WithDefault(description string, defaultValue int32) schema.Int
 	}
 }
 
-// RequiredInt32WithDefault returns a required int32 attribute with a default value
-func RequiredInt32WithDefault(description string, defaultValue int32) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceRequiredInt32WithDefault returns a required int32 attribute with a default value
+func ResourceRequiredInt32WithDefault(description string, defaultValue int32) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Required:    true,
 		Default:     int64default.StaticInt64(int64(defaultValue)),
 	}
 }
 
-// OptionalPort returns an optional int64 attribute for network ports (0-65535)
-func OptionalPort(description string) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceOptionalPort returns an optional int64 attribute for network ports (0-65535)
+func ResourceOptionalPort(description string) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Optional:    true,
 	}
 }
 
-// RequiredPort returns a required int64 attribute for network ports (0-65535)
-func RequiredPort(description string) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceRequiredPort returns a required int64 attribute for network ports (0-65535)
+func ResourceRequiredPort(description string) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Required:    true,
 	}
 }
 
-// PortWithDefault returns a port attribute with a default value
-func PortWithDefault(description string, defaultValue int64) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourcePortWithDefault returns a port attribute with a default value
+func ResourcePortWithDefault(description string, defaultValue int64) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Optional:    true,
 		Computed:    true,
@@ -134,41 +139,41 @@ func PortWithDefault(description string, defaultValue int64) schema.Int64Attribu
 	}
 }
 
-// PercentageInt returns a percentage as int64 (0-100)
-func PercentageInt(description string) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourcePercentageInt returns a percentage as int64 (0-100)
+func ResourcePercentageInt(description string) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Optional:    true,
 	}
 }
 
-// RequiredPercentageInt returns a required percentage as int64 (0-100)
-func RequiredPercentageInt(description string) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceRequiredPercentageInt returns a required percentage as int64 (0-100)
+func ResourceRequiredPercentageInt(description string) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Required:    true,
 	}
 }
 
-// DurationInt returns a duration in seconds as int64
-func DurationInt(description string) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceDurationInt returns a duration in seconds as int64
+func ResourceDurationInt(description string) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Optional:    true,
 	}
 }
 
-// RequiredDurationInt returns a required duration in seconds as int64
-func RequiredDurationInt(description string) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceRequiredDurationInt returns a required duration in seconds as int64
+func ResourceRequiredDurationInt(description string) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Required:    true,
 	}
 }
 
-// TimeoutInt returns a timeout duration in seconds as int64
-func TimeoutInt(description string, defaultSeconds int64) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceTimeoutInt returns a timeout duration in seconds as int64
+func ResourceTimeoutInt(description string, defaultSeconds int64) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Optional:    true,
 		Computed:    true,
@@ -176,12 +181,32 @@ func TimeoutInt(description string, defaultSeconds int64) schema.Int64Attribute 
 	}
 }
 
-// CountInt returns a count attribute as int64
-func CountInt(description string) schema.Int64Attribute {
-	return schema.Int64Attribute{
+// ResourceCountInt returns a count attribute as int64
+func ResourceCountInt(description string) resourceschema.Int64Attribute {
+	return resourceschema.Int64Attribute{
 		Description: description,
 		Optional:    true,
 		Computed:    true,
 		Default:     int64default.StaticInt64(0),
+	}
+}
+
+// ========================================
+// Data Source Schema Functions
+// ========================================
+
+// DataSourceComputedInt64 returns a computed int64 attribute for data sources
+func DataSourceComputedInt64(description string) datasourceschema.Int64Attribute {
+	return datasourceschema.Int64Attribute{
+		Description: description,
+		Computed:    true,
+	}
+}
+
+// DataSourceOptionalInt64 returns an optional int64 attribute for data sources
+func DataSourceOptionalInt64(description string) datasourceschema.Int64Attribute {
+	return datasourceschema.Int64Attribute{
+		Description: description,
+		Optional:    true,
 	}
 }

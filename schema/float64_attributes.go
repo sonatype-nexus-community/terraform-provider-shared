@@ -17,46 +17,51 @@
 package schema
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/float64default"
 )
 
-// RequiredFloat64 returns a required float64 attribute
-func RequiredFloat64(description string) schema.Float64Attribute {
-	return schema.Float64Attribute{
+// ========================================
+// Resource Schema Functions
+// ========================================
+
+// ResourceRequiredFloat64 returns a required float64 attribute
+func ResourceRequiredFloat64(description string) resourceschema.Float64Attribute {
+	return resourceschema.Float64Attribute{
 		Description: description,
 		Required:    true,
 	}
 }
 
-// OptionalFloat64 returns an optional float64 attribute
-func OptionalFloat64(description string) schema.Float64Attribute {
-	return schema.Float64Attribute{
+// ResourceOptionalFloat64 returns an optional float64 attribute
+func ResourceOptionalFloat64(description string) resourceschema.Float64Attribute {
+	return resourceschema.Float64Attribute{
 		Description: description,
 		Optional:    true,
 	}
 }
 
-// ComputedFloat64 returns a computed float64 attribute
-func ComputedFloat64(description string) schema.Float64Attribute {
-	return schema.Float64Attribute{
+// ResourceComputedFloat64 returns a computed float64 attribute
+func ResourceComputedFloat64(description string) resourceschema.Float64Attribute {
+	return resourceschema.Float64Attribute{
 		Description: description,
 		Computed:    true,
 	}
 }
 
-// ComputedFloat64WithDefault returns a computed float64 attribute with a default value
-func ComputedFloat64WithDefault(description string, defaultValue float64) schema.Float64Attribute {
-	return schema.Float64Attribute{
+// ResourceComputedFloat64WithDefault returns a computed float64 attribute with a default value
+func ResourceComputedFloat64WithDefault(description string, defaultValue float64) resourceschema.Float64Attribute {
+	return resourceschema.Float64Attribute{
 		Description: description,
 		Computed:    true,
 		Default:     float64default.StaticFloat64(defaultValue),
 	}
 }
 
-// OptionalFloat64WithDefault returns an optional float64 attribute with a default value
-func OptionalFloat64WithDefault(description string, defaultValue float64) schema.Float64Attribute {
-	return schema.Float64Attribute{
+// ResourceOptionalFloat64WithDefault returns an optional float64 attribute with a default value
+func ResourceOptionalFloat64WithDefault(description string, defaultValue float64) resourceschema.Float64Attribute {
+	return resourceschema.Float64Attribute{
 		Description: description,
 		Optional:    true,
 		Computed:    true,
@@ -64,11 +69,31 @@ func OptionalFloat64WithDefault(description string, defaultValue float64) schema
 	}
 }
 
-// RequiredFloat64WithDefault returns a required float64 attribute with a default value
-func RequiredFloat64WithDefault(description string, defaultValue float64) schema.Float64Attribute {
-	return schema.Float64Attribute{
+// ResourceRequiredFloat64WithDefault returns a required float64 attribute with a default value
+func ResourceRequiredFloat64WithDefault(description string, defaultValue float64) resourceschema.Float64Attribute {
+	return resourceschema.Float64Attribute{
 		Description: description,
 		Required:    true,
 		Default:     float64default.StaticFloat64(defaultValue),
+	}
+}
+
+// ========================================
+// Data Source Schema Functions
+// ========================================
+
+// DataSourceComputedFloat64 returns a computed float64 attribute for data sources
+func DataSourceComputedFloat64(description string) datasourceschema.Float64Attribute {
+	return datasourceschema.Float64Attribute{
+		Description: description,
+		Computed:    true,
+	}
+}
+
+// DataSourceOptionalFloat64 returns an optional float64 attribute for data sources
+func DataSourceOptionalFloat64(description string) datasourceschema.Float64Attribute {
+	return datasourceschema.Float64Attribute{
+		Description: description,
+		Optional:    true,
 	}
 }

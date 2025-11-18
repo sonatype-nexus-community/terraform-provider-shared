@@ -17,40 +17,45 @@
 package schema
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-// RequiredStringSet returns a required set attribute with string elements
-func RequiredStringSet(description string) schema.SetAttribute {
-	return schema.SetAttribute{
+// ========================================
+// Resource Schema Functions
+// ========================================
+
+// ResourceRequiredStringSet returns a required set attribute with string elements
+func ResourceRequiredStringSet(description string) resourceschema.SetAttribute {
+	return resourceschema.SetAttribute{
 		Description: description,
 		ElementType: types.StringType,
 		Required:    true,
 	}
 }
 
-// OptionalStringSet returns an optional set attribute with string elements
-func OptionalStringSet(description string) schema.SetAttribute {
-	return schema.SetAttribute{
+// ResourceOptionalStringSet returns an optional set attribute with string elements
+func ResourceOptionalStringSet(description string) resourceschema.SetAttribute {
+	return resourceschema.SetAttribute{
 		Description: description,
 		ElementType: types.StringType,
 		Optional:    true,
 	}
 }
 
-// ComputedStringSet returns a computed set attribute with string elements
-func ComputedStringSet(description string) schema.SetAttribute {
-	return schema.SetAttribute{
+// ResourceComputedStringSet returns a computed set attribute with string elements
+func ResourceComputedStringSet(description string) resourceschema.SetAttribute {
+	return resourceschema.SetAttribute{
 		Description: description,
 		ElementType: types.StringType,
 		Computed:    true,
 	}
 }
 
-// ComputedOptionalStringSet returns a computed optional set attribute with string elements
-func ComputedOptionalStringSet(description string) schema.SetAttribute {
-	return schema.SetAttribute{
+// ResourceComputedOptionalStringSet returns a computed optional set attribute with string elements
+func ResourceComputedOptionalStringSet(description string) resourceschema.SetAttribute {
+	return resourceschema.SetAttribute{
 		Description: description,
 		ElementType: types.StringType,
 		Optional:    true,
@@ -58,54 +63,112 @@ func ComputedOptionalStringSet(description string) schema.SetAttribute {
 	}
 }
 
-// RequiredInt64Set returns a required set attribute with int64 elements
-func RequiredInt64Set(description string) schema.SetAttribute {
-	return schema.SetAttribute{
+// ResourceRequiredInt64Set returns a required set attribute with int64 elements
+func ResourceRequiredInt64Set(description string) resourceschema.SetAttribute {
+	return resourceschema.SetAttribute{
 		Description: description,
 		ElementType: types.Int64Type,
 		Required:    true,
 	}
 }
 
-// OptionalInt64Set returns an optional set attribute with int64 elements
-func OptionalInt64Set(description string) schema.SetAttribute {
-	return schema.SetAttribute{
+// ResourceOptionalInt64Set returns an optional set attribute with int64 elements
+func ResourceOptionalInt64Set(description string) resourceschema.SetAttribute {
+	return resourceschema.SetAttribute{
 		Description: description,
 		ElementType: types.Int64Type,
 		Optional:    true,
 	}
 }
 
-// ComputedInt64Set returns a computed set attribute with int64 elements
-func ComputedInt64Set(description string) schema.SetAttribute {
-	return schema.SetAttribute{
+// ResourceComputedInt64Set returns a computed set attribute with int64 elements
+func ResourceComputedInt64Set(description string) resourceschema.SetAttribute {
+	return resourceschema.SetAttribute{
 		Description: description,
 		ElementType: types.Int64Type,
 		Computed:    true,
 	}
 }
 
-// RequiredBoolSet returns a required set attribute with bool elements
-func RequiredBoolSet(description string) schema.SetAttribute {
-	return schema.SetAttribute{
+// ResourceRequiredBoolSet returns a required set attribute with bool elements
+func ResourceRequiredBoolSet(description string) resourceschema.SetAttribute {
+	return resourceschema.SetAttribute{
 		Description: description,
 		ElementType: types.BoolType,
 		Required:    true,
 	}
 }
 
-// OptionalBoolSet returns an optional set attribute with bool elements
-func OptionalBoolSet(description string) schema.SetAttribute {
-	return schema.SetAttribute{
+// ResourceOptionalBoolSet returns an optional set attribute with bool elements
+func ResourceOptionalBoolSet(description string) resourceschema.SetAttribute {
+	return resourceschema.SetAttribute{
 		Description: description,
 		ElementType: types.BoolType,
 		Optional:    true,
 	}
 }
 
-// ComputedBoolSet returns a computed set attribute with bool elements
-func ComputedBoolSet(description string) schema.SetAttribute {
-	return schema.SetAttribute{
+// ResourceComputedBoolSet returns a computed set attribute with bool elements
+func ResourceComputedBoolSet(description string) resourceschema.SetAttribute {
+	return resourceschema.SetAttribute{
+		Description: description,
+		ElementType: types.BoolType,
+		Computed:    true,
+	}
+}
+
+// ========================================
+// Data Source Schema Functions
+// ========================================
+
+// DataSourceOptionalStringSet returns an optional set attribute with string elements for data sources
+func DataSourceOptionalStringSet(description string) datasourceschema.SetAttribute {
+	return datasourceschema.SetAttribute{
+		Description: description,
+		ElementType: types.StringType,
+		Optional:    true,
+	}
+}
+
+// DataSourceComputedStringSet returns a computed set attribute with string elements for data sources
+func DataSourceComputedStringSet(description string) datasourceschema.SetAttribute {
+	return datasourceschema.SetAttribute{
+		Description: description,
+		ElementType: types.StringType,
+		Computed:    true,
+	}
+}
+
+// DataSourceOptionalInt64Set returns an optional set attribute with int64 elements for data sources
+func DataSourceOptionalInt64Set(description string) datasourceschema.SetAttribute {
+	return datasourceschema.SetAttribute{
+		Description: description,
+		ElementType: types.Int64Type,
+		Optional:    true,
+	}
+}
+
+// DataSourceComputedInt64Set returns a computed set attribute with int64 elements for data sources
+func DataSourceComputedInt64Set(description string) datasourceschema.SetAttribute {
+	return datasourceschema.SetAttribute{
+		Description: description,
+		ElementType: types.Int64Type,
+		Computed:    true,
+	}
+}
+
+// DataSourceOptionalBoolSet returns an optional set attribute with bool elements for data sources
+func DataSourceOptionalBoolSet(description string) datasourceschema.SetAttribute {
+	return datasourceschema.SetAttribute{
+		Description: description,
+		ElementType: types.BoolType,
+		Optional:    true,
+	}
+}
+
+// DataSourceComputedBoolSet returns a computed set attribute with bool elements for data sources
+func DataSourceComputedBoolSet(description string) datasourceschema.SetAttribute {
+	return datasourceschema.SetAttribute{
 		Description: description,
 		ElementType: types.BoolType,
 		Computed:    true,

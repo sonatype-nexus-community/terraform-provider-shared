@@ -17,40 +17,45 @@
 package schema
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-// RequiredStringList returns a required list attribute with string elements
-func RequiredStringList(description string) schema.ListAttribute {
-	return schema.ListAttribute{
+// ========================================
+// Resource Schema Functions
+// ========================================
+
+// ResourceRequiredStringList returns a required list attribute with string elements
+func ResourceRequiredStringList(description string) resourceschema.ListAttribute {
+	return resourceschema.ListAttribute{
 		Description: description,
 		ElementType: types.StringType,
 		Required:    true,
 	}
 }
 
-// OptionalStringList returns an optional list attribute with string elements
-func OptionalStringList(description string) schema.ListAttribute {
-	return schema.ListAttribute{
+// ResourceOptionalStringList returns an optional list attribute with string elements
+func ResourceOptionalStringList(description string) resourceschema.ListAttribute {
+	return resourceschema.ListAttribute{
 		Description: description,
 		ElementType: types.StringType,
 		Optional:    true,
 	}
 }
 
-// ComputedStringList returns a computed list attribute with string elements
-func ComputedStringList(description string) schema.ListAttribute {
-	return schema.ListAttribute{
+// ResourceComputedStringList returns a computed list attribute with string elements
+func ResourceComputedStringList(description string) resourceschema.ListAttribute {
+	return resourceschema.ListAttribute{
 		Description: description,
 		ElementType: types.StringType,
 		Computed:    true,
 	}
 }
 
-// ComputedOptionalStringList returns a computed optional list attribute with string elements
-func ComputedOptionalStringList(description string) schema.ListAttribute {
-	return schema.ListAttribute{
+// ResourceComputedOptionalStringList returns a computed optional list attribute with string elements
+func ResourceComputedOptionalStringList(description string) resourceschema.ListAttribute {
+	return resourceschema.ListAttribute{
 		Description: description,
 		ElementType: types.StringType,
 		Optional:    true,
@@ -58,54 +63,112 @@ func ComputedOptionalStringList(description string) schema.ListAttribute {
 	}
 }
 
-// RequiredInt64List returns a required list attribute with int64 elements
-func RequiredInt64List(description string) schema.ListAttribute {
-	return schema.ListAttribute{
+// ResourceRequiredInt64List returns a required list attribute with int64 elements
+func ResourceRequiredInt64List(description string) resourceschema.ListAttribute {
+	return resourceschema.ListAttribute{
 		Description: description,
 		ElementType: types.Int64Type,
 		Required:    true,
 	}
 }
 
-// OptionalInt64List returns an optional list attribute with int64 elements
-func OptionalInt64List(description string) schema.ListAttribute {
-	return schema.ListAttribute{
+// ResourceOptionalInt64List returns an optional list attribute with int64 elements
+func ResourceOptionalInt64List(description string) resourceschema.ListAttribute {
+	return resourceschema.ListAttribute{
 		Description: description,
 		ElementType: types.Int64Type,
 		Optional:    true,
 	}
 }
 
-// ComputedInt64List returns a computed list attribute with int64 elements
-func ComputedInt64List(description string) schema.ListAttribute {
-	return schema.ListAttribute{
+// ResourceComputedInt64List returns a computed list attribute with int64 elements
+func ResourceComputedInt64List(description string) resourceschema.ListAttribute {
+	return resourceschema.ListAttribute{
 		Description: description,
 		ElementType: types.Int64Type,
 		Computed:    true,
 	}
 }
 
-// RequiredBoolList returns a required list attribute with bool elements
-func RequiredBoolList(description string) schema.ListAttribute {
-	return schema.ListAttribute{
+// ResourceRequiredBoolList returns a required list attribute with bool elements
+func ResourceRequiredBoolList(description string) resourceschema.ListAttribute {
+	return resourceschema.ListAttribute{
 		Description: description,
 		ElementType: types.BoolType,
 		Required:    true,
 	}
 }
 
-// OptionalBoolList returns an optional list attribute with bool elements
-func OptionalBoolList(description string) schema.ListAttribute {
-	return schema.ListAttribute{
+// ResourceOptionalBoolList returns an optional list attribute with bool elements
+func ResourceOptionalBoolList(description string) resourceschema.ListAttribute {
+	return resourceschema.ListAttribute{
 		Description: description,
 		ElementType: types.BoolType,
 		Optional:    true,
 	}
 }
 
-// ComputedBoolList returns a computed list attribute with bool elements
-func ComputedBoolList(description string) schema.ListAttribute {
-	return schema.ListAttribute{
+// ResourceComputedBoolList returns a computed list attribute with bool elements
+func ResourceComputedBoolList(description string) resourceschema.ListAttribute {
+	return resourceschema.ListAttribute{
+		Description: description,
+		ElementType: types.BoolType,
+		Computed:    true,
+	}
+}
+
+// ========================================
+// Data Source Schema Functions
+// ========================================
+
+// DataSourceOptionalStringList returns an optional list attribute with string elements for data sources
+func DataSourceOptionalStringList(description string) datasourceschema.ListAttribute {
+	return datasourceschema.ListAttribute{
+		Description: description,
+		ElementType: types.StringType,
+		Optional:    true,
+	}
+}
+
+// DataSourceComputedStringList returns a computed list attribute with string elements for data sources
+func DataSourceComputedStringList(description string) datasourceschema.ListAttribute {
+	return datasourceschema.ListAttribute{
+		Description: description,
+		ElementType: types.StringType,
+		Computed:    true,
+	}
+}
+
+// DataSourceOptionalInt64List returns an optional list attribute with int64 elements for data sources
+func DataSourceOptionalInt64List(description string) datasourceschema.ListAttribute {
+	return datasourceschema.ListAttribute{
+		Description: description,
+		ElementType: types.Int64Type,
+		Optional:    true,
+	}
+}
+
+// DataSourceComputedInt64List returns a computed list attribute with int64 elements for data sources
+func DataSourceComputedInt64List(description string) datasourceschema.ListAttribute {
+	return datasourceschema.ListAttribute{
+		Description: description,
+		ElementType: types.Int64Type,
+		Computed:    true,
+	}
+}
+
+// DataSourceOptionalBoolList returns an optional list attribute with bool elements for data sources
+func DataSourceOptionalBoolList(description string) datasourceschema.ListAttribute {
+	return datasourceschema.ListAttribute{
+		Description: description,
+		ElementType: types.BoolType,
+		Optional:    true,
+	}
+}
+
+// DataSourceComputedBoolList returns a computed list attribute with bool elements for data sources
+func DataSourceComputedBoolList(description string) datasourceschema.ListAttribute {
+	return datasourceschema.ListAttribute{
 		Description: description,
 		ElementType: types.BoolType,
 		Computed:    true,

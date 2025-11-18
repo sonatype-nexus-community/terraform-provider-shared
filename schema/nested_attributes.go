@@ -17,39 +17,44 @@
 package schema
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 )
 
-// RequiredSingleNestedAttribute returns a required single nested attribute
-func RequiredSingleNestedAttribute(description string, attributes map[string]schema.Attribute) schema.SingleNestedAttribute {
-	return schema.SingleNestedAttribute{
+// ========================================
+// Resource Schema Functions
+// ========================================
+
+// ResourceRequiredSingleNestedAttribute returns a required single nested attribute
+func ResourceRequiredSingleNestedAttribute(description string, attributes map[string]resourceschema.Attribute) resourceschema.SingleNestedAttribute {
+	return resourceschema.SingleNestedAttribute{
 		Description: description,
 		Required:    true,
 		Attributes:  attributes,
 	}
 }
 
-// OptionalSingleNestedAttribute returns an optional single nested attribute
-func OptionalSingleNestedAttribute(description string, attributes map[string]schema.Attribute) schema.SingleNestedAttribute {
-	return schema.SingleNestedAttribute{
+// ResourceOptionalSingleNestedAttribute returns an optional single nested attribute
+func ResourceOptionalSingleNestedAttribute(description string, attributes map[string]resourceschema.Attribute) resourceschema.SingleNestedAttribute {
+	return resourceschema.SingleNestedAttribute{
 		Description: description,
 		Optional:    true,
 		Attributes:  attributes,
 	}
 }
 
-// ComputedSingleNestedAttribute returns a computed single nested attribute
-func ComputedSingleNestedAttribute(description string, attributes map[string]schema.Attribute) schema.SingleNestedAttribute {
-	return schema.SingleNestedAttribute{
+// ResourceComputedSingleNestedAttribute returns a computed single nested attribute
+func ResourceComputedSingleNestedAttribute(description string, attributes map[string]resourceschema.Attribute) resourceschema.SingleNestedAttribute {
+	return resourceschema.SingleNestedAttribute{
 		Description: description,
 		Computed:    true,
 		Attributes:  attributes,
 	}
 }
 
-// ComputedOptionalSingleNestedAttribute returns a computed optional single nested attribute
-func ComputedOptionalSingleNestedAttribute(description string, attributes map[string]schema.Attribute) schema.SingleNestedAttribute {
-	return schema.SingleNestedAttribute{
+// ResourceComputedOptionalSingleNestedAttribute returns a computed optional single nested attribute
+func ResourceComputedOptionalSingleNestedAttribute(description string, attributes map[string]resourceschema.Attribute) resourceschema.SingleNestedAttribute {
+	return resourceschema.SingleNestedAttribute{
 		Description: description,
 		Optional:    true,
 		Computed:    true,
@@ -57,36 +62,36 @@ func ComputedOptionalSingleNestedAttribute(description string, attributes map[st
 	}
 }
 
-// RequiredListNestedAttribute returns a required list nested attribute
-func RequiredListNestedAttribute(description string, nestedObject schema.NestedAttributeObject) schema.ListNestedAttribute {
-	return schema.ListNestedAttribute{
+// ResourceRequiredListNestedAttribute returns a required list nested attribute
+func ResourceRequiredListNestedAttribute(description string, nestedObject resourceschema.NestedAttributeObject) resourceschema.ListNestedAttribute {
+	return resourceschema.ListNestedAttribute{
 		Description: description,
 		Required:    true,
 		NestedObject: nestedObject,
 	}
 }
 
-// OptionalListNestedAttribute returns an optional list nested attribute
-func OptionalListNestedAttribute(description string, nestedObject schema.NestedAttributeObject) schema.ListNestedAttribute {
-	return schema.ListNestedAttribute{
+// ResourceOptionalListNestedAttribute returns an optional list nested attribute
+func ResourceOptionalListNestedAttribute(description string, nestedObject resourceschema.NestedAttributeObject) resourceschema.ListNestedAttribute {
+	return resourceschema.ListNestedAttribute{
 		Description: description,
 		Optional:    true,
 		NestedObject: nestedObject,
 	}
 }
 
-// ComputedListNestedAttribute returns a computed list nested attribute
-func ComputedListNestedAttribute(description string, nestedObject schema.NestedAttributeObject) schema.ListNestedAttribute {
-	return schema.ListNestedAttribute{
+// ResourceComputedListNestedAttribute returns a computed list nested attribute
+func ResourceComputedListNestedAttribute(description string, nestedObject resourceschema.NestedAttributeObject) resourceschema.ListNestedAttribute {
+	return resourceschema.ListNestedAttribute{
 		Description: description,
 		Computed:    true,
 		NestedObject: nestedObject,
 	}
 }
 
-// ComputedOptionalListNestedAttribute returns a computed optional list nested attribute
-func ComputedOptionalListNestedAttribute(description string, nestedObject schema.NestedAttributeObject) schema.ListNestedAttribute {
-	return schema.ListNestedAttribute{
+// ResourceComputedOptionalListNestedAttribute returns a computed optional list nested attribute
+func ResourceComputedOptionalListNestedAttribute(description string, nestedObject resourceschema.NestedAttributeObject) resourceschema.ListNestedAttribute {
+	return resourceschema.ListNestedAttribute{
 		Description: description,
 		Optional:    true,
 		Computed:    true,
@@ -94,38 +99,96 @@ func ComputedOptionalListNestedAttribute(description string, nestedObject schema
 	}
 }
 
-// RequiredSetNestedAttribute returns a required set nested attribute
-func RequiredSetNestedAttribute(description string, nestedObject schema.NestedAttributeObject) schema.SetNestedAttribute {
-	return schema.SetNestedAttribute{
+// ResourceRequiredSetNestedAttribute returns a required set nested attribute
+func ResourceRequiredSetNestedAttribute(description string, nestedObject resourceschema.NestedAttributeObject) resourceschema.SetNestedAttribute {
+	return resourceschema.SetNestedAttribute{
 		Description: description,
 		Required:    true,
 		NestedObject: nestedObject,
 	}
 }
 
-// OptionalSetNestedAttribute returns an optional set nested attribute
-func OptionalSetNestedAttribute(description string, nestedObject schema.NestedAttributeObject) schema.SetNestedAttribute {
-	return schema.SetNestedAttribute{
+// ResourceOptionalSetNestedAttribute returns an optional set nested attribute
+func ResourceOptionalSetNestedAttribute(description string, nestedObject resourceschema.NestedAttributeObject) resourceschema.SetNestedAttribute {
+	return resourceschema.SetNestedAttribute{
 		Description: description,
 		Optional:    true,
 		NestedObject: nestedObject,
 	}
 }
 
-// ComputedSetNestedAttribute returns a computed set nested attribute
-func ComputedSetNestedAttribute(description string, nestedObject schema.NestedAttributeObject) schema.SetNestedAttribute {
-	return schema.SetNestedAttribute{
+// ResourceComputedSetNestedAttribute returns a computed set nested attribute
+func ResourceComputedSetNestedAttribute(description string, nestedObject resourceschema.NestedAttributeObject) resourceschema.SetNestedAttribute {
+	return resourceschema.SetNestedAttribute{
 		Description: description,
 		Computed:    true,
 		NestedObject: nestedObject,
 	}
 }
 
-// ComputedOptionalSetNestedAttribute returns a computed optional set nested attribute
-func ComputedOptionalSetNestedAttribute(description string, nestedObject schema.NestedAttributeObject) schema.SetNestedAttribute {
-	return schema.SetNestedAttribute{
+// ResourceComputedOptionalSetNestedAttribute returns a computed optional set nested attribute
+func ResourceComputedOptionalSetNestedAttribute(description string, nestedObject resourceschema.NestedAttributeObject) resourceschema.SetNestedAttribute {
+	return resourceschema.SetNestedAttribute{
 		Description: description,
 		Optional:    true,
+		Computed:    true,
+		NestedObject: nestedObject,
+	}
+}
+
+// ========================================
+// Data Source Schema Functions
+// ========================================
+
+// DataSourceOptionalSingleNestedAttribute returns an optional single nested attribute for data sources
+func DataSourceOptionalSingleNestedAttribute(description string, attributes map[string]datasourceschema.Attribute) datasourceschema.SingleNestedAttribute {
+	return datasourceschema.SingleNestedAttribute{
+		Description: description,
+		Optional:    true,
+		Attributes:  attributes,
+	}
+}
+
+// DataSourceComputedSingleNestedAttribute returns a computed single nested attribute for data sources
+func DataSourceComputedSingleNestedAttribute(description string, attributes map[string]datasourceschema.Attribute) datasourceschema.SingleNestedAttribute {
+	return datasourceschema.SingleNestedAttribute{
+		Description: description,
+		Computed:    true,
+		Attributes:  attributes,
+	}
+}
+
+// DataSourceOptionalListNestedAttribute returns an optional list nested attribute for data sources
+func DataSourceOptionalListNestedAttribute(description string, nestedObject datasourceschema.NestedAttributeObject) datasourceschema.ListNestedAttribute {
+	return datasourceschema.ListNestedAttribute{
+		Description: description,
+		Optional:    true,
+		NestedObject: nestedObject,
+	}
+}
+
+// DataSourceComputedListNestedAttribute returns a computed list nested attribute for data sources
+func DataSourceComputedListNestedAttribute(description string, nestedObject datasourceschema.NestedAttributeObject) datasourceschema.ListNestedAttribute {
+	return datasourceschema.ListNestedAttribute{
+		Description: description,
+		Computed:    true,
+		NestedObject: nestedObject,
+	}
+}
+
+// DataSourceOptionalSetNestedAttribute returns an optional set nested attribute for data sources
+func DataSourceOptionalSetNestedAttribute(description string, nestedObject datasourceschema.NestedAttributeObject) datasourceschema.SetNestedAttribute {
+	return datasourceschema.SetNestedAttribute{
+		Description: description,
+		Optional:    true,
+		NestedObject: nestedObject,
+	}
+}
+
+// DataSourceComputedSetNestedAttribute returns a computed set nested attribute for data sources
+func DataSourceComputedSetNestedAttribute(description string, nestedObject datasourceschema.NestedAttributeObject) datasourceschema.SetNestedAttribute {
+	return datasourceschema.SetNestedAttribute{
+		Description: description,
 		Computed:    true,
 		NestedObject: nestedObject,
 	}

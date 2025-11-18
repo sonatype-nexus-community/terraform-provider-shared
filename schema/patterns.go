@@ -17,53 +17,54 @@
 package schema
 
 import (
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
+	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 )
 
 // StandardResourceAttributes returns a map of standard attributes for creatable/updatable resources
 // Includes: id (computed), last_updated (computed)
-func StandardResourceAttributes() map[string]schema.Attribute {
-	return map[string]schema.Attribute{
-		"id":           StandardID(),
-		"last_updated": Timestamp(),
+func StandardResourceAttributes() map[string]resourceschema.Attribute {
+	return map[string]resourceschema.Attribute{
+		"id":           ResourceStandardID(),
+		"last_updated": ResourceTimestamp(),
 	}
 }
 
 // NamedResourceAttributes returns a map of standard attributes plus a required name field
-func NamedResourceAttributes() map[string]schema.Attribute {
+func NamedResourceAttributes() map[string]resourceschema.Attribute {
 	attrs := StandardResourceAttributes()
-	attrs["name"] = RequiredString("Name of the resource")
+	attrs["name"] = ResourceRequiredString("Name of the resource")
 	return attrs
 }
 
 // IdentityResourceAttributes returns a map for username/id based resources
-func IdentityResourceAttributes() map[string]schema.Attribute {
+func IdentityResourceAttributes() map[string]resourceschema.Attribute {
 	attrs := StandardResourceAttributes()
-	attrs["username"] = RequiredString("Username identifier")
+	attrs["username"] = ResourceRequiredString("Username identifier")
 	return attrs
 }
 
 // OwnershipResourceAttributes returns a map for resources with ownership tracking
-func OwnershipResourceAttributes() map[string]schema.Attribute {
+func OwnershipResourceAttributes() map[string]resourceschema.Attribute {
 	attrs := StandardResourceAttributes()
-	attrs["owner_id"] = RequiredString("ID of the resource owner")
-	attrs["owner_type"] = RequiredString("Type of the owner (user, group, organization, etc.)")
+	attrs["owner_id"] = ResourceRequiredString("ID of the resource owner")
+	attrs["owner_type"] = ResourceRequiredString("Type of the owner (user, group, organization, etc.)")
 	return attrs
 }
 
 // AuditableResourceAttributes returns a map for resources with audit trail
 // Includes: id, created_at, updated_at
-func AuditableResourceAttributes() map[string]schema.Attribute {
-	return map[string]schema.Attribute{
-		"id":         StandardID(),
-		"created_at": ComputedString("Timestamp when the resource was created"),
-		"updated_at": Timestamp(),
+func AuditableResourceAttributes() map[string]resourceschema.Attribute {
+	return map[string]resourceschema.Attribute{
+		"id":         ResourceStandardID(),
+		"created_at": ResourceComputedString("Timestamp when the resource was created"),
+		"updated_at": ResourceTimestamp(),
 	}
 }
 
 // DataSourceIDAttribute returns attributes for data source filters
-func DataSourceIDAttribute() schema.StringAttribute {
-	return schema.StringAttribute{
+func DataSourceIDAttribute() datasourceschema.StringAttribute {
+	return datasourceschema.StringAttribute{
 		Description: "ID to lookup the data source",
 		Optional:    true,
 		Computed:    true,
@@ -71,10 +72,10 @@ func DataSourceIDAttribute() schema.StringAttribute {
 }
 
 // SourceAndReadOnlyAttributes returns common computed attributes for resources managed externally
-func SourceAndReadOnlyAttributes() map[string]schema.Attribute {
-	return map[string]schema.Attribute{
-		"source":     ComputedOptionalString("Source system that created/manages this resource"),
-		"read_only":  ComputedOptionalBool("Whether the resource is read-only"),
-		"managed_by": ComputedOptionalString("System managing this resource"),
+func SourceAndReadOnlyAttributes() map[string]resourceschema.Attribute {
+	return map[string]resourceschema.Attribute{
+		"source":     ResourceComputedOptionalString("Source system that created/manages this resource"),
+		"read_only":  ResourceComputedOptionalBool("Whether the resource is read-only"),
+		"managed_by": ResourceComputedOptionalString("System managing this resource"),
 	}
 }
