@@ -1,0 +1,120 @@
+linters:
+  enable:
+    - asciicheck
+    - bidichk
+    - deadcode
+    - depguard
+    - dogsled
+    - durationcheck
+    - errcheck
+    - errname
+    - errorlint
+    - exhaustive
+    - exportloopref
+    - forbidigo
+    - gochecknoglobals
+    - gochecknoinits
+    - gocognac
+    - goconst
+    - gocritic
+    - gocyclo
+    - godot
+    - godox
+    - goerr113
+    - gofmt
+    - gofumpt
+    - goheader
+    - goimports
+    - gomnd
+    - gomoddirectives
+    - gomodguard
+    - goprintffuncname
+    - gosec
+    - gosimple
+    - govet
+    - grouper
+    - ifshort
+    - importas
+    - ineffassign
+    - interfacebloat
+    - ireturn
+    - lll
+    - loggercheck
+    - maintidx
+    - makezero
+    - misspell
+    - nakedret
+    - nilnil
+    - nlreturn
+    - noctx
+    - nolintlint
+    - nonamedreturns
+    - nosprintfhostport
+    - paralleltest
+    - prealloc
+    - predeclared
+    - promlinter
+    - revive
+    - rowserrcheck
+    - sqlclosecheck
+    - staticcheck
+    - structcheck
+    - stylecheck
+    - tagliatelle
+    - tenv
+    - testableexamples
+    - testpackage
+    - tparallel
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - usestdlibvars
+    - varcheck
+    - wastedassign
+    - whitespace
+    - wrapcheck
+
+linters-settings:
+  gofmt:
+    simplify: true
+  goimports:
+    local-prefixes: github.com/sonatype-nexus-community
+  gocyclo:
+    min-complexity: 10
+  lll:
+    line-length: 120
+    tab-width: 4
+  misspell:
+    locale: US
+  staticcheck:
+    go: "1.23.7"
+  stylecheck:
+    go: "1.23.7"
+  depguard:
+    rules:
+      main:
+        deny:
+          - name: io/ioutil
+            recommendations:
+              - io
+              - os
+
+output:
+  sort-results: true
+  sort-order:
+    - file
+    - linter
+
+issues:
+  exclude:
+    - 'shadow: declaration of "err" shadows declaration'
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gocyclo
+        - errcheck
+        - gosec
+        - dupl
+        - funlen
+        - goconst

@@ -1,57 +1,78 @@
-# How to contribute
+# Contributing
 
-It's great you're here and reading this guide, because we need volunteers to help keep this project active and alive for the greater benefit of everyone!
+This repository is part of the Sonatype Nexus Community and welcomes contributions from the community.
 
-- [Engaging with this project](#engaging-with-this-project)
-- [Develpoment Guidelines](#develpoment-guidelines)
-  - [Coding Conventions](#coding-conventions)
-- [Testing](#testing)
-- [Submitting Contributions](#submitting-contributions)
+## Getting Started
 
-## Engaging with this project
+1. **Fork** the repository on GitHub
+2. **Clone** your fork locally
+3. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+4. **Commit** your changes (`git commit -S -s -m 'Add some amazing feature'`)
+5. **Push** to the branch (`git push origin feature/amazing-feature`)
+6. **Open** a Pull Request
 
-TODO: Add links below to your repo's GitHub Issues and Discussions pages.
+## Development Setup
 
-Here are some important resources:
-- [GitHub Issues](#) - a place for bugs to be raised and feature requests made
-- [GitHub Discussions](#) - a place to discuss ideas or real-world usage
+### Prerequisites
 
-## Development Guidelines
+- Go 1.23.7 or later
+- golangci-lint (optional, but recommended)
 
-*TODO: Explain in detail what development standards must be adhered to when contributions are made.*
+### Building
 
-*You might include:*
-- Testing requirements
-- Explanation of PR Checks
-- What to expect from a PR reviewer/approver (such as expected time to response)
+```bash
+go build -v .
+```
 
-### Coding Conventions
+### Testing
 
-- In order to help verify the authenticity of contributed code, we ask that your [commits be signed](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits). 
-  All commits must be signed off to show that you agree to publish your changes under the current terms and licenses of the project.
-  
-  Here are some notes we found helpful in configuring a local environment to automatically sign git commits:
-    - [GPG commit signature verification](https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#gpg-commit-signature-verification)
-    - [Telling Git about your GPG key](https://docs.github.com/en/authentication/managing-commit-signature-verification/telling-git-about-your-signing-key#telling-git-about-your-gpg-key)
-    
-- TODO: Explain code style, convention & quality standards (and any associated checks that will be run)
+```bash
+go test -v -cover -timeout=5m ./...
+```
+
+### Linting
+
+```bash
+go fmt ./...
+go vet ./...
+golangci-lint run ./...
+```
+
+## Guidelines
+
+- Ensure all tests pass before submitting a PR
+- Add tests for new functionality
+- Follow the existing code style and conventions
+- Update documentation as needed
+- Keep commits focused and descriptive
+- Link any related issues in your PR description
+
+## Code Style
+
+This project follows standard Go conventions:
+- Run `go fmt` on all code
+- Use `golangci-lint` for linting
+- Keep functions small and focused
+- Write clear, descriptive names
 
 ## Testing
 
-*TODO: Explain in detail:*
+All new code should include tests. Run the test suite with:
 
-- How to run tests, including dependencies that might need installing or configuring
-- Environmental configuration that may be required
-- Consideration when writing tests (i.e. don't depend on *X*)
+```bash
+go test ./...
+```
 
-*You might wish to break this out into different sub-sections if you have, for example, unit tests and integration tests with differing requirements.*
+## Documentation
 
+- Update README.md if adding new public functions
+- Add inline documentation for exported functions
+- Include examples where appropriate
 
-## Submitting Contributions
+## Questions or Issues?
 
-Please send Pull Requests that:
-1. Have a singluar purpose, and that is backed by one or more GitHub Issues in this project
-2. Are clear
-3. Have appropriate test coverage for the Pull Requests purpose
-4. Meet our Code Style Convention (see [above](#develpoment-guidelines))
-5. Sign off your commits to show that you agree to publish your changes under the current terms and licenses of the project, and to indicate agreement with [Developer Certificate of Origin (DCO)](https://developercertificate.org/).
+- Open a GitHub Issue for bugs or feature requests
+- Start a discussion for questions
+- Be respectful and constructive in all communications
+
+Thank you for contributing!

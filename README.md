@@ -1,34 +1,72 @@
-# YOUR PROJECT NAME HERE
+# Terraform Provider Shared
 
-<!-- Badges Section -->
 [![shield_gh-workflow-test]][link_gh-workflow-test]
 [![shield_license]][license_file]
-<!-- Add other badges or shields as appropriate -->
 
 ---
 
-Introduce your project here. A short summary about what its purpose and scope is.
+Shared libraries, utilities, and common code for Sonatype Terraform Providers.
 
-- [Usage](#usage)
-- [Development](#development)
-- [The Fine Print](#the-fine-print)
+This repository contains reusable schema builders, validators, error handling, and common patterns used across multiple Terraform providers:
+- [terraform-provider-sonatypeiq](https://github.com/sonatype-nexus-community/terraform-provider-sonatypeiq)
+- [terraform-provider-sonatyperepo](https://github.com/sonatype-nexus-community/terraform-provider-sonatyperepo)
+
+## Features
+
+- **Schema Builders**: Utility functions for creating consistent Terraform schema attributes
+- **Validators**: Pre-built validation rules for common patterns (IDs, emails, enums, etc.)
+- **Error Handling**: Standardized error response handling across providers
+- **Base Resources**: Common base resource implementations
+- **Helper Functions**: Reusable utilities for API operations and data conversion
 
 ## Usage
 
-Use this section (and any additional sub-sections) to explain how to use this project.
+Add this module as a dependency to your Terraform provider:
 
-Include:
-- Installation
-- Configuration
-- Execution
+```go
+require github.com/sonatype-nexus-community/terraform-provider-shared v0.1.0
+```
+
+### Schema Builders Example
+
+```go
+import "github.com/sonatype-nexus-community/terraform-provider-shared/schema"
+
+resp.Schema = schema.Schema{
+    Attributes: map[string]schema.Attribute{
+        "id": schema.StandardID(),
+        "name": schema.RequiredString("Name of the resource"),
+        "email": schema.OptionalString("Email address"),
+        "status": schema.StringEnum("Status", []string{"active", "inactive"}),
+        "last_updated": schema.Timestamp(),
+    },
+}
+```
 
 ## Development
+
+### Building
+
+```bash
+go build -v .
+```
+
+### Testing
+
+```bash
+go test -v -cover -timeout=5m ./...
+```
+
+### Linting
+
+```bash
+go fmt ./...
+go vet ./...
+```
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for details.
 
 ## The Fine Print
-
-Remember:
 
 This project is part of the [Sonatype Nexus Community](https://github.com/sonatype-nexus-community) organization, which is not officially supported by Sonatype. Please review the latest pull requests, issues, and commits to understand this project's readiness for contribution and use.
 
@@ -38,9 +76,8 @@ This project is part of the [Sonatype Nexus Community](https://github.com/sonaty
 
 Last but not least of all - have fun!
 
-<!-- Links Section -->
-[shield_gh-workflow-test]: https://img.shields.io/github/actions/workflow/status/sonatype-nexus-community/community-project-template/test.yml?branch=main&logo=GitHub&logoColor=white "build"
-[shield_license]: https://img.shields.io/github/license/sonatype-nexus-community/community-project-template?logo=open%20source%20initiative&logoColor=white "license"
+[shield_gh-workflow-test]: https://img.shields.io/github/actions/workflow/status/sonatype-nexus-community/terraform-provider-shared/test.yml?branch=main&logo=GitHub&logoColor=white "build"
+[shield_license]: https://img.shields.io/github/license/sonatype-nexus-community/terraform-provider-shared?logo=open%20source%20initiative&logoColor=white "license"
 
-[link_gh-workflow-test]: https://github.com/sonatype-nexus-community/community-project-template/actions/workflows/test.yml?query=branch%3Amain
-[license_file]: https://github.com/sonatype-nexus-community/community-project-template/blob/main/LICENSE
+[link_gh-workflow-test]: https://github.com/sonatype-nexus-community/terraform-provider-shared/actions/workflows/test.yml?query=branch%3Amain
+[license_file]: https://github.com/sonatype-nexus-community/terraform-provider-shared/blob/main/LICENSE
