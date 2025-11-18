@@ -20,56 +20,56 @@ import (
 	"testing"
 )
 
-func TestStandardID(t *testing.T) {
-	attr := StandardID()
+func TestResourceStandardID(t *testing.T) {
+	attr := ResourceStandardID()
 	if attr.GetDescription() != "Internal ID of the resource" || !attr.IsComputed() {
-		t.Fatal("StandardID should return a computed string attribute with correct description")
+		t.Fatal("ResourceStandardID should return a computed string attribute with correct description")
 	}
 }
 
-func TestTimestamp(t *testing.T) {
-	attr := Timestamp()
+func TestResourceTimestamp(t *testing.T) {
+	attr := ResourceTimestamp()
 	if !attr.IsComputed() {
-		t.Fatal("Timestamp should return a computed attribute")
+		t.Fatal("ResourceTimestamp should return a computed attribute")
 	}
 }
 
-func TestRequiredString(t *testing.T) {
-	attr := RequiredString("test description")
+func TestResourceRequiredString(t *testing.T) {
+	attr := ResourceRequiredString("test description")
 	if !attr.IsRequired() || attr.IsOptional() {
-		t.Fatal("RequiredString should return a required string attribute")
+		t.Fatal("ResourceRequiredString should return a required string attribute")
 	}
 	if attr.GetDescription() != "test description" {
-		t.Fatal("RequiredString should have the provided description")
+		t.Fatal("ResourceRequiredString should have the provided description")
 	}
 }
 
-func TestOptionalString(t *testing.T) {
-	attr := OptionalString("test description")
+func TestResourceOptionalString(t *testing.T) {
+	attr := ResourceOptionalString("test description")
 	if !attr.IsOptional() || attr.IsRequired() {
-		t.Fatal("OptionalString should return an optional string attribute")
+		t.Fatal("ResourceOptionalString should return an optional string attribute")
 	}
 }
 
-func TestSensitiveString(t *testing.T) {
-	attr := SensitiveString("password")
+func TestResourceSensitiveString(t *testing.T) {
+	attr := ResourceSensitiveString("password")
 	if !attr.IsOptional() {
-		t.Fatal("SensitiveString should return an optional attribute")
+		t.Fatal("ResourceSensitiveString should return an optional attribute")
 	}
 	// Note: We can't easily check Sensitive property without deeper inspection
 }
 
-func TestStringEnum(t *testing.T) {
-	attr := StringEnum("status", "active", "inactive", "pending")
+func TestResourceStringEnum(t *testing.T) {
+	attr := ResourceStringEnum("status", "active", "inactive", "pending")
 	if !attr.IsOptional() {
-		t.Fatal("StringEnum should return an optional attribute")
+		t.Fatal("ResourceStringEnum should return an optional attribute")
 	}
 }
 
-func TestStringEnumWithDefault(t *testing.T) {
-	attr := StringEnumWithDefault("status", "active", "active", "inactive")
+func TestResourceStringEnumWithDefault(t *testing.T) {
+	attr := ResourceStringEnumWithDefault("status", "active", "active", "inactive")
 	if !attr.IsOptional() || !attr.IsComputed() {
-		t.Fatal("StringEnumWithDefault should return optional and computed attribute")
+		t.Fatal("ResourceStringEnumWithDefault should return optional and computed attribute")
 	}
 }
 
