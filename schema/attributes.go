@@ -65,6 +65,15 @@ func ComputedString(description string) schema.StringAttribute {
 	}
 }
 
+// ComputedStringWithDefault returns a computed string attribute with a default value
+func ComputedStringWithDefault(description string, defaultValue string) schema.StringAttribute {
+	return schema.StringAttribute{
+		Description: description,
+		Computed:    true,
+		Default:     stringdefault.StaticString(defaultValue),
+	}
+}
+
 // SensitiveString returns an optional sensitive string attribute with the given description
 func SensitiveString(description string) schema.StringAttribute {
 	return schema.StringAttribute{

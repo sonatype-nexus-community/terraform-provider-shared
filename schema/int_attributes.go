@@ -45,6 +45,15 @@ func ComputedInt64(description string) schema.Int64Attribute {
 	}
 }
 
+// ComputedInt64WithDefault returns a computed int64 attribute with a default value
+func ComputedInt64WithDefault(description string, defaultValue int64) schema.Int64Attribute {
+	return schema.Int64Attribute{
+		Description: description,
+		Computed:    true,
+		Default:     int64default.StaticInt64(defaultValue),
+	}
+}
+
 // OptionalInt64WithDefault returns an optional int64 attribute with a default value
 func OptionalInt64WithDefault(description string, defaultValue int64) schema.Int64Attribute {
 	return schema.Int64Attribute{

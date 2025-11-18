@@ -45,6 +45,15 @@ func ComputedFloat64(description string) schema.Float64Attribute {
 	}
 }
 
+// ComputedFloat64WithDefault returns a computed float64 attribute with a default value
+func ComputedFloat64WithDefault(description string, defaultValue float64) schema.Float64Attribute {
+	return schema.Float64Attribute{
+		Description: description,
+		Computed:    true,
+		Default:     float64default.StaticFloat64(defaultValue),
+	}
+}
+
 // OptionalFloat64WithDefault returns an optional float64 attribute with a default value
 func OptionalFloat64WithDefault(description string, defaultValue float64) schema.Float64Attribute {
 	return schema.Float64Attribute{
