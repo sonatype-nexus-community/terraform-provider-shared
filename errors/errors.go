@@ -17,9 +17,15 @@
 package errors
 
 import (
+	"context"
+	"errors"
 	"fmt"
 	"io"
+	"log"
+	"net"
 	"net/http"
+	"reflect"
+	"syscall"
 
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 )
@@ -158,4 +164,77 @@ func IsClientError(statusCode int) bool {
 // IsServerError checks if the status code is a 5xx error
 func IsServerError(statusCode int) bool {
 	return statusCode >= 500 && statusCode < 600
+}
+
+// HandleAPIError processes API errors and detects network-related errors.
+// It adds the error to diagnostics with appropriate context.
+// This is useful for providers that need to distinguish between network errors
+// and API errors during resource operations.
+func HandleAPIError(message string, err *error, httpResponse *http.Response, respDiags *diag.Diagnostics) {
+	networkError, errorMessage := detectNetworkError(*err)
+	if networkError {
+		respDiags.AddError(
+			errorMessage,
+			fmt.Sprintf("Networking Error: %s (%v)", errorMessage, *err),
+		)
+	} else {
+		if httpResponse != nil {
+			respDiags.AddError(
+				message,
+				fmt.Sprintf("%s: %s: %s", *err, httpResponse.Status, extractResponseBody(httpResponse)),
+			)
+		} else {
+			respDiags.AddError(
+				message,
+				fmt.Sprintf("Unexpected Error: %v ('%s'): ", *err, reflect.TypeOf(*err)),
+			)
+		}
+	}
+}
+
+// HandleAPIWarning processes API warnings and adds them to diagnostics.
+// Use this for non-critical API issues that should be reported to the user.
+func HandleAPIWarning(message string, err *error, httpResponse *http.Response, respDiags *diag.Diagnostics) {
+	respDiags.AddWarning(
+		message,
+		fmt.Sprintf("%s: %s: %s", *err, httpResponse.Status, extractResponseBody(httpResponse)),
+	)
+}
+
+// detectNetworkError identifies if an error is network-related (as opposed to API-related)
+// It checks for specific error types like DNS errors, connection errors, and timeouts.
+func detectNetworkError(err error) (bool, string) {
+	// Check for specific error types
+	if opErr, ok := err.(*net.OpError); ok {
+		// Network operation error (dial, read, write, etc.)
+		return true, fmt.Sprintf("OpError: %s, %s", opErr.Op, opErr.Net)
+	}
+
+	if dnsErr, ok := err.(*net.DNSError); ok {
+		// DNS resolution error
+		return true, fmt.Sprintf("DNS Error: %v", dnsErr)
+	}
+
+	if errors.Is(err, context.DeadlineExceeded) {
+		// Timeout error
+		return true, fmt.Sprintf("Connection timed out: %v", err)
+	}
+
+	// General network error check
+	if errors.Is(err, syscall.ECONNREFUSED) {
+		return true, fmt.Sprintf("Connection refused: %v", err)
+	}
+
+	return false, ""
+}
+
+// extractResponseBody reads and returns the body from an HTTP response.
+// This is a helper function for error reporting.
+func extractResponseBody(httpResponse *http.Response) []byte {
+	body, _ := io.ReadAll(httpResponse.Body)
+	err := httpResponse.Body.Close()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	return body
 }
