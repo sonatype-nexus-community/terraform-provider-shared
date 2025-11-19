@@ -33,16 +33,16 @@ import (
 // ResourceStandardID returns a standard computed ID attribute
 func ResourceStandardID() resourceschema.StringAttribute {
 	return resourceschema.StringAttribute{
-		Description: "Internal ID of the resource",
-		Computed:    true,
+		MarkdownDescription: "Internal ID of the resource",
+		Computed:            true,
 	}
 }
 
 // ResourceLastUpdated returns a standard computed last updated attribute for tracking last updates
 func ResourceLastUpdated() resourceschema.StringAttribute {
 	return resourceschema.StringAttribute{
-		Description: "String representation of the date/time the resource was last changed",
-		Computed:    true,
+		MarkdownDescription: "String representation of the date/time the resource was last changed",
+		Computed:            true,
 	}
 }
 
@@ -154,9 +154,9 @@ func ResourceStringEnumWithDefault(description string, defaultValue string, enum
 // ResourceComputedOptionalString returns a computed optional string (persists state for unknown)
 func ResourceComputedOptionalString(description string) resourceschema.StringAttribute {
 	return newResourceStringAttribute(stringAttributeConfig{
-		description:   description,
-		optional:      true,
-		computed:      true,
+		description: description,
+		optional:    true,
+		computed:    true,
 		planModifiers: []planmodifier.String{
 			stringplanmodifier.UseStateForUnknown(),
 		},
@@ -166,8 +166,8 @@ func ResourceComputedOptionalString(description string) resourceschema.StringAtt
 // ResourceIDAttribute returns a string attribute commonly used for referencing other resources
 func ResourceIDAttribute(description string) resourceschema.StringAttribute {
 	return newResourceStringAttribute(stringAttributeConfig{
-		description:   description,
-		required:      true,
+		description: description,
+		required:    true,
 		planModifiers: []planmodifier.String{
 			stringplanmodifier.RequiresReplace(),
 		},

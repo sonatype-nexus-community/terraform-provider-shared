@@ -42,33 +42,33 @@ type collectionConfig struct {
 // newResourceListAttribute creates a list attribute from the given configuration
 func newResourceListAttribute(config collectionConfig) resourceschema.ListAttribute {
 	return resourceschema.ListAttribute{
-		Description: config.description,
-		ElementType: config.elementType,
-		Required:    config.required,
-		Optional:    config.optional,
-		Computed:    config.computed,
+		MarkdownDescription: config.description,
+		ElementType:         config.elementType,
+		Required:            config.required,
+		Optional:            config.optional,
+		Computed:            config.computed,
 	}
 }
 
 // newResourceMapAttribute creates a map attribute from the given configuration
 func newResourceMapAttribute(config collectionConfig) resourceschema.MapAttribute {
 	return resourceschema.MapAttribute{
-		Description: config.description,
-		ElementType: config.elementType,
-		Required:    config.required,
-		Optional:    config.optional,
-		Computed:    config.computed,
+		MarkdownDescription: config.description,
+		ElementType:         config.elementType,
+		Required:            config.required,
+		Optional:            config.optional,
+		Computed:            config.computed,
 	}
 }
 
 // newResourceSetAttribute creates a set attribute from the given configuration
 func newResourceSetAttribute(config collectionConfig) resourceschema.SetAttribute {
 	return resourceschema.SetAttribute{
-		Description: config.description,
-		ElementType: config.elementType,
-		Required:    config.required,
-		Optional:    config.optional,
-		Computed:    config.computed,
+		MarkdownDescription: config.description,
+		ElementType:         config.elementType,
+		Required:            config.required,
+		Optional:            config.optional,
+		Computed:            config.computed,
 	}
 }
 
@@ -79,29 +79,29 @@ func newResourceSetAttribute(config collectionConfig) resourceschema.SetAttribut
 // newDataSourceListAttribute creates a list attribute from the given configuration for data sources
 func newDataSourceListAttribute(config collectionConfig) datasourceschema.ListAttribute {
 	return datasourceschema.ListAttribute{
-		Description: config.description,
-		ElementType: config.elementType,
-		Optional:    config.optional,
-		Computed:    config.computed,
+		MarkdownDescription: config.description,
+		ElementType:         config.elementType,
+		Optional:            config.optional,
+		Computed:            config.computed,
 	}
 }
 
 // newDataSourceMapAttribute creates a map attribute from the given configuration for data sources
 func newDataSourceMapAttribute(config collectionConfig) datasourceschema.MapAttribute {
 	return datasourceschema.MapAttribute{
-		Description: config.description,
-		ElementType: config.elementType,
-		Optional:    config.optional,
-		Computed:    config.computed,
+		MarkdownDescription: config.description,
+		ElementType:         config.elementType,
+		Optional:            config.optional,
+		Computed:            config.computed,
 	}
 }
 
 // newDataSourceSetAttribute creates a set attribute from the given configuration for data sources
 func newDataSourceSetAttribute(config collectionConfig) datasourceschema.SetAttribute {
 	return datasourceschema.SetAttribute{
-		Description: config.description,
-		ElementType: config.elementType,
-		Optional:    config.optional,
-		Computed:    config.computed,
+		MarkdownDescription: config.description,
+		ElementType:         config.elementType,
+		Optional:            config.optional,
+		Computed:            config.computed,
 	}
 }

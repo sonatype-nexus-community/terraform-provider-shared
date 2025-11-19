@@ -43,11 +43,11 @@ type stringAttributeConfig struct {
 // newResourceStringAttribute creates a resource string attribute from config
 func newResourceStringAttribute(config stringAttributeConfig) resourceschema.StringAttribute {
 	attr := resourceschema.StringAttribute{
-		Description: config.description,
-		Required:    config.required,
-		Optional:    config.optional,
-		Computed:    config.computed,
-		Sensitive:   config.sensitive,
+		MarkdownDescription: config.description,
+		Required:            config.required,
+		Optional:            config.optional,
+		Computed:            config.computed,
+		Sensitive:           config.sensitive,
 	}
 	if config.defaultValue != nil {
 		attr.Default = config.defaultValue
@@ -64,10 +64,10 @@ func newResourceStringAttribute(config stringAttributeConfig) resourceschema.Str
 // newDataSourceStringAttribute creates a datasource string attribute from config
 func newDataSourceStringAttribute(config stringAttributeConfig) datasourceschema.StringAttribute {
 	attr := datasourceschema.StringAttribute{
-		Description: config.description,
-		Optional:    config.optional,
-		Computed:    config.computed,
-		Sensitive:   config.sensitive,
+		MarkdownDescription: config.description,
+		Optional:            config.optional,
+		Computed:            config.computed,
+		Sensitive:           config.sensitive,
 	}
 	if len(config.validators) > 0 {
 		attr.Validators = config.validators
@@ -92,10 +92,10 @@ type boolAttributeConfig struct {
 // newResourceBoolAttribute creates a resource bool attribute from config
 func newResourceBoolAttribute(config boolAttributeConfig) resourceschema.BoolAttribute {
 	attr := resourceschema.BoolAttribute{
-		Description: config.description,
-		Required:    config.required,
-		Optional:    config.optional,
-		Computed:    config.computed,
+		MarkdownDescription: config.description,
+		Required:            config.required,
+		Optional:            config.optional,
+		Computed:            config.computed,
 	}
 	if config.defaultValue != nil {
 		attr.Default = config.defaultValue
@@ -109,9 +109,9 @@ func newResourceBoolAttribute(config boolAttributeConfig) resourceschema.BoolAtt
 // newDataSourceBoolAttribute creates a datasource bool attribute from config
 func newDataSourceBoolAttribute(config boolAttributeConfig) datasourceschema.BoolAttribute {
 	return datasourceschema.BoolAttribute{
-		Description: config.description,
-		Optional:    config.optional,
-		Computed:    config.computed,
+		MarkdownDescription: config.description,
+		Optional:            config.optional,
+		Computed:            config.computed,
 	}
 }
 
@@ -132,10 +132,10 @@ type int64AttributeConfig struct {
 // newResourceInt64Attribute creates a resource int64 attribute from config
 func newResourceInt64Attribute(config int64AttributeConfig) resourceschema.Int64Attribute {
 	attr := resourceschema.Int64Attribute{
-		Description: config.description,
-		Required:    config.required,
-		Optional:    config.optional,
-		Computed:    config.computed,
+		MarkdownDescription: config.description,
+		Required:            config.required,
+		Optional:            config.optional,
+		Computed:            config.computed,
 	}
 	if config.defaultValue != nil {
 		attr.Default = config.defaultValue
@@ -149,9 +149,9 @@ func newResourceInt64Attribute(config int64AttributeConfig) resourceschema.Int64
 // newDataSourceInt64Attribute creates a datasource int64 attribute from config
 func newDataSourceInt64Attribute(config int64AttributeConfig) datasourceschema.Int64Attribute {
 	attr := datasourceschema.Int64Attribute{
-		Description: config.description,
-		Optional:    config.optional,
-		Computed:    config.computed,
+		MarkdownDescription: config.description,
+		Optional:            config.optional,
+		Computed:            config.computed,
 	}
 	if len(config.validators) > 0 {
 		attr.Validators = config.validators
@@ -176,10 +176,10 @@ type float64AttributeConfig struct {
 // newResourceFloat64Attribute creates a resource float64 attribute from config
 func newResourceFloat64Attribute(config float64AttributeConfig) resourceschema.Float64Attribute {
 	attr := resourceschema.Float64Attribute{
-		Description: config.description,
-		Required:    config.required,
-		Optional:    config.optional,
-		Computed:    config.computed,
+		MarkdownDescription: config.description,
+		Required:            config.required,
+		Optional:            config.optional,
+		Computed:            config.computed,
 	}
 	if config.defaultValue != nil {
 		attr.Default = config.defaultValue
@@ -193,9 +193,9 @@ func newResourceFloat64Attribute(config float64AttributeConfig) resourceschema.F
 // newDataSourceFloat64Attribute creates a datasource float64 attribute from config
 func newDataSourceFloat64Attribute(config float64AttributeConfig) datasourceschema.Float64Attribute {
 	attr := datasourceschema.Float64Attribute{
-		Description: config.description,
-		Optional:    config.optional,
-		Computed:    config.computed,
+		MarkdownDescription: config.description,
+		Optional:            config.optional,
+		Computed:            config.computed,
 	}
 	if len(config.validators) > 0 {
 		attr.Validators = config.validators
