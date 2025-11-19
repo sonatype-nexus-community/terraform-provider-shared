@@ -218,6 +218,81 @@ func OptionalStringWithRegexAndLength(description string, pattern *regexp.Regexp
 
 // Integer Attribute Validators
 
+// RequiredInt32WithRange returns a required int32 attribute with range validation
+// Note: int32 values are wrapped as int64 internally
+func RequiredInt32WithRange(description string, minValue, maxValue int32) schema.Int64Attribute {
+	return schema.Int64Attribute{
+		MarkdownDescription: description,
+		Required:    true,
+		Validators: []validator.Int64{
+			int64validator.Between(int64(minValue), int64(maxValue)),
+		},
+	}
+}
+
+// OptionalInt32WithRange returns an optional int32 attribute with range validation
+func OptionalInt32WithRange(description string, minValue, maxValue int32) schema.Int64Attribute {
+	return schema.Int64Attribute{
+		MarkdownDescription: description,
+		Optional:    true,
+		Validators: []validator.Int64{
+			int64validator.Between(int64(minValue), int64(maxValue)),
+		},
+	}
+}
+
+// ComputedInt32WithRange returns a computed int32 attribute with range validation
+func ComputedInt32WithRange(description string, minValue, maxValue int32) schema.Int64Attribute {
+	return schema.Int64Attribute{
+		MarkdownDescription: description,
+		Computed:    true,
+		Validators: []validator.Int64{
+			int64validator.Between(int64(minValue), int64(maxValue)),
+		},
+	}
+}
+
+// Int32WithValidators returns a required int32 attribute with custom validators
+func Int32WithValidators(description string, validators ...validator.Int64) schema.Int64Attribute {
+	attr := schema.Int64Attribute{
+		MarkdownDescription: description,
+		Required:    true,
+	}
+	if len(validators) > 0 {
+		attr.Validators = validators
+	}
+	return attr
+}
+
+// OptionalInt32WithValidators returns an optional int32 attribute with custom validators
+func OptionalInt32WithValidators(description string, validators ...validator.Int64) schema.Int64Attribute {
+	attr := schema.Int64Attribute{
+		MarkdownDescription: description,
+		Optional:    true,
+	}
+	if len(validators) > 0 {
+		attr.Validators = validators
+	}
+	return attr
+}
+
+// RequiredInt32WithValidators returns a required int32 attribute with custom validators
+func RequiredInt32WithValidators(description string, validators ...validator.Int64) schema.Int64Attribute {
+	return Int32WithValidators(description, validators...)
+}
+
+// ComputedInt32WithValidators returns a computed int32 attribute with custom validators
+func ComputedInt32WithValidators(description string, validators ...validator.Int64) schema.Int64Attribute {
+	attr := schema.Int64Attribute{
+		MarkdownDescription: description,
+		Computed:    true,
+	}
+	if len(validators) > 0 {
+		attr.Validators = validators
+	}
+	return attr
+}
+
 // RequiredInt64WithRange returns a required int64 attribute with range validation
 func RequiredInt64WithRange(description string, minValue, maxValue int64) schema.Int64Attribute {
 	return schema.Int64Attribute{

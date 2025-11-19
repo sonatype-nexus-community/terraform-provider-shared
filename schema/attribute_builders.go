@@ -160,6 +160,51 @@ func newDataSourceInt64Attribute(config int64AttributeConfig) datasourceschema.I
 }
 
 // ========================================
+// Int32 Attribute Configuration
+// ========================================
+
+// int32AttributeConfig holds configuration for int32 attribute builders
+// Note: int32 attributes use Int64Attribute internally since Terraform doesn't have a native Int32Type
+type int32AttributeConfig struct {
+	description  string
+	required     bool
+	optional     bool
+	computed     bool
+	defaultValue defaults.Int64
+	validators   []validator.Int64
+}
+
+// newResourceInt32Attribute creates a resource int32 attribute from config
+func newResourceInt32Attribute(config int32AttributeConfig) resourceschema.Int64Attribute {
+	attr := resourceschema.Int64Attribute{
+		MarkdownDescription: config.description,
+		Required:            config.required,
+		Optional:            config.optional,
+		Computed:            config.computed,
+	}
+	if config.defaultValue != nil {
+		attr.Default = config.defaultValue
+	}
+	if len(config.validators) > 0 {
+		attr.Validators = config.validators
+	}
+	return attr
+}
+
+// newDataSourceInt32Attribute creates a datasource int32 attribute from config
+func newDataSourceInt32Attribute(config int32AttributeConfig) datasourceschema.Int64Attribute {
+	attr := datasourceschema.Int64Attribute{
+		MarkdownDescription: config.description,
+		Optional:            config.optional,
+		Computed:            config.computed,
+	}
+	if len(config.validators) > 0 {
+		attr.Validators = config.validators
+	}
+	return attr
+}
+
+// ========================================
 // Float64 Attribute Configuration
 // ========================================
 

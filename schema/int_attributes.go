@@ -78,9 +78,9 @@ func ResourceRequiredInt64WithDefault(description string, defaultValue int64) re
 	})
 }
 
-// NOTE: Int32 values are handled using the Int64 functions below.
-// Terraform's plugin framework uses Int64Type for all integer attributes.
-// When working with int32 values, convert them using int64() and use the Int64 functions.
+// NOTE: Int32 values have dedicated helpers in int32_attributes.go.
+// Terraform's plugin framework uses Int64Type for all integer attributes,
+// so int32 values are wrapped as int64 internally.
 
 // ResourceOptionalPort returns an optional int64 attribute for network ports (0-65535)
 func ResourceOptionalPort(description string) resourceschema.Int64Attribute {

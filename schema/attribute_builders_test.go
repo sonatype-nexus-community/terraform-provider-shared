@@ -81,6 +81,26 @@ func TestNewDataSourceInt64Attribute(t *testing.T) {
 	}
 }
 
+func TestNewResourceInt32Attribute(t *testing.T) {
+	attr := newResourceInt32Attribute(int32AttributeConfig{
+		description: "test",
+		required:    true,
+	})
+	if !attr.IsRequired() {
+		t.Fatal("newResourceInt32Attribute with required:true should return required attribute")
+	}
+}
+
+func TestNewDataSourceInt32Attribute(t *testing.T) {
+	attr := newDataSourceInt32Attribute(int32AttributeConfig{
+		description: "test",
+		optional:    true,
+	})
+	if !attr.IsOptional() {
+		t.Fatal("newDataSourceInt32Attribute with optional:true should return optional attribute")
+	}
+}
+
 func TestNewResourceFloat64Attribute(t *testing.T) {
 	attr := newResourceFloat64Attribute(float64AttributeConfig{
 		description: "test",
