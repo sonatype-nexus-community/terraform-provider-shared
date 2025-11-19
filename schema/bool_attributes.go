@@ -92,6 +92,59 @@ func ResourceComputedBoolWithDefault(description string, defaultValue bool) reso
 	})
 }
 
+// ResourceComputedOptionalBoolWithDefault returns a computed optional boolean with a default value
+// (combines optional+computed flags with a static default)
+func ResourceComputedOptionalBoolWithDefault(description string, defaultValue bool) resourceschema.BoolAttribute {
+	return newResourceBoolAttribute(boolAttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: booldefault.StaticBool(defaultValue),
+	})
+}
+
+// ResourceOptionalBoolWithPlanModifier returns an optional boolean attribute with plan modifiers
+// (useful for attributes that need custom plan modification logic)
+func ResourceOptionalBoolWithPlanModifier(description string, planMods ...planmodifier.Bool) resourceschema.BoolAttribute {
+	return newResourceBoolAttribute(boolAttributeConfig{
+		description:   description,
+		optional:      true,
+		planModifiers: planMods,
+	})
+}
+
+// ResourceOptionalBoolWithDefaultAndPlanModifier returns an optional boolean attribute with default and plan modifiers
+func ResourceOptionalBoolWithDefaultAndPlanModifier(description string, defaultValue bool, planMods ...planmodifier.Bool) resourceschema.BoolAttribute {
+	return newResourceBoolAttribute(boolAttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		defaultValue:  booldefault.StaticBool(defaultValue),
+		planModifiers: planMods,
+	})
+}
+
+// ResourceComputedOptionalBoolWithPlanModifier returns a computed optional boolean with plan modifiers
+func ResourceComputedOptionalBoolWithPlanModifier(description string, planMods ...planmodifier.Bool) resourceschema.BoolAttribute {
+	return newResourceBoolAttribute(boolAttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		planModifiers: planMods,
+	})
+}
+
+// ResourceComputedOptionalBoolWithDefaultAndPlanModifier returns a computed optional boolean with default and plan modifiers
+func ResourceComputedOptionalBoolWithDefaultAndPlanModifier(description string, defaultValue bool, planMods ...planmodifier.Bool) resourceschema.BoolAttribute {
+	return newResourceBoolAttribute(boolAttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		defaultValue:  booldefault.StaticBool(defaultValue),
+		planModifiers: planMods,
+	})
+}
+
 // ========================================
 // Data Source Schema Functions
 // ========================================
