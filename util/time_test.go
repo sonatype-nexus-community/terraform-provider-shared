@@ -114,3 +114,34 @@ func TestUnixTimestampConversions(t *testing.T) {
 		t.Fatalf("Round-trip conversion failed: %d != %d", unix, unix2)
 	}
 }
+
+func TestFormatTimestamp(t *testing.T) {
+	now := time.Now()
+	formatted := FormatTimestamp(now)
+	if formatted == "" {
+		t.Fatal("FormatTimestamp should not return empty string")
+	}
+
+	// Verify it's parseable
+	parsed, err := ParseTimestamp(formatted)
+	if err != nil {
+		t.Fatalf("FormatTimestamp should return valid format: %v", err)
+	}
+
+	// Check that parsed time is within a second of original
+	diff := parsed.Sub(now)
+	if diff < 0 {
+		diff = -diff
+	}
+	if diff > time.Second {
+		t.Fatalf("Parsed time differs from original by %v", diff)
+	}
+}
+
+func TestStringToUnixTimestampError(t *testing.T) {
+	// Test with invalid input
+	_, err := StringToUnixTimestamp("not-a-number")
+	if err == nil {
+		t.Fatal("StringToUnixTimestamp should error on invalid input")
+	}
+}

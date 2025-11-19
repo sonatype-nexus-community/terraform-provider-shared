@@ -17,8 +17,15 @@
 package errors
 
 import (
+	"bytes"
+	"context"
+	"io"
+	"net"
 	"net/http"
+	"syscall"
 	"testing"
+
+	"github.com/hashicorp/terraform-plugin-framework/diag"
 )
 
 func TestAPIError(t *testing.T) {
@@ -160,16 +167,194 @@ func TestIsServerError(t *testing.T) {
 func TestParseAPIError(t *testing.T) {
 	// Test with nil response
 	result := ParseAPIError(nil)
-	if result == "" {
-		t.Fatal("ParseAPIError(nil) should return a string")
+	if result != "Unknown error" {
+		t.Fatalf("ParseAPIError(nil) should return 'Unknown error', got %s", result)
 	}
 
-	// Test with HTTP response
+	// Test with HTTP response without body
 	resp := &http.Response{
 		Status: "400 Bad Request",
+		Body:   io.NopCloser(bytes.NewReader([]byte(""))),
 	}
 	result = ParseAPIError(resp)
 	if result != "400 Bad Request" {
 		t.Fatalf("ParseAPIError failed: got %s", result)
 	}
+
+	// Test with HTTP response with body
+	resp = &http.Response{
+		Status: "500 Internal Server Error",
+		Body:   io.NopCloser(bytes.NewReader([]byte("Server error details"))),
+	}
+	result = ParseAPIError(resp)
+	if result != "500 Internal Server Error: Server error details" {
+		t.Fatalf("ParseAPIError with body failed: got %s", result)
+	}
+}
+
+func TestAddAPIErrorDiagnostic(t *testing.T) {
+	diags := diag.Diagnostics{}
+	resp := &http.Response{
+		Status: "400 Bad Request",
+		Body:   io.NopCloser(bytes.NewReader([]byte(""))),
+	}
+
+	AddAPIErrorDiagnostic(&diags, "creating", "User", resp, nil)
+	if !diags.HasError() {
+		t.Fatal("AddAPIErrorDiagnostic should add an error to diagnostics")
+	}
+
+	// Test with error
+	diags = diag.Diagnostics{}
+	testErr := &net.OpError{Op: "dial", Net: "tcp"}
+	AddAPIErrorDiagnostic(&diags, "creating", "User", resp, testErr)
+	if !diags.HasError() {
+		t.Fatal("AddAPIErrorDiagnostic should add an error to diagnostics")
+	}
+}
+
+func TestAddNotFoundDiagnostic(t *testing.T) {
+	diags := diag.Diagnostics{}
+	AddNotFoundDiagnostic(&diags, "User", "user123")
+	if !diags.HasError() {
+		t.Fatal("AddNotFoundDiagnostic should add an error to diagnostics")
+	}
+}
+
+func TestAddValidationDiagnostic(t *testing.T) {
+	diags := diag.Diagnostics{}
+	AddValidationDiagnostic(&diags, "email", "must be valid")
+	if !diags.HasError() {
+		t.Fatal("AddValidationDiagnostic should add an error to diagnostics")
+	}
+}
+
+func TestAddConflictDiagnostic(t *testing.T) {
+	diags := diag.Diagnostics{}
+	AddConflictDiagnostic(&diags, "User", "already exists")
+	if !diags.HasError() {
+		t.Fatal("AddConflictDiagnostic should add an error to diagnostics")
+	}
+}
+
+func TestAddUnauthorizedDiagnostic(t *testing.T) {
+	diags := diag.Diagnostics{}
+	AddUnauthorizedDiagnostic(&diags, "create user")
+	if !diags.HasError() {
+		t.Fatal("AddUnauthorizedDiagnostic should add an error to diagnostics")
+	}
+}
+
+func TestAddTimeoutDiagnostic(t *testing.T) {
+	diags := diag.Diagnostics{}
+	AddTimeoutDiagnostic(&diags, "creating", "User")
+	if !diags.HasError() {
+		t.Fatal("AddTimeoutDiagnostic should add an error to diagnostics")
+	}
+}
+
+func TestDetectNetworkError_OpError(t *testing.T) {
+	opErr := &net.OpError{Op: "dial", Net: "tcp"}
+	isNet, msg := detectNetworkError(opErr)
+	if !isNet {
+		t.Fatal("detectNetworkError should return true for OpError")
+	}
+	if msg == "" {
+		t.Fatal("detectNetworkError should return a non-empty message for OpError")
+	}
+}
+
+func TestDetectNetworkError_DNSError(t *testing.T) {
+	dnsErr := &net.DNSError{Err: "name resolution failed"}
+	isNet, msg := detectNetworkError(dnsErr)
+	if !isNet {
+		t.Fatal("detectNetworkError should return true for DNSError")
+	}
+	if msg == "" {
+		t.Fatal("detectNetworkError should return a non-empty message for DNSError")
+	}
+}
+
+func TestDetectNetworkError_DeadlineExceeded(t *testing.T) {
+	isNet, msg := detectNetworkError(context.DeadlineExceeded)
+	if !isNet {
+		t.Fatal("detectNetworkError should return true for DeadlineExceeded")
+	}
+	if msg == "" {
+		t.Fatal("detectNetworkError should return a non-empty message for DeadlineExceeded")
+	}
+}
+
+func TestDetectNetworkError_ECONNREFUSED(t *testing.T) {
+	isNet, msg := detectNetworkError(syscall.ECONNREFUSED)
+	if !isNet {
+		t.Fatal("detectNetworkError should return true for ECONNREFUSED")
+	}
+	if msg == "" {
+		t.Fatal("detectNetworkError should return a non-empty message for ECONNREFUSED")
+	}
+}
+
+func TestDetectNetworkError_NonNetworkError(t *testing.T) {
+	isNet, msg := detectNetworkError(new(struct{ error }))
+	if isNet {
+		t.Fatal("detectNetworkError should return false for non-network errors")
+	}
+	if msg != "" {
+		t.Fatalf("detectNetworkError should return empty string for non-network error, got %s", msg)
+	}
+}
+
+func TestHandleAPIError_NetworkError(t *testing.T) {
+	diags := diag.Diagnostics{}
+	var err error = &net.OpError{Op: "dial", Net: "tcp"}
+	resp := &http.Response{
+		Status: "500 Internal Server Error",
+		Body:   io.NopCloser(bytes.NewReader([]byte(""))),
+	}
+
+	HandleAPIError("Test Error", &err, resp, &diags)
+	if !diags.HasError() {
+		t.Fatal("HandleAPIError should add an error to diagnostics")
+	}
+}
+
+func TestHandleAPIError_APIError(t *testing.T) {
+	diags := diag.Diagnostics{}
+	var err error
+	resp := &http.Response{
+		Status: "400 Bad Request",
+		Body:   io.NopCloser(bytes.NewReader([]byte("Invalid request"))),
+	}
+
+	HandleAPIError("Test Error", &err, resp, &diags)
+	if !diags.HasError() {
+		t.Fatal("HandleAPIError should add an error to diagnostics")
+	}
+}
+
+func TestHandleAPIError_NoResponse(t *testing.T) {
+	diags := diag.Diagnostics{}
+	var err error
+
+	HandleAPIError("Test Error", &err, nil, &diags)
+	if !diags.HasError() {
+		t.Fatal("HandleAPIError should add an error to diagnostics")
+	}
+}
+
+func TestHandleAPIWarning(t *testing.T) {
+	diags := diag.Diagnostics{}
+	testErr := new(struct {
+		msg string
+	})
+	var err error
+	resp := &http.Response{
+		Status: "200 OK",
+		Body:   io.NopCloser(bytes.NewReader([]byte("Warning message"))),
+	}
+
+	HandleAPIWarning("Test Warning", &err, resp, &diags)
+	// The function should have been called without panicking
+	_ = testErr
 }

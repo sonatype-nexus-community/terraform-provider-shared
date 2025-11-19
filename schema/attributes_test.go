@@ -92,3 +92,74 @@ func TestStandardResourceAttributes(t *testing.T) {
 		t.Fatal("StandardResourceAttributes should include 'last_updated'")
 	}
 }
+
+func TestResourceComputedStringFunc(t *testing.T) {
+	attr := ResourceComputedString("computed description")
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedString should return a computed attribute")
+	}
+}
+
+func TestResourceComputedStringWithDefaultFunc(t *testing.T) {
+	attr := ResourceComputedStringWithDefault("description", "default")
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedStringWithDefault should return a computed attribute")
+	}
+}
+
+func TestDataSourceComputedStringFunc(t *testing.T) {
+	attr := DataSourceComputedString("description")
+	if !attr.IsComputed() {
+		t.Fatal("DataSourceComputedString should return a computed attribute")
+	}
+}
+
+func TestDataSourceOptionalStringFunc(t *testing.T) {
+	attr := DataSourceOptionalString("optional description")
+	if !attr.IsOptional() {
+		t.Fatal("DataSourceOptionalString should return an optional attribute")
+	}
+}
+
+func TestNamedResourceAttributesFunc(t *testing.T) {
+	attrs := NamedResourceAttributes()
+	if len(attrs) == 0 {
+		t.Fatal("NamedResourceAttributes should return at least one attribute")
+	}
+}
+
+func TestIdentityResourceAttributesFunc(t *testing.T) {
+	attrs := IdentityResourceAttributes()
+	if len(attrs) == 0 {
+		t.Fatal("IdentityResourceAttributes should return at least one attribute")
+	}
+}
+
+func TestOwnershipResourceAttributesFunc(t *testing.T) {
+	attrs := OwnershipResourceAttributes()
+	if len(attrs) == 0 {
+		t.Fatal("OwnershipResourceAttributes should return at least one attribute")
+	}
+}
+
+func TestAuditableResourceAttributesFunc(t *testing.T) {
+	attrs := AuditableResourceAttributes()
+	if len(attrs) == 0 {
+		t.Fatal("AuditableResourceAttributes should return at least one attribute")
+	}
+}
+
+func TestDataSourceIDAttributeFunc(t *testing.T) {
+	attr := DataSourceIDAttribute()
+	// DataSourceIDAttribute returns a single StringAttribute, not a map
+	if attr.GetDescription() == "" && !attr.IsComputed() {
+		t.Fatal("DataSourceIDAttribute should return a valid attribute")
+	}
+}
+
+func TestSourceAndReadOnlyAttributesFunc(t *testing.T) {
+	attrs := SourceAndReadOnlyAttributes()
+	if len(attrs) == 0 {
+		t.Fatal("SourceAndReadOnlyAttributes should return at least one attribute")
+	}
+}
