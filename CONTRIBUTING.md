@@ -38,6 +38,73 @@ go vet ./...
 golangci-lint run ./...
 ```
 
+## GitHub Actions Checks
+
+All pull requests are automatically checked by GitHub Actions. The following checks must pass before merging:
+
+### 1. Tests with Coverage Verification
+
+- Runs all tests with coverage tracking
+- **Requirement**: Test coverage must be at least 60%
+- **Local equivalent**:
+  ```bash
+  go test -v -coverprofile=coverage.out -timeout=5m ./...
+  go tool cover -func=coverage.out | grep total
+  ```
+
+### 2. Code Formatting (go fmt)
+
+- Ensures all code is properly formatted according to Go standards
+- **Local equivalent**:
+  ```bash
+  go fmt ./...
+  ```
+  Note: If `go fmt` makes changes, commit those changes before pushing.
+
+### 3. Vet Analysis (go vet)
+
+- Catches common coding mistakes and suspicious constructs
+- **Local equivalent**:
+  ```bash
+  go vet ./...
+  ```
+
+### 4. Sonatype Lifecycle Scan
+
+- Performs security and supply chain analysis
+- Only runs on push to main and tags
+- Verifies dependencies for known vulnerabilities
+
+## Pre-Submission Checklist
+
+Before submitting a pull request, ensure:
+
+1. All tests pass locally:
+   ```bash
+   go test -v -timeout=5m ./...
+   ```
+
+2. Coverage is at least 60%:
+   ```bash
+   go test -coverprofile=coverage.out ./...
+   go tool cover -func=coverage.out | grep total
+   ```
+
+3. Code is properly formatted:
+   ```bash
+   go fmt ./...
+   ```
+
+4. No vet issues:
+   ```bash
+   go vet ./...
+   ```
+
+5. Commit messages follow the format:
+   - Use `-S` flag for signing commits: `git commit -S`
+   - Use `-s` flag for DCO: `git commit -s`
+   - Use `-m` with a clear message: `git commit -m 'Clear description of changes'`
+
 ## Guidelines
 
 - Ensure all tests pass before submitting a PR
