@@ -68,7 +68,8 @@ func Int32ToPtr(i int32) *int32 {
 	return &i
 }
 
-// Int32PtrToValue converts a pointer to int32 to a types.Int64 value (int32 stored as int64)
+// Int32PtrToValue converts a pointer to int32 to a types.Int64 value.
+// NOTE: Values are stored as int64 since Terraform's plugin framework uses Int64Type.
 func Int32PtrToValue(i *int32) types.Int64 {
 	if i == nil {
 		return types.Int64Null()

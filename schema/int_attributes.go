@@ -28,167 +28,136 @@ import (
 
 // ResourceRequiredInt64 returns a required int64 attribute
 func ResourceRequiredInt64(description string) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Required:    true,
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description: description,
+		required:    true,
+	})
 }
 
 // ResourceOptionalInt64 returns an optional int64 attribute
 func ResourceOptionalInt64(description string) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Optional:    true,
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description: description,
+		optional:    true,
+	})
 }
 
 // ResourceComputedInt64 returns a computed int64 attribute
 func ResourceComputedInt64(description string) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Computed:    true,
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description: description,
+		computed:    true,
+	})
 }
 
 // ResourceComputedInt64WithDefault returns a computed int64 attribute with a default value
 func ResourceComputedInt64WithDefault(description string, defaultValue int64) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Computed:    true,
-		Default:     int64default.StaticInt64(defaultValue),
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description:  description,
+		computed:     true,
+		defaultValue: int64default.StaticInt64(defaultValue),
+	})
 }
 
 // ResourceOptionalInt64WithDefault returns an optional int64 attribute with a default value
 func ResourceOptionalInt64WithDefault(description string, defaultValue int64) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Optional:    true,
-		Computed:    true,
-		Default:     int64default.StaticInt64(defaultValue),
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: int64default.StaticInt64(defaultValue),
+	})
 }
 
 // ResourceRequiredInt64WithDefault returns a required int64 attribute with a default value
 func ResourceRequiredInt64WithDefault(description string, defaultValue int64) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Required:    true,
-		Default:     int64default.StaticInt64(defaultValue),
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description:  description,
+		required:     true,
+		defaultValue: int64default.StaticInt64(defaultValue),
+	})
 }
 
-// ResourceRequiredInt32 returns a required int32 attribute
-func ResourceRequiredInt32(description string) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Required:    true,
-	}
-}
-
-// ResourceOptionalInt32 returns an optional int32 attribute
-func ResourceOptionalInt32(description string) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Optional:    true,
-	}
-}
-
-// ResourceOptionalInt32WithDefault returns an optional int32 attribute with a default value
-func ResourceOptionalInt32WithDefault(description string, defaultValue int32) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Optional:    true,
-		Computed:    true,
-		Default:     int64default.StaticInt64(int64(defaultValue)),
-	}
-}
-
-// ResourceRequiredInt32WithDefault returns a required int32 attribute with a default value
-func ResourceRequiredInt32WithDefault(description string, defaultValue int32) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Required:    true,
-		Default:     int64default.StaticInt64(int64(defaultValue)),
-	}
-}
+// NOTE: Int32 values are handled using the Int64 functions below.
+// Terraform's plugin framework uses Int64Type for all integer attributes.
+// When working with int32 values, convert them using int64() and use the Int64 functions.
 
 // ResourceOptionalPort returns an optional int64 attribute for network ports (0-65535)
 func ResourceOptionalPort(description string) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Optional:    true,
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description: description,
+		optional:    true,
+	})
 }
 
 // ResourceRequiredPort returns a required int64 attribute for network ports (0-65535)
 func ResourceRequiredPort(description string) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Required:    true,
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description: description,
+		required:    true,
+	})
 }
 
 // ResourcePortWithDefault returns a port attribute with a default value
 func ResourcePortWithDefault(description string, defaultValue int64) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Optional:    true,
-		Computed:    true,
-		Default:     int64default.StaticInt64(defaultValue),
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: int64default.StaticInt64(defaultValue),
+	})
 }
 
 // ResourcePercentageInt returns a percentage as int64 (0-100)
 func ResourcePercentageInt(description string) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Optional:    true,
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description: description,
+		optional:    true,
+	})
 }
 
 // ResourceRequiredPercentageInt returns a required percentage as int64 (0-100)
 func ResourceRequiredPercentageInt(description string) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Required:    true,
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description: description,
+		required:    true,
+	})
 }
 
 // ResourceDurationInt returns a duration in seconds as int64
 func ResourceDurationInt(description string) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Optional:    true,
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description: description,
+		optional:    true,
+	})
 }
 
 // ResourceRequiredDurationInt returns a required duration in seconds as int64
 func ResourceRequiredDurationInt(description string) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Required:    true,
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description: description,
+		required:    true,
+	})
 }
 
 // ResourceTimeoutInt returns a timeout duration in seconds as int64
 func ResourceTimeoutInt(description string, defaultSeconds int64) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Optional:    true,
-		Computed:    true,
-		Default:     int64default.StaticInt64(defaultSeconds),
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: int64default.StaticInt64(defaultSeconds),
+	})
 }
 
 // ResourceCountInt returns a count attribute as int64
 func ResourceCountInt(description string) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
-		Description: description,
-		Optional:    true,
-		Computed:    true,
-		Default:     int64default.StaticInt64(0),
-	}
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: int64default.StaticInt64(0),
+	})
 }
 
 // ========================================
@@ -197,16 +166,16 @@ func ResourceCountInt(description string) resourceschema.Int64Attribute {
 
 // DataSourceComputedInt64 returns a computed int64 attribute for data sources
 func DataSourceComputedInt64(description string) datasourceschema.Int64Attribute {
-	return datasourceschema.Int64Attribute{
-		Description: description,
-		Computed:    true,
-	}
+	return newDataSourceInt64Attribute(int64AttributeConfig{
+		description: description,
+		computed:    true,
+	})
 }
 
 // DataSourceOptionalInt64 returns an optional int64 attribute for data sources
 func DataSourceOptionalInt64(description string) datasourceschema.Int64Attribute {
-	return datasourceschema.Int64Attribute{
-		Description: description,
-		Optional:    true,
-	}
+	return newDataSourceInt64Attribute(int64AttributeConfig{
+		description: description,
+		optional:    true,
+	})
 }

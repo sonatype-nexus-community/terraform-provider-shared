@@ -23,154 +23,170 @@ import (
 )
 
 // ========================================
-// Resource Schema Functions
+// Resource Schema Functions - String Maps
 // ========================================
 
 // ResourceRequiredStringMap returns a required map attribute with string values
 func ResourceRequiredStringMap(description string) resourceschema.MapAttribute {
-	return resourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.StringType,
-		Required:    true,
-	}
+	return newResourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		required:    true,
+	})
 }
 
 // ResourceOptionalStringMap returns an optional map attribute with string values
 func ResourceOptionalStringMap(description string) resourceschema.MapAttribute {
-	return resourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.StringType,
-		Optional:    true,
-	}
+	return newResourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		optional:    true,
+	})
 }
 
 // ResourceComputedStringMap returns a computed map attribute with string values
 func ResourceComputedStringMap(description string) resourceschema.MapAttribute {
-	return resourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.StringType,
-		Computed:    true,
-	}
+	return newResourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		computed:    true,
+	})
 }
 
 // ResourceComputedOptionalStringMap returns a computed optional map attribute with string values
 func ResourceComputedOptionalStringMap(description string) resourceschema.MapAttribute {
-	return resourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.StringType,
-		Optional:    true,
-		Computed:    true,
-	}
+	return newResourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		optional:    true,
+		computed:    true,
+	})
 }
+
+// ========================================
+// Resource Schema Functions - Int64 Maps
+// ========================================
 
 // ResourceRequiredInt64Map returns a required map attribute with int64 values
 func ResourceRequiredInt64Map(description string) resourceschema.MapAttribute {
-	return resourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.Int64Type,
-		Required:    true,
-	}
+	return newResourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		required:    true,
+	})
 }
 
 // ResourceOptionalInt64Map returns an optional map attribute with int64 values
 func ResourceOptionalInt64Map(description string) resourceschema.MapAttribute {
-	return resourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.Int64Type,
-		Optional:    true,
-	}
+	return newResourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		optional:    true,
+	})
 }
 
 // ResourceComputedInt64Map returns a computed map attribute with int64 values
 func ResourceComputedInt64Map(description string) resourceschema.MapAttribute {
-	return resourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.Int64Type,
-		Computed:    true,
-	}
+	return newResourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		computed:    true,
+	})
 }
+
+// ========================================
+// Resource Schema Functions - Bool Maps
+// ========================================
 
 // ResourceRequiredBoolMap returns a required map attribute with bool values
 func ResourceRequiredBoolMap(description string) resourceschema.MapAttribute {
-	return resourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.BoolType,
-		Required:    true,
-	}
+	return newResourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		required:    true,
+	})
 }
 
 // ResourceOptionalBoolMap returns an optional map attribute with bool values
 func ResourceOptionalBoolMap(description string) resourceschema.MapAttribute {
-	return resourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.BoolType,
-		Optional:    true,
-	}
+	return newResourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		optional:    true,
+	})
 }
 
 // ResourceComputedBoolMap returns a computed map attribute with bool values
 func ResourceComputedBoolMap(description string) resourceschema.MapAttribute {
-	return resourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.BoolType,
-		Computed:    true,
-	}
+	return newResourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		computed:    true,
+	})
 }
 
 // ========================================
-// Data Source Schema Functions
+// Data Source Schema Functions - String Maps
 // ========================================
 
 // DataSourceOptionalStringMap returns an optional map attribute with string values for data sources
 func DataSourceOptionalStringMap(description string) datasourceschema.MapAttribute {
-	return datasourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.StringType,
-		Optional:    true,
-	}
+	return newDataSourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		optional:    true,
+	})
 }
 
 // DataSourceComputedStringMap returns a computed map attribute with string values for data sources
 func DataSourceComputedStringMap(description string) datasourceschema.MapAttribute {
-	return datasourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.StringType,
-		Computed:    true,
-	}
+	return newDataSourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		computed:    true,
+	})
 }
+
+// ========================================
+// Data Source Schema Functions - Int64 Maps
+// ========================================
 
 // DataSourceOptionalInt64Map returns an optional map attribute with int64 values for data sources
 func DataSourceOptionalInt64Map(description string) datasourceschema.MapAttribute {
-	return datasourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.Int64Type,
-		Optional:    true,
-	}
+	return newDataSourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		optional:    true,
+	})
 }
 
 // DataSourceComputedInt64Map returns a computed map attribute with int64 values for data sources
 func DataSourceComputedInt64Map(description string) datasourceschema.MapAttribute {
-	return datasourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.Int64Type,
-		Computed:    true,
-	}
+	return newDataSourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		computed:    true,
+	})
 }
+
+// ========================================
+// Data Source Schema Functions - Bool Maps
+// ========================================
 
 // DataSourceOptionalBoolMap returns an optional map attribute with bool values for data sources
 func DataSourceOptionalBoolMap(description string) datasourceschema.MapAttribute {
-	return datasourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.BoolType,
-		Optional:    true,
-	}
+	return newDataSourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		optional:    true,
+	})
 }
 
 // DataSourceComputedBoolMap returns a computed map attribute with bool values for data sources
 func DataSourceComputedBoolMap(description string) datasourceschema.MapAttribute {
-	return datasourceschema.MapAttribute{
-		Description: description,
-		ElementType: types.BoolType,
-		Computed:    true,
-	}
+	return newDataSourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		computed:    true,
+	})
 }

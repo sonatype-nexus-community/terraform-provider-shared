@@ -48,130 +48,130 @@ func ResourceTimestamp() resourceschema.StringAttribute {
 
 // ResourceRequiredString returns a required string attribute with the given description
 func ResourceRequiredString(description string) resourceschema.StringAttribute {
-	return resourceschema.StringAttribute{
-		Description: description,
-		Required:    true,
-	}
+	return newResourceStringAttribute(stringAttributeConfig{
+		description: description,
+		required:    true,
+	})
 }
 
 // ResourceOptionalString returns an optional string attribute with the given description
 func ResourceOptionalString(description string) resourceschema.StringAttribute {
-	return resourceschema.StringAttribute{
-		Description: description,
-		Optional:    true,
-	}
+	return newResourceStringAttribute(stringAttributeConfig{
+		description: description,
+		optional:    true,
+	})
 }
 
 // ResourceComputedString returns a computed string attribute with the given description
 func ResourceComputedString(description string) resourceschema.StringAttribute {
-	return resourceschema.StringAttribute{
-		Description: description,
-		Computed:    true,
-	}
+	return newResourceStringAttribute(stringAttributeConfig{
+		description: description,
+		computed:    true,
+	})
 }
 
 // ResourceComputedStringWithDefault returns a computed string attribute with a default value
 func ResourceComputedStringWithDefault(description string, defaultValue string) resourceschema.StringAttribute {
-	return resourceschema.StringAttribute{
-		Description: description,
-		Computed:    true,
-		Default:     stringdefault.StaticString(defaultValue),
-	}
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:  description,
+		computed:     true,
+		defaultValue: stringdefault.StaticString(defaultValue),
+	})
 }
 
 // ResourceSensitiveString returns an optional sensitive string attribute with the given description
 func ResourceSensitiveString(description string) resourceschema.StringAttribute {
-	return resourceschema.StringAttribute{
-		Description: description,
-		Optional:    true,
-		Sensitive:   true,
-	}
+	return newResourceStringAttribute(stringAttributeConfig{
+		description: description,
+		optional:    true,
+		sensitive:   true,
+	})
 }
 
 // ResourceSensitiveRequiredString returns a required sensitive string attribute
 func ResourceSensitiveRequiredString(description string) resourceschema.StringAttribute {
-	return resourceschema.StringAttribute{
-		Description: description,
-		Required:    true,
-		Sensitive:   true,
-	}
+	return newResourceStringAttribute(stringAttributeConfig{
+		description: description,
+		required:    true,
+		sensitive:   true,
+	})
 }
 
 // ResourceComputedSensitiveString returns a computed sensitive string attribute
 func ResourceComputedSensitiveString(description string) resourceschema.StringAttribute {
-	return resourceschema.StringAttribute{
-		Description: description,
-		Computed:    true,
-		Sensitive:   true,
-	}
+	return newResourceStringAttribute(stringAttributeConfig{
+		description: description,
+		computed:    true,
+		sensitive:   true,
+	})
 }
 
 // ResourceStringWithDefault returns an optional string attribute with a default value
 func ResourceStringWithDefault(description string, defaultValue string) resourceschema.StringAttribute {
-	return resourceschema.StringAttribute{
-		Description: description,
-		Optional:    true,
-		Computed:    true,
-		Default:     stringdefault.StaticString(defaultValue),
-	}
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: stringdefault.StaticString(defaultValue),
+	})
 }
 
 // ResourceStringEnum returns a string attribute with enum validation
 func ResourceStringEnum(description string, enumValues ...string) resourceschema.StringAttribute {
-	return resourceschema.StringAttribute{
-		Description: description,
-		Optional:    true,
-		Validators: []validator.String{
+	return newResourceStringAttribute(stringAttributeConfig{
+		description: description,
+		optional:    true,
+		validators: []validator.String{
 			stringvalidator.OneOf(enumValues...),
 		},
-	}
+	})
 }
 
 // ResourceRequiredStringEnum returns a required string attribute with enum validation
 func ResourceRequiredStringEnum(description string, enumValues ...string) resourceschema.StringAttribute {
-	return resourceschema.StringAttribute{
-		Description: description,
-		Required:    true,
-		Validators: []validator.String{
+	return newResourceStringAttribute(stringAttributeConfig{
+		description: description,
+		required:    true,
+		validators: []validator.String{
 			stringvalidator.OneOf(enumValues...),
 		},
-	}
+	})
 }
 
 // ResourceStringEnumWithDefault returns an optional string attribute with enum validation and a default value
 func ResourceStringEnumWithDefault(description string, defaultValue string, enumValues ...string) resourceschema.StringAttribute {
-	return resourceschema.StringAttribute{
-		Description: description,
-		Optional:    true,
-		Computed:    true,
-		Default:     stringdefault.StaticString(defaultValue),
-		Validators: []validator.String{
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: stringdefault.StaticString(defaultValue),
+		validators: []validator.String{
 			stringvalidator.OneOf(enumValues...),
 		},
-	}
+	})
 }
 
 // ResourceComputedOptionalString returns a computed optional string (persists state for unknown)
 func ResourceComputedOptionalString(description string) resourceschema.StringAttribute {
-	return resourceschema.StringAttribute{
-		Description: description,
-		Optional:    true,
-		Computed:    true,
-		PlanModifiers: []planmodifier.String{
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		planModifiers: []planmodifier.String{
 			stringplanmodifier.UseStateForUnknown(),
 		},
-	}
+	})
 }
 
 // ResourceIDAttribute returns a string attribute commonly used for referencing other resources
 func ResourceIDAttribute(description string) resourceschema.StringAttribute {
-	return resourceschema.StringAttribute{
-		Description: description,
-		Required:    true,
-		PlanModifiers: []planmodifier.String{
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:   description,
+		required:      true,
+		planModifiers: []planmodifier.String{
 			stringplanmodifier.RequiresReplace(),
 		},
-	}
+	})
 }
 
 // ========================================
@@ -180,45 +180,45 @@ func ResourceIDAttribute(description string) resourceschema.StringAttribute {
 
 // DataSourceComputedString returns a computed string attribute for data sources
 func DataSourceComputedString(description string) datasourceschema.StringAttribute {
-	return datasourceschema.StringAttribute{
-		Description: description,
-		Computed:    true,
-	}
+	return newDataSourceStringAttribute(stringAttributeConfig{
+		description: description,
+		computed:    true,
+	})
 }
 
 // DataSourceOptionalString returns an optional string attribute for data sources
 func DataSourceOptionalString(description string) datasourceschema.StringAttribute {
-	return datasourceschema.StringAttribute{
-		Description: description,
-		Optional:    true,
-	}
+	return newDataSourceStringAttribute(stringAttributeConfig{
+		description: description,
+		optional:    true,
+	})
 }
 
 // DataSourceComputedSensitiveString returns a computed sensitive string attribute for data sources
 func DataSourceComputedSensitiveString(description string) datasourceschema.StringAttribute {
-	return datasourceschema.StringAttribute{
-		Description: description,
-		Computed:    true,
-		Sensitive:   true,
-	}
+	return newDataSourceStringAttribute(stringAttributeConfig{
+		description: description,
+		computed:    true,
+		sensitive:   true,
+	})
 }
 
 // DataSourceSensitiveString returns an optional sensitive string attribute for data sources
 func DataSourceSensitiveString(description string) datasourceschema.StringAttribute {
-	return datasourceschema.StringAttribute{
-		Description: description,
-		Optional:    true,
-		Sensitive:   true,
-	}
+	return newDataSourceStringAttribute(stringAttributeConfig{
+		description: description,
+		optional:    true,
+		sensitive:   true,
+	})
 }
 
 // DataSourceStringEnum returns a string attribute with enum validation for data sources
 func DataSourceStringEnum(description string, enumValues ...string) datasourceschema.StringAttribute {
-	return datasourceschema.StringAttribute{
-		Description: description,
-		Optional:    true,
-		Validators: []validator.String{
+	return newDataSourceStringAttribute(stringAttributeConfig{
+		description: description,
+		optional:    true,
+		validators: []validator.String{
 			stringvalidator.OneOf(enumValues...),
 		},
-	}
+	})
 }

@@ -23,154 +23,170 @@ import (
 )
 
 // ========================================
-// Resource Schema Functions
+// Resource Schema Functions - String Lists
 // ========================================
 
 // ResourceRequiredStringList returns a required list attribute with string elements
 func ResourceRequiredStringList(description string) resourceschema.ListAttribute {
-	return resourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.StringType,
-		Required:    true,
-	}
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		required:    true,
+	})
 }
 
 // ResourceOptionalStringList returns an optional list attribute with string elements
 func ResourceOptionalStringList(description string) resourceschema.ListAttribute {
-	return resourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.StringType,
-		Optional:    true,
-	}
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		optional:    true,
+	})
 }
 
 // ResourceComputedStringList returns a computed list attribute with string elements
 func ResourceComputedStringList(description string) resourceschema.ListAttribute {
-	return resourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.StringType,
-		Computed:    true,
-	}
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		computed:    true,
+	})
 }
 
 // ResourceComputedOptionalStringList returns a computed optional list attribute with string elements
 func ResourceComputedOptionalStringList(description string) resourceschema.ListAttribute {
-	return resourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.StringType,
-		Optional:    true,
-		Computed:    true,
-	}
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		optional:    true,
+		computed:    true,
+	})
 }
+
+// ========================================
+// Resource Schema Functions - Int64 Lists
+// ========================================
 
 // ResourceRequiredInt64List returns a required list attribute with int64 elements
 func ResourceRequiredInt64List(description string) resourceschema.ListAttribute {
-	return resourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.Int64Type,
-		Required:    true,
-	}
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		required:    true,
+	})
 }
 
 // ResourceOptionalInt64List returns an optional list attribute with int64 elements
 func ResourceOptionalInt64List(description string) resourceschema.ListAttribute {
-	return resourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.Int64Type,
-		Optional:    true,
-	}
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		optional:    true,
+	})
 }
 
 // ResourceComputedInt64List returns a computed list attribute with int64 elements
 func ResourceComputedInt64List(description string) resourceschema.ListAttribute {
-	return resourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.Int64Type,
-		Computed:    true,
-	}
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		computed:    true,
+	})
 }
+
+// ========================================
+// Resource Schema Functions - Bool Lists
+// ========================================
 
 // ResourceRequiredBoolList returns a required list attribute with bool elements
 func ResourceRequiredBoolList(description string) resourceschema.ListAttribute {
-	return resourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.BoolType,
-		Required:    true,
-	}
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		required:    true,
+	})
 }
 
 // ResourceOptionalBoolList returns an optional list attribute with bool elements
 func ResourceOptionalBoolList(description string) resourceschema.ListAttribute {
-	return resourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.BoolType,
-		Optional:    true,
-	}
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		optional:    true,
+	})
 }
 
 // ResourceComputedBoolList returns a computed list attribute with bool elements
 func ResourceComputedBoolList(description string) resourceschema.ListAttribute {
-	return resourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.BoolType,
-		Computed:    true,
-	}
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		computed:    true,
+	})
 }
 
 // ========================================
-// Data Source Schema Functions
+// Data Source Schema Functions - String Lists
 // ========================================
 
 // DataSourceOptionalStringList returns an optional list attribute with string elements for data sources
 func DataSourceOptionalStringList(description string) datasourceschema.ListAttribute {
-	return datasourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.StringType,
-		Optional:    true,
-	}
+	return newDataSourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		optional:    true,
+	})
 }
 
 // DataSourceComputedStringList returns a computed list attribute with string elements for data sources
 func DataSourceComputedStringList(description string) datasourceschema.ListAttribute {
-	return datasourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.StringType,
-		Computed:    true,
-	}
+	return newDataSourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		computed:    true,
+	})
 }
+
+// ========================================
+// Data Source Schema Functions - Int64 Lists
+// ========================================
 
 // DataSourceOptionalInt64List returns an optional list attribute with int64 elements for data sources
 func DataSourceOptionalInt64List(description string) datasourceschema.ListAttribute {
-	return datasourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.Int64Type,
-		Optional:    true,
-	}
+	return newDataSourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		optional:    true,
+	})
 }
 
 // DataSourceComputedInt64List returns a computed list attribute with int64 elements for data sources
 func DataSourceComputedInt64List(description string) datasourceschema.ListAttribute {
-	return datasourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.Int64Type,
-		Computed:    true,
-	}
+	return newDataSourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		computed:    true,
+	})
 }
+
+// ========================================
+// Data Source Schema Functions - Bool Lists
+// ========================================
 
 // DataSourceOptionalBoolList returns an optional list attribute with bool elements for data sources
 func DataSourceOptionalBoolList(description string) datasourceschema.ListAttribute {
-	return datasourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.BoolType,
-		Optional:    true,
-	}
+	return newDataSourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		optional:    true,
+	})
 }
 
 // DataSourceComputedBoolList returns a computed list attribute with bool elements for data sources
 func DataSourceComputedBoolList(description string) datasourceschema.ListAttribute {
-	return datasourceschema.ListAttribute{
-		Description: description,
-		ElementType: types.BoolType,
-		Computed:    true,
-	}
+	return newDataSourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		computed:    true,
+	})
 }

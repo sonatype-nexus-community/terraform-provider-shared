@@ -28,54 +28,54 @@ import (
 
 // ResourceRequiredFloat64 returns a required float64 attribute
 func ResourceRequiredFloat64(description string) resourceschema.Float64Attribute {
-	return resourceschema.Float64Attribute{
-		Description: description,
-		Required:    true,
-	}
+	return newResourceFloat64Attribute(float64AttributeConfig{
+		description: description,
+		required:    true,
+	})
 }
 
 // ResourceOptionalFloat64 returns an optional float64 attribute
 func ResourceOptionalFloat64(description string) resourceschema.Float64Attribute {
-	return resourceschema.Float64Attribute{
-		Description: description,
-		Optional:    true,
-	}
+	return newResourceFloat64Attribute(float64AttributeConfig{
+		description: description,
+		optional:    true,
+	})
 }
 
 // ResourceComputedFloat64 returns a computed float64 attribute
 func ResourceComputedFloat64(description string) resourceschema.Float64Attribute {
-	return resourceschema.Float64Attribute{
-		Description: description,
-		Computed:    true,
-	}
+	return newResourceFloat64Attribute(float64AttributeConfig{
+		description: description,
+		computed:    true,
+	})
 }
 
 // ResourceComputedFloat64WithDefault returns a computed float64 attribute with a default value
 func ResourceComputedFloat64WithDefault(description string, defaultValue float64) resourceschema.Float64Attribute {
-	return resourceschema.Float64Attribute{
-		Description: description,
-		Computed:    true,
-		Default:     float64default.StaticFloat64(defaultValue),
-	}
+	return newResourceFloat64Attribute(float64AttributeConfig{
+		description:  description,
+		computed:     true,
+		defaultValue: float64default.StaticFloat64(defaultValue),
+	})
 }
 
 // ResourceOptionalFloat64WithDefault returns an optional float64 attribute with a default value
 func ResourceOptionalFloat64WithDefault(description string, defaultValue float64) resourceschema.Float64Attribute {
-	return resourceschema.Float64Attribute{
-		Description: description,
-		Optional:    true,
-		Computed:    true,
-		Default:     float64default.StaticFloat64(defaultValue),
-	}
+	return newResourceFloat64Attribute(float64AttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: float64default.StaticFloat64(defaultValue),
+	})
 }
 
 // ResourceRequiredFloat64WithDefault returns a required float64 attribute with a default value
 func ResourceRequiredFloat64WithDefault(description string, defaultValue float64) resourceschema.Float64Attribute {
-	return resourceschema.Float64Attribute{
-		Description: description,
-		Required:    true,
-		Default:     float64default.StaticFloat64(defaultValue),
-	}
+	return newResourceFloat64Attribute(float64AttributeConfig{
+		description:  description,
+		required:     true,
+		defaultValue: float64default.StaticFloat64(defaultValue),
+	})
 }
 
 // ========================================
@@ -84,16 +84,16 @@ func ResourceRequiredFloat64WithDefault(description string, defaultValue float64
 
 // DataSourceComputedFloat64 returns a computed float64 attribute for data sources
 func DataSourceComputedFloat64(description string) datasourceschema.Float64Attribute {
-	return datasourceschema.Float64Attribute{
-		Description: description,
-		Computed:    true,
-	}
+	return newDataSourceFloat64Attribute(float64AttributeConfig{
+		description: description,
+		computed:    true,
+	})
 }
 
 // DataSourceOptionalFloat64 returns an optional float64 attribute for data sources
 func DataSourceOptionalFloat64(description string) datasourceschema.Float64Attribute {
-	return datasourceschema.Float64Attribute{
-		Description: description,
-		Optional:    true,
-	}
+	return newDataSourceFloat64Attribute(float64AttributeConfig{
+		description: description,
+		optional:    true,
+	})
 }

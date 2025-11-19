@@ -30,66 +30,66 @@ import (
 
 // ResourceRequiredBool returns a required boolean attribute
 func ResourceRequiredBool(description string) resourceschema.BoolAttribute {
-	return resourceschema.BoolAttribute{
-		Description: description,
-		Required:    true,
-	}
+	return newResourceBoolAttribute(boolAttributeConfig{
+		description: description,
+		required:    true,
+	})
 }
 
 // ResourceOptionalBool returns an optional boolean attribute
 func ResourceOptionalBool(description string) resourceschema.BoolAttribute {
-	return resourceschema.BoolAttribute{
-		Description: description,
-		Optional:    true,
-	}
+	return newResourceBoolAttribute(boolAttributeConfig{
+		description: description,
+		optional:    true,
+	})
 }
 
 // ResourceComputedBool returns a computed boolean attribute
 func ResourceComputedBool(description string) resourceschema.BoolAttribute {
-	return resourceschema.BoolAttribute{
-		Description: description,
-		Computed:    true,
-	}
+	return newResourceBoolAttribute(boolAttributeConfig{
+		description: description,
+		computed:    true,
+	})
 }
 
 // ResourceOptionalBoolWithDefault returns an optional boolean attribute with a default value
 func ResourceOptionalBoolWithDefault(description string, defaultValue bool) resourceschema.BoolAttribute {
-	return resourceschema.BoolAttribute{
-		Description: description,
-		Optional:    true,
-		Computed:    true,
-		Default:     booldefault.StaticBool(defaultValue),
-	}
+	return newResourceBoolAttribute(boolAttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: booldefault.StaticBool(defaultValue),
+	})
 }
 
 // ResourceComputedOptionalBool returns a computed optional boolean (persists state for unknown)
 func ResourceComputedOptionalBool(description string) resourceschema.BoolAttribute {
-	return resourceschema.BoolAttribute{
-		Description: description,
-		Optional:    true,
-		Computed:    true,
-		PlanModifiers: []planmodifier.Bool{
+	return newResourceBoolAttribute(boolAttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		planModifiers: []planmodifier.Bool{
 			boolplanmodifier.UseStateForUnknown(),
 		},
-	}
+	})
 }
 
 // ResourceRequiredBoolWithDefault returns a required boolean attribute with a default value
 func ResourceRequiredBoolWithDefault(description string, defaultValue bool) resourceschema.BoolAttribute {
-	return resourceschema.BoolAttribute{
-		Description: description,
-		Required:    true,
-		Default:     booldefault.StaticBool(defaultValue),
-	}
+	return newResourceBoolAttribute(boolAttributeConfig{
+		description:  description,
+		required:     true,
+		defaultValue: booldefault.StaticBool(defaultValue),
+	})
 }
 
 // ResourceComputedBoolWithDefault returns a computed boolean attribute with a default value
 func ResourceComputedBoolWithDefault(description string, defaultValue bool) resourceschema.BoolAttribute {
-	return resourceschema.BoolAttribute{
-		Description: description,
-		Computed:    true,
-		Default:     booldefault.StaticBool(defaultValue),
-	}
+	return newResourceBoolAttribute(boolAttributeConfig{
+		description:  description,
+		computed:     true,
+		defaultValue: booldefault.StaticBool(defaultValue),
+	})
 }
 
 // ========================================
@@ -98,16 +98,16 @@ func ResourceComputedBoolWithDefault(description string, defaultValue bool) reso
 
 // DataSourceComputedBool returns a computed boolean attribute for data sources
 func DataSourceComputedBool(description string) datasourceschema.BoolAttribute {
-	return datasourceschema.BoolAttribute{
-		Description: description,
-		Computed:    true,
-	}
+	return newDataSourceBoolAttribute(boolAttributeConfig{
+		description: description,
+		computed:    true,
+	})
 }
 
 // DataSourceOptionalBool returns an optional boolean attribute for data sources
 func DataSourceOptionalBool(description string) datasourceschema.BoolAttribute {
-	return datasourceschema.BoolAttribute{
-		Description: description,
-		Optional:    true,
-	}
+	return newDataSourceBoolAttribute(boolAttributeConfig{
+		description: description,
+		optional:    true,
+	})
 }
