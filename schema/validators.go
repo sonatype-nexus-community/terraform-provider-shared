@@ -31,7 +31,7 @@ import (
 // RequiredStringWithRegex returns a required string attribute with regex validation
 func RequiredStringWithRegex(description string, pattern *regexp.Regexp, errorMsg string) schema.StringAttribute {
 	return schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Required:    true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(pattern, errorMsg),
@@ -42,7 +42,7 @@ func RequiredStringWithRegex(description string, pattern *regexp.Regexp, errorMs
 // OptionalStringWithRegex returns an optional string attribute with regex validation
 func OptionalStringWithRegex(description string, pattern *regexp.Regexp, errorMsg string) schema.StringAttribute {
 	return schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Optional:    true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(pattern, errorMsg),
@@ -53,7 +53,7 @@ func OptionalStringWithRegex(description string, pattern *regexp.Regexp, errorMs
 // ComputedStringWithRegex returns a computed string attribute with regex validation
 func ComputedStringWithRegex(description string, pattern *regexp.Regexp, errorMsg string) schema.StringAttribute {
 	return schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Computed:    true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(pattern, errorMsg),
@@ -64,7 +64,7 @@ func ComputedStringWithRegex(description string, pattern *regexp.Regexp, errorMs
 // StringWithValidators returns a required string attribute with custom validators list
 func StringWithValidators(description string, validators ...validator.String) schema.StringAttribute {
 	attr := schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Required:    true,
 	}
 	if len(validators) > 0 {
@@ -76,7 +76,7 @@ func StringWithValidators(description string, validators ...validator.String) sc
 // OptionalStringWithValidators returns an optional string attribute with custom validators
 func OptionalStringWithValidators(description string, validators ...validator.String) schema.StringAttribute {
 	attr := schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Optional:    true,
 	}
 	if len(validators) > 0 {
@@ -93,7 +93,7 @@ func RequiredStringWithValidators(description string, validators ...validator.St
 // ComputedStringWithValidators returns a computed string attribute with custom validators
 func ComputedStringWithValidators(description string, validators ...validator.String) schema.StringAttribute {
 	attr := schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Computed:    true,
 	}
 	if len(validators) > 0 {
@@ -105,7 +105,7 @@ func ComputedStringWithValidators(description string, validators ...validator.St
 // RequiredStringWithLengthBetween returns a required string attribute with length validation
 func RequiredStringWithLengthBetween(description string, minLength, maxLength int) schema.StringAttribute {
 	return schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Required:    true,
 		Validators: []validator.String{
 			stringvalidator.LengthBetween(minLength, maxLength),
@@ -116,7 +116,7 @@ func RequiredStringWithLengthBetween(description string, minLength, maxLength in
 // OptionalStringWithLengthBetween returns an optional string attribute with length validation
 func OptionalStringWithLengthBetween(description string, minLength, maxLength int) schema.StringAttribute {
 	return schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Optional:    true,
 		Validators: []validator.String{
 			stringvalidator.LengthBetween(minLength, maxLength),
@@ -127,7 +127,7 @@ func OptionalStringWithLengthBetween(description string, minLength, maxLength in
 // RequiredStringWithLengthAtLeast returns a required string attribute with minimum length validation
 func RequiredStringWithLengthAtLeast(description string, minLength int) schema.StringAttribute {
 	return schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Required:    true,
 		Validators: []validator.String{
 			stringvalidator.LengthAtLeast(minLength),
@@ -138,7 +138,7 @@ func RequiredStringWithLengthAtLeast(description string, minLength int) schema.S
 // OptionalStringWithLengthAtLeast returns an optional string attribute with minimum length validation
 func OptionalStringWithLengthAtLeast(description string, minLength int) schema.StringAttribute {
 	return schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Optional:    true,
 		Validators: []validator.String{
 			stringvalidator.LengthAtLeast(minLength),
@@ -149,7 +149,7 @@ func OptionalStringWithLengthAtLeast(description string, minLength int) schema.S
 // RequiredStringWithLengthAtMost returns a required string attribute with maximum length validation
 func RequiredStringWithLengthAtMost(description string, maxLength int) schema.StringAttribute {
 	return schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Required:    true,
 		Validators: []validator.String{
 			stringvalidator.LengthAtMost(maxLength),
@@ -160,7 +160,7 @@ func RequiredStringWithLengthAtMost(description string, maxLength int) schema.St
 // OptionalStringWithLengthAtMost returns an optional string attribute with maximum length validation
 func OptionalStringWithLengthAtMost(description string, maxLength int) schema.StringAttribute {
 	return schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Optional:    true,
 		Validators: []validator.String{
 			stringvalidator.LengthAtMost(maxLength),
@@ -171,7 +171,7 @@ func OptionalStringWithLengthAtMost(description string, maxLength int) schema.St
 // OptionalSensitiveStringWithLengthAtLeast returns an optional sensitive string attribute with minimum length validation
 func OptionalSensitiveStringWithLengthAtLeast(description string, minLength int) schema.StringAttribute {
 	return schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Optional:    true,
 		Sensitive:   true,
 		Validators: []validator.String{
@@ -183,7 +183,7 @@ func OptionalSensitiveStringWithLengthAtLeast(description string, minLength int)
 // RequiredSensitiveStringWithLengthAtLeast returns a required sensitive string attribute with minimum length validation
 func RequiredSensitiveStringWithLengthAtLeast(description string, minLength int) schema.StringAttribute {
 	return schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Required:    true,
 		Sensitive:   true,
 		Validators: []validator.String{
@@ -195,7 +195,7 @@ func RequiredSensitiveStringWithLengthAtLeast(description string, minLength int)
 // RequiredStringWithRegexAndLength returns a required string attribute with regex and length validation
 func RequiredStringWithRegexAndLength(description string, pattern *regexp.Regexp, errorMsg string, minLength, maxLength int) schema.StringAttribute {
 	return schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Required:    true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(pattern, errorMsg),
@@ -207,7 +207,7 @@ func RequiredStringWithRegexAndLength(description string, pattern *regexp.Regexp
 // OptionalStringWithRegexAndLength returns an optional string attribute with regex and length validation
 func OptionalStringWithRegexAndLength(description string, pattern *regexp.Regexp, errorMsg string, minLength, maxLength int) schema.StringAttribute {
 	return schema.StringAttribute{
-		Description: description,
+		MarkdownDescription: description,
 		Optional:    true,
 		Validators: []validator.String{
 			stringvalidator.RegexMatches(pattern, errorMsg),
@@ -221,7 +221,7 @@ func OptionalStringWithRegexAndLength(description string, pattern *regexp.Regexp
 // RequiredInt64WithRange returns a required int64 attribute with range validation
 func RequiredInt64WithRange(description string, minValue, maxValue int64) schema.Int64Attribute {
 	return schema.Int64Attribute{
-		Description: description,
+		MarkdownDescription: description,
 		Required:    true,
 		Validators: []validator.Int64{
 			int64validator.Between(minValue, maxValue),
@@ -232,7 +232,7 @@ func RequiredInt64WithRange(description string, minValue, maxValue int64) schema
 // OptionalInt64WithRange returns an optional int64 attribute with range validation
 func OptionalInt64WithRange(description string, minValue, maxValue int64) schema.Int64Attribute {
 	return schema.Int64Attribute{
-		Description: description,
+		MarkdownDescription: description,
 		Optional:    true,
 		Validators: []validator.Int64{
 			int64validator.Between(minValue, maxValue),
@@ -243,7 +243,7 @@ func OptionalInt64WithRange(description string, minValue, maxValue int64) schema
 // ComputedInt64WithRange returns a computed int64 attribute with range validation
 func ComputedInt64WithRange(description string, minValue, maxValue int64) schema.Int64Attribute {
 	return schema.Int64Attribute{
-		Description: description,
+		MarkdownDescription: description,
 		Computed:    true,
 		Validators: []validator.Int64{
 			int64validator.Between(minValue, maxValue),
@@ -254,7 +254,7 @@ func ComputedInt64WithRange(description string, minValue, maxValue int64) schema
 // Int64WithValidators returns a required int64 attribute with custom validators
 func Int64WithValidators(description string, validators ...validator.Int64) schema.Int64Attribute {
 	attr := schema.Int64Attribute{
-		Description: description,
+		MarkdownDescription: description,
 		Required:    true,
 	}
 	if len(validators) > 0 {
@@ -266,7 +266,7 @@ func Int64WithValidators(description string, validators ...validator.Int64) sche
 // OptionalInt64WithValidators returns an optional int64 attribute with custom validators
 func OptionalInt64WithValidators(description string, validators ...validator.Int64) schema.Int64Attribute {
 	attr := schema.Int64Attribute{
-		Description: description,
+		MarkdownDescription: description,
 		Optional:    true,
 	}
 	if len(validators) > 0 {
@@ -283,7 +283,7 @@ func RequiredInt64WithValidators(description string, validators ...validator.Int
 // ComputedInt64WithValidators returns a computed int64 attribute with custom validators
 func ComputedInt64WithValidators(description string, validators ...validator.Int64) schema.Int64Attribute {
 	attr := schema.Int64Attribute{
-		Description: description,
+		MarkdownDescription: description,
 		Computed:    true,
 	}
 	if len(validators) > 0 {
@@ -297,7 +297,7 @@ func ComputedInt64WithValidators(description string, validators ...validator.Int
 // RequiredFloat64WithRange returns a required float64 attribute with range validation
 func RequiredFloat64WithRange(description string, minValue, maxValue float64) schema.Float64Attribute {
 	return schema.Float64Attribute{
-		Description: description,
+		MarkdownDescription: description,
 		Required:    true,
 		Validators: []validator.Float64{
 			float64validator.Between(minValue, maxValue),
@@ -308,7 +308,7 @@ func RequiredFloat64WithRange(description string, minValue, maxValue float64) sc
 // OptionalFloat64WithRange returns an optional float64 attribute with range validation
 func OptionalFloat64WithRange(description string, minValue, maxValue float64) schema.Float64Attribute {
 	return schema.Float64Attribute{
-		Description: description,
+		MarkdownDescription: description,
 		Optional:    true,
 		Validators: []validator.Float64{
 			float64validator.Between(minValue, maxValue),
@@ -319,7 +319,7 @@ func OptionalFloat64WithRange(description string, minValue, maxValue float64) sc
 // ComputedFloat64WithRange returns a computed float64 attribute with range validation
 func ComputedFloat64WithRange(description string, minValue, maxValue float64) schema.Float64Attribute {
 	return schema.Float64Attribute{
-		Description: description,
+		MarkdownDescription: description,
 		Computed:    true,
 		Validators: []validator.Float64{
 			float64validator.Between(minValue, maxValue),
@@ -330,7 +330,7 @@ func ComputedFloat64WithRange(description string, minValue, maxValue float64) sc
 // Float64WithValidators returns a required float64 attribute with custom validators
 func Float64WithValidators(description string, validators ...validator.Float64) schema.Float64Attribute {
 	attr := schema.Float64Attribute{
-		Description: description,
+		MarkdownDescription: description,
 		Required:    true,
 	}
 	if len(validators) > 0 {
@@ -342,7 +342,7 @@ func Float64WithValidators(description string, validators ...validator.Float64) 
 // OptionalFloat64WithValidators returns an optional float64 attribute with custom validators
 func OptionalFloat64WithValidators(description string, validators ...validator.Float64) schema.Float64Attribute {
 	attr := schema.Float64Attribute{
-		Description: description,
+		MarkdownDescription: description,
 		Optional:    true,
 	}
 	if len(validators) > 0 {
@@ -359,7 +359,7 @@ func RequiredFloat64WithValidators(description string, validators ...validator.F
 // ComputedFloat64WithValidators returns a computed float64 attribute with custom validators
 func ComputedFloat64WithValidators(description string, validators ...validator.Float64) schema.Float64Attribute {
 	attr := schema.Float64Attribute{
-		Description: description,
+		MarkdownDescription: description,
 		Computed:    true,
 	}
 	if len(validators) > 0 {

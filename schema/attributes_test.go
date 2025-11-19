@@ -22,7 +22,7 @@ import (
 
 func TestResourceStandardID(t *testing.T) {
 	attr := ResourceStandardID()
-	if attr.GetDescription() != "Internal ID of the resource" || !attr.IsComputed() {
+	if attr.GetMarkdownDescription() != "Internal ID of the resource" || !attr.IsComputed() {
 		t.Fatal("ResourceStandardID should return a computed string attribute with correct description")
 	}
 }
@@ -39,7 +39,7 @@ func TestResourceRequiredString(t *testing.T) {
 	if !attr.IsRequired() || attr.IsOptional() {
 		t.Fatal("ResourceRequiredString should return a required string attribute")
 	}
-	if attr.GetDescription() != "test description" {
+	if attr.GetMarkdownDescription() != "test description" {
 		t.Fatal("ResourceRequiredString should have the provided description")
 	}
 }
@@ -152,7 +152,7 @@ func TestAuditableResourceAttributesFunc(t *testing.T) {
 func TestDataSourceIDAttributeFunc(t *testing.T) {
 	attr := DataSourceIDAttribute()
 	// DataSourceIDAttribute returns a single StringAttribute, not a map
-	if attr.GetDescription() == "" && !attr.IsComputed() {
+	if attr.GetMarkdownDescription() == "" && !attr.IsComputed() {
 		t.Fatal("DataSourceIDAttribute should return a valid attribute")
 	}
 }

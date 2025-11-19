@@ -30,7 +30,7 @@ func TestRequiredStringWithRegex(t *testing.T) {
 	if !attr.IsRequired() || attr.IsOptional() {
 		t.Fatal("RequiredStringWithRegex should return a required attribute")
 	}
-	if attr.GetDescription() != "test description" {
+	if attr.GetMarkdownDescription() != "test description" {
 		t.Fatal("description mismatch")
 	}
 }
@@ -59,7 +59,7 @@ func TestStringWithValidators(t *testing.T) {
 	if !attr.IsRequired() || attr.IsOptional() {
 		t.Fatal("StringWithValidators should return a required attribute by default")
 	}
-	if attr.GetDescription() != "test description" {
+	if attr.GetMarkdownDescription() != "test description" {
 		t.Fatal("description mismatch")
 	}
 }
@@ -178,7 +178,7 @@ func TestRequiredInt64WithRange(t *testing.T) {
 	if !attr.IsRequired() || attr.IsOptional() {
 		t.Fatal("RequiredInt64WithRange should return a required attribute")
 	}
-	if attr.GetDescription() != "test description" {
+	if attr.GetMarkdownDescription() != "test description" {
 		t.Fatal("description mismatch")
 	}
 }
@@ -205,7 +205,7 @@ func TestInt64WithValidators(t *testing.T) {
 	if !attr.IsRequired() || attr.IsOptional() {
 		t.Fatal("Int64WithValidators should return a required attribute by default")
 	}
-	if attr.GetDescription() != "test description" {
+	if attr.GetMarkdownDescription() != "test description" {
 		t.Fatal("description mismatch")
 	}
 }
