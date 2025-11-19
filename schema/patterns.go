@@ -26,7 +26,7 @@ import (
 func StandardResourceAttributes() map[string]resourceschema.Attribute {
 	return map[string]resourceschema.Attribute{
 		"id":           ResourceStandardID(),
-		"last_updated": ResourceTimestamp(),
+		"last_updated": ResourceLastUpdated(),
 	}
 }
 
@@ -58,7 +58,7 @@ func AuditableResourceAttributes() map[string]resourceschema.Attribute {
 	return map[string]resourceschema.Attribute{
 		"id":         ResourceStandardID(),
 		"created_at": ResourceComputedString("Timestamp when the resource was created"),
-		"updated_at": ResourceTimestamp(),
+		"updated_at": ResourceLastUpdated(),
 	}
 }
 

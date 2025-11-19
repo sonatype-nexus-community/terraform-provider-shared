@@ -38,8 +38,8 @@ func ResourceStandardID() resourceschema.StringAttribute {
 	}
 }
 
-// ResourceTimestamp returns a standard computed timestamp attribute for tracking last updates
-func ResourceTimestamp() resourceschema.StringAttribute {
+// ResourceLastUpdated returns a standard computed last updated attribute for tracking last updates
+func ResourceLastUpdated() resourceschema.StringAttribute {
 	return resourceschema.StringAttribute{
 		Description: "String representation of the date/time the resource was last changed",
 		Computed:    true,

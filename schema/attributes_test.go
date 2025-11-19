@@ -27,10 +27,10 @@ func TestResourceStandardID(t *testing.T) {
 	}
 }
 
-func TestResourceTimestamp(t *testing.T) {
-	attr := ResourceTimestamp()
+func TestResourceLastUpdated(t *testing.T) {
+	attr := ResourceLastUpdated()
 	if !attr.IsComputed() {
-		t.Fatal("ResourceTimestamp should return a computed attribute")
+		t.Fatal("ResourceLastUpdated should return a computed attribute")
 	}
 }
 
