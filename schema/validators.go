@@ -19,6 +19,7 @@ package schema
 import (
 	"regexp"
 
+	"github.com/hashicorp/terraform-plugin-framework-validators/float64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -282,6 +283,82 @@ func RequiredInt64WithValidators(description string, validators ...validator.Int
 // ComputedInt64WithValidators returns a computed int64 attribute with custom validators
 func ComputedInt64WithValidators(description string, validators ...validator.Int64) schema.Int64Attribute {
 	attr := schema.Int64Attribute{
+		Description: description,
+		Computed:    true,
+	}
+	if len(validators) > 0 {
+		attr.Validators = validators
+	}
+	return attr
+}
+
+// Float64 Attribute Validators
+
+// RequiredFloat64WithRange returns a required float64 attribute with range validation
+func RequiredFloat64WithRange(description string, minValue, maxValue float64) schema.Float64Attribute {
+	return schema.Float64Attribute{
+		Description: description,
+		Required:    true,
+		Validators: []validator.Float64{
+			float64validator.Between(minValue, maxValue),
+		},
+	}
+}
+
+// OptionalFloat64WithRange returns an optional float64 attribute with range validation
+func OptionalFloat64WithRange(description string, minValue, maxValue float64) schema.Float64Attribute {
+	return schema.Float64Attribute{
+		Description: description,
+		Optional:    true,
+		Validators: []validator.Float64{
+			float64validator.Between(minValue, maxValue),
+		},
+	}
+}
+
+// ComputedFloat64WithRange returns a computed float64 attribute with range validation
+func ComputedFloat64WithRange(description string, minValue, maxValue float64) schema.Float64Attribute {
+	return schema.Float64Attribute{
+		Description: description,
+		Computed:    true,
+		Validators: []validator.Float64{
+			float64validator.Between(minValue, maxValue),
+		},
+	}
+}
+
+// Float64WithValidators returns a required float64 attribute with custom validators
+func Float64WithValidators(description string, validators ...validator.Float64) schema.Float64Attribute {
+	attr := schema.Float64Attribute{
+		Description: description,
+		Required:    true,
+	}
+	if len(validators) > 0 {
+		attr.Validators = validators
+	}
+	return attr
+}
+
+// OptionalFloat64WithValidators returns an optional float64 attribute with custom validators
+func OptionalFloat64WithValidators(description string, validators ...validator.Float64) schema.Float64Attribute {
+	attr := schema.Float64Attribute{
+		Description: description,
+		Optional:    true,
+	}
+	if len(validators) > 0 {
+		attr.Validators = validators
+	}
+	return attr
+}
+
+// RequiredFloat64WithValidators returns a required float64 attribute with custom validators
+func RequiredFloat64WithValidators(description string, validators ...validator.Float64) schema.Float64Attribute {
+	return Float64WithValidators(description, validators...)
+}
+
+// ComputedFloat64WithValidators returns a computed float64 attribute with custom validators
+func ComputedFloat64WithValidators(description string, validators ...validator.Float64) schema.Float64Attribute {
+	attr := schema.Float64Attribute{
 		Description: description,
 		Computed:    true,
 	}
