@@ -27,21 +27,14 @@ Add this module as a dependency to your Terraform provider:
 require github.com/sonatype-nexus-community/terraform-provider-shared v0.1.0
 ```
 
-### Schema Builders Example
+## Examples
 
-```go
-import "github.com/sonatype-nexus-community/terraform-provider-shared/schema"
+Comprehensive examples are available in the [`examples`](./examples) directory:
 
-resp.Schema = schema.Schema{
-    Attributes: map[string]schema.Attribute{
-        "id": schema.StandardID(),
-        "name": schema.RequiredString("Name of the resource"),
-        "email": schema.OptionalString("Email address"),
-        "status": schema.StringEnum("Status", []string{"active", "inactive"}),
-        "last_updated": schema.Timestamp(),
-    },
-}
-```
+- [**Schema Builders**](./examples/schema_builders.md) - Creating consistent Terraform resource schema attributes
+- [**Validators**](./examples/validators.md) - Enforcing constraints on attribute values (enums, patterns, ranges)
+- [**Type Conversions**](./examples/conversion.md) - Converting between Go types and Terraform framework types
+- [**Error Handling**](./examples/error_handling.md) - Standardized error messages and HTTP status code handling
 
 ## Development
 
