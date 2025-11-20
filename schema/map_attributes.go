@@ -149,6 +149,15 @@ func ResourceComputedOptionalBoolMap(description string) resourceschema.MapAttri
 // Data Source Schema Functions - String Maps
 // ========================================
 
+// DataSourceRequiredStringMap returns a required map attribute with string values for data sources
+func DataSourceRequiredStringMap(description string) datasourceschema.MapAttribute {
+	return newDataSourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		required:    true,
+	})
+}
+
 // DataSourceOptionalStringMap returns an optional map attribute with string values for data sources
 func DataSourceOptionalStringMap(description string) datasourceschema.MapAttribute {
 	return newDataSourceMapAttribute(collectionConfig{
@@ -171,6 +180,15 @@ func DataSourceComputedStringMap(description string) datasourceschema.MapAttribu
 // Data Source Schema Functions - Int64 Maps
 // ========================================
 
+// DataSourceRequiredInt64Map returns a required map attribute with int64 values for data sources
+func DataSourceRequiredInt64Map(description string) datasourceschema.MapAttribute {
+	return newDataSourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		required:    true,
+	})
+}
+
 // DataSourceOptionalInt64Map returns an optional map attribute with int64 values for data sources
 func DataSourceOptionalInt64Map(description string) datasourceschema.MapAttribute {
 	return newDataSourceMapAttribute(collectionConfig{
@@ -192,6 +210,15 @@ func DataSourceComputedInt64Map(description string) datasourceschema.MapAttribut
 // ========================================
 // Data Source Schema Functions - Bool Maps
 // ========================================
+
+// DataSourceRequiredBoolMap returns a required map attribute with bool values for data sources
+func DataSourceRequiredBoolMap(description string) datasourceschema.MapAttribute {
+	return newDataSourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		required:    true,
+	})
+}
 
 // DataSourceOptionalBoolMap returns an optional map attribute with bool values for data sources
 func DataSourceOptionalBoolMap(description string) datasourceschema.MapAttribute {

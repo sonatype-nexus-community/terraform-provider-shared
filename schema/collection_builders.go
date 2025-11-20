@@ -87,6 +87,7 @@ func newDataSourceListAttribute(config collectionConfig) datasourceschema.ListAt
 	return datasourceschema.ListAttribute{
 		MarkdownDescription: config.description,
 		ElementType:         config.elementType,
+		Required:            config.required,
 		Optional:            config.optional,
 		Computed:            config.computed,
 	}
@@ -97,6 +98,7 @@ func newDataSourceMapAttribute(config collectionConfig) datasourceschema.MapAttr
 	return datasourceschema.MapAttribute{
 		MarkdownDescription: config.description,
 		ElementType:         config.elementType,
+		Required:            config.required,
 		Optional:            config.optional,
 		Computed:            config.computed,
 	}
@@ -107,6 +109,7 @@ func newDataSourceSetAttribute(config collectionConfig) datasourceschema.SetAttr
 	attr := datasourceschema.SetAttribute{
 		MarkdownDescription: config.description,
 		ElementType:         config.elementType,
+		Required:            config.required,
 		Optional:            config.optional,
 		Computed:            config.computed,
 	}
