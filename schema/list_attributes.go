@@ -94,6 +94,16 @@ func ResourceComputedInt64List(description string) resourceschema.ListAttribute 
 	})
 }
 
+// ResourceComputedOptionalInt64List returns a computed optional list attribute with int64 elements
+func ResourceComputedOptionalInt64List(description string) resourceschema.ListAttribute {
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		optional:    true,
+		computed:    true,
+	})
+}
+
 // ========================================
 // Resource Schema Functions - Bool Lists
 // ========================================
@@ -121,6 +131,16 @@ func ResourceComputedBoolList(description string) resourceschema.ListAttribute {
 	return newResourceListAttribute(collectionConfig{
 		description: description,
 		elementType: types.BoolType,
+		computed:    true,
+	})
+}
+
+// ResourceComputedOptionalBoolList returns a computed optional list attribute with bool elements
+func ResourceComputedOptionalBoolList(description string) resourceschema.ListAttribute {
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		optional:    true,
 		computed:    true,
 	})
 }

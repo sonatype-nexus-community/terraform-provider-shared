@@ -94,6 +94,16 @@ func ResourceComputedInt64Map(description string) resourceschema.MapAttribute {
 	})
 }
 
+// ResourceComputedOptionalInt64Map returns a computed optional map attribute with int64 values
+func ResourceComputedOptionalInt64Map(description string) resourceschema.MapAttribute {
+	return newResourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		optional:    true,
+		computed:    true,
+	})
+}
+
 // ========================================
 // Resource Schema Functions - Bool Maps
 // ========================================
@@ -121,6 +131,16 @@ func ResourceComputedBoolMap(description string) resourceschema.MapAttribute {
 	return newResourceMapAttribute(collectionConfig{
 		description: description,
 		elementType: types.BoolType,
+		computed:    true,
+	})
+}
+
+// ResourceComputedOptionalBoolMap returns a computed optional map attribute with bool values
+func ResourceComputedOptionalBoolMap(description string) resourceschema.MapAttribute {
+	return newResourceMapAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		optional:    true,
 		computed:    true,
 	})
 }

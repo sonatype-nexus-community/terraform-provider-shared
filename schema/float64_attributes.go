@@ -69,6 +69,15 @@ func ResourceOptionalFloat64WithDefault(description string, defaultValue float64
 	})
 }
 
+// ResourceComputedOptionalFloat64 returns a computed optional float64 attribute
+func ResourceComputedOptionalFloat64(description string) resourceschema.Float64Attribute {
+	return newResourceFloat64Attribute(float64AttributeConfig{
+		description: description,
+		optional:    true,
+		computed:    true,
+	})
+}
+
 // ResourceRequiredFloat64WithDefault returns a required float64 attribute with a default value
 func ResourceRequiredFloat64WithDefault(description string, defaultValue float64) resourceschema.Float64Attribute {
 	return newResourceFloat64Attribute(float64AttributeConfig{

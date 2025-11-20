@@ -70,6 +70,15 @@ func ResourceOptionalInt32WithDefault(description string, defaultValue int32) re
 	})
 }
 
+// ResourceComputedOptionalInt32 returns a computed optional int32 attribute
+func ResourceComputedOptionalInt32(description string) resourceschema.Int64Attribute {
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description: description,
+		optional:    true,
+		computed:    true,
+	})
+}
+
 // ResourceRequiredInt32WithDefault returns a required int32 attribute with a default value
 func ResourceRequiredInt32WithDefault(description string, defaultValue int32) resourceschema.Int64Attribute {
 	return newResourceInt64Attribute(int64AttributeConfig{

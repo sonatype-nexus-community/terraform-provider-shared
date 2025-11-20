@@ -94,6 +94,16 @@ func ResourceComputedInt64Set(description string) resourceschema.SetAttribute {
 	})
 }
 
+// ResourceComputedOptionalInt64Set returns a computed optional set attribute with int64 elements
+func ResourceComputedOptionalInt64Set(description string) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		optional:    true,
+		computed:    true,
+	})
+}
+
 // ========================================
 // Resource Schema Functions - Bool Sets
 // ========================================
@@ -121,6 +131,16 @@ func ResourceComputedBoolSet(description string) resourceschema.SetAttribute {
 	return newResourceSetAttribute(collectionConfig{
 		description: description,
 		elementType: types.BoolType,
+		computed:    true,
+	})
+}
+
+// ResourceComputedOptionalBoolSet returns a computed optional set attribute with bool elements
+func ResourceComputedOptionalBoolSet(description string) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		optional:    true,
 		computed:    true,
 	})
 }
