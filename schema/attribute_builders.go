@@ -111,6 +111,7 @@ func newResourceBoolAttribute(config boolAttributeConfig) resourceschema.BoolAtt
 func newDataSourceBoolAttribute(config boolAttributeConfig) datasourceschema.BoolAttribute {
 	return datasourceschema.BoolAttribute{
 		MarkdownDescription: config.description,
+		Required:            config.required,
 		Optional:            config.optional,
 		Computed:            config.computed,
 	}

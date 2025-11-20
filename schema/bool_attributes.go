@@ -149,6 +149,14 @@ func ResourceComputedOptionalBoolWithDefaultAndPlanModifier(description string, 
 // Data Source Schema Functions
 // ========================================
 
+// DataSourceRequiredBool returns a required boolean attribute for data sources
+func DataSourceRequiredBool(description string) datasourceschema.BoolAttribute {
+	return newDataSourceBoolAttribute(boolAttributeConfig{
+		description: description,
+		required:    true,
+	})
+}
+
 // DataSourceComputedBool returns a computed boolean attribute for data sources
 func DataSourceComputedBool(description string) datasourceschema.BoolAttribute {
 	return newDataSourceBoolAttribute(boolAttributeConfig{
