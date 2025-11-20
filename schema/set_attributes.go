@@ -19,6 +19,7 @@ package schema
 import (
 	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -63,6 +64,36 @@ func ResourceComputedOptionalStringSet(description string) resourceschema.SetAtt
 	})
 }
 
+// ResourceRequiredStringSetWithValidator returns a required set attribute with string elements and validators
+func ResourceRequiredStringSetWithValidator(description string, validators ...validator.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		required:    true,
+		validators:  validators,
+	})
+}
+
+// ResourceOptionalStringSetWithValidator returns an optional set attribute with string elements and validators
+func ResourceOptionalStringSetWithValidator(description string, validators ...validator.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		optional:    true,
+		validators:  validators,
+	})
+}
+
+// ResourceComputedStringSetWithValidator returns a computed set attribute with string elements and validators
+func ResourceComputedStringSetWithValidator(description string, validators ...validator.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		computed:    true,
+		validators:  validators,
+	})
+}
+
 // ========================================
 // Resource Schema Functions - Int64 Sets
 // ========================================
@@ -104,6 +135,36 @@ func ResourceComputedOptionalInt64Set(description string) resourceschema.SetAttr
 	})
 }
 
+// ResourceRequiredInt64SetWithValidator returns a required set attribute with int64 elements and validators
+func ResourceRequiredInt64SetWithValidator(description string, validators ...validator.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		required:    true,
+		validators:  validators,
+	})
+}
+
+// ResourceOptionalInt64SetWithValidator returns an optional set attribute with int64 elements and validators
+func ResourceOptionalInt64SetWithValidator(description string, validators ...validator.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		optional:    true,
+		validators:  validators,
+	})
+}
+
+// ResourceComputedInt64SetWithValidator returns a computed set attribute with int64 elements and validators
+func ResourceComputedInt64SetWithValidator(description string, validators ...validator.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int64Type,
+		computed:    true,
+		validators:  validators,
+	})
+}
+
 // ========================================
 // Resource Schema Functions - Bool Sets
 // ========================================
@@ -142,6 +203,36 @@ func ResourceComputedOptionalBoolSet(description string) resourceschema.SetAttri
 		elementType: types.BoolType,
 		optional:    true,
 		computed:    true,
+	})
+}
+
+// ResourceRequiredBoolSetWithValidator returns a required set attribute with bool elements and validators
+func ResourceRequiredBoolSetWithValidator(description string, validators ...validator.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		required:    true,
+		validators:  validators,
+	})
+}
+
+// ResourceOptionalBoolSetWithValidator returns an optional set attribute with bool elements and validators
+func ResourceOptionalBoolSetWithValidator(description string, validators ...validator.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		optional:    true,
+		validators:  validators,
+	})
+}
+
+// ResourceComputedBoolSetWithValidator returns a computed set attribute with bool elements and validators
+func ResourceComputedBoolSetWithValidator(description string, validators ...validator.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description: description,
+		elementType: types.BoolType,
+		computed:    true,
+		validators:  validators,
 	})
 }
 
