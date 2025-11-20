@@ -20,6 +20,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
 
 // ========================================
@@ -33,6 +34,7 @@ type collectionConfig struct {
 	required    bool
 	optional    bool
 	computed    bool
+	validators  []validator.Set
 }
 
 // ========================================
@@ -63,13 +65,17 @@ func newResourceMapAttribute(config collectionConfig) resourceschema.MapAttribut
 
 // newResourceSetAttribute creates a set attribute from the given configuration
 func newResourceSetAttribute(config collectionConfig) resourceschema.SetAttribute {
-	return resourceschema.SetAttribute{
+	attr := resourceschema.SetAttribute{
 		MarkdownDescription: config.description,
 		ElementType:         config.elementType,
 		Required:            config.required,
 		Optional:            config.optional,
 		Computed:            config.computed,
 	}
+	if len(config.validators) > 0 {
+		attr.Validators = config.validators
+	}
+	return attr
 }
 
 // ========================================
@@ -98,10 +104,14 @@ func newDataSourceMapAttribute(config collectionConfig) datasourceschema.MapAttr
 
 // newDataSourceSetAttribute creates a set attribute from the given configuration for data sources
 func newDataSourceSetAttribute(config collectionConfig) datasourceschema.SetAttribute {
-	return datasourceschema.SetAttribute{
+	attr := datasourceschema.SetAttribute{
 		MarkdownDescription: config.description,
 		ElementType:         config.elementType,
 		Optional:            config.optional,
 		Computed:            config.computed,
 	}
+	if len(config.validators) > 0 {
+		attr.Validators = config.validators
+	}
+	return attr
 }
