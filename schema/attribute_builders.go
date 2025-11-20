@@ -65,6 +65,7 @@ func newResourceStringAttribute(config stringAttributeConfig) resourceschema.Str
 func newDataSourceStringAttribute(config stringAttributeConfig) datasourceschema.StringAttribute {
 	attr := datasourceschema.StringAttribute{
 		MarkdownDescription: config.description,
+		Required:            config.required,
 		Optional:            config.optional,
 		Computed:            config.computed,
 		Sensitive:           config.sensitive,

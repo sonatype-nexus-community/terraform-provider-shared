@@ -282,6 +282,14 @@ func DataSourceSensitiveString(description string) datasourceschema.StringAttrib
 	})
 }
 
+// DataSourceRequiredString returns a required string attribute for data sources
+func DataSourceRequiredString(description string) datasourceschema.StringAttribute {
+	return newDataSourceStringAttribute(stringAttributeConfig{
+		description: description,
+		required:    true,
+	})
+}
+
 // DataSourceStringEnum returns a string attribute with enum validation for data sources
 func DataSourceStringEnum(description string, enumValues ...string) datasourceschema.StringAttribute {
 	return newDataSourceStringAttribute(stringAttributeConfig{

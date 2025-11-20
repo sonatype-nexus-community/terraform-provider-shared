@@ -121,6 +121,16 @@ func TestDataSourceOptionalStringFunc(t *testing.T) {
 	}
 }
 
+func TestDataSourceRequiredStringFunc(t *testing.T) {
+	attr := DataSourceRequiredString("required description")
+	if !attr.IsRequired() || attr.IsOptional() {
+		t.Fatal("DataSourceRequiredString should return a required attribute")
+	}
+	if attr.GetMarkdownDescription() != "required description" {
+		t.Fatal("DataSourceRequiredString should have the provided description")
+	}
+}
+
 func TestNamedResourceAttributesFunc(t *testing.T) {
 	attrs := NamedResourceAttributes()
 	if len(attrs) == 0 {
