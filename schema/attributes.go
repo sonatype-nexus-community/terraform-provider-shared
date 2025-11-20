@@ -88,6 +88,16 @@ func ResourceSensitiveString(description string) resourceschema.StringAttribute 
 	})
 }
 
+// ResourceSensitiveOptionalStringWithPlanModifier returns an optional sensitive string attribute with plan modifiers
+func ResourceSensitiveOptionalStringWithPlanModifier(description string, planMods ...planmodifier.String) resourceschema.StringAttribute {
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:   description,
+		optional:      true,
+		sensitive:     true,
+		planModifiers: planMods,
+	})
+}
+
 // ResourceSensitiveRequiredString returns a required sensitive string attribute
 func ResourceSensitiveRequiredString(description string) resourceschema.StringAttribute {
 	return newResourceStringAttribute(stringAttributeConfig{
@@ -138,6 +148,16 @@ func ResourceRequiredStringEnum(description string, enumValues ...string) resour
 	})
 }
 
+// ResourceRequiredStringEnumWithPlanModifier returns a required string attribute with enum validation and plan modifiers
+func ResourceRequiredStringEnumWithPlanModifier(description string, planMods []planmodifier.String, enumValues ...string) resourceschema.StringAttribute {
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:   description,
+		required:      true,
+		validators:    []validator.String{stringvalidator.OneOf(enumValues...)},
+		planModifiers: planMods,
+	})
+}
+
 // ResourceStringEnumWithDefault returns an optional string attribute with enum validation and a default value
 func ResourceStringEnumWithDefault(description string, defaultValue string, enumValues ...string) resourceschema.StringAttribute {
 	return newResourceStringAttribute(stringAttributeConfig{
@@ -171,6 +191,56 @@ func ResourceIDAttribute(description string) resourceschema.StringAttribute {
 		planModifiers: []planmodifier.String{
 			stringplanmodifier.RequiresReplace(),
 		},
+	})
+}
+
+// ResourceOptionalStringWithPlanModifier returns an optional string attribute with plan modifiers
+func ResourceOptionalStringWithPlanModifier(description string, planMods ...planmodifier.String) resourceschema.StringAttribute {
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:   description,
+		optional:      true,
+		planModifiers: planMods,
+	})
+}
+
+// ResourceOptionalStringWithDefaultAndPlanModifier returns an optional string attribute with default and plan modifiers
+func ResourceOptionalStringWithDefaultAndPlanModifier(description string, defaultValue string, planMods ...planmodifier.String) resourceschema.StringAttribute {
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		defaultValue:  stringdefault.StaticString(defaultValue),
+		planModifiers: planMods,
+	})
+}
+
+// ResourceComputedOptionalStringWithPlanModifier returns a computed optional string with plan modifiers
+func ResourceComputedOptionalStringWithPlanModifier(description string, planMods ...planmodifier.String) resourceschema.StringAttribute {
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		planModifiers: planMods,
+	})
+}
+
+// ResourceComputedOptionalStringWithDefaultAndPlanModifier returns a computed optional string with default and plan modifiers
+func ResourceComputedOptionalStringWithDefaultAndPlanModifier(description string, defaultValue string, planMods ...planmodifier.String) resourceschema.StringAttribute {
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		defaultValue:  stringdefault.StaticString(defaultValue),
+		planModifiers: planMods,
+	})
+}
+
+// ResourceComputedStringWithPlanModifier returns a computed string attribute with plan modifiers
+func ResourceComputedStringWithPlanModifier(description string, planMods ...planmodifier.String) resourceschema.StringAttribute {
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:   description,
+		computed:      true,
+		planModifiers: planMods,
 	})
 }
 
