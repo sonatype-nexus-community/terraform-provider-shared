@@ -158,6 +158,16 @@ func DataSourceComputedSingleNestedAttribute(description string, attributes map[
 	}
 }
 
+// DataSourceComputedOptionalSingleNestedAttribute returns a computed optional single nested attribute for data sources
+func DataSourceComputedOptionalSingleNestedAttribute(description string, attributes map[string]datasourceschema.Attribute) datasourceschema.SingleNestedAttribute {
+	return datasourceschema.SingleNestedAttribute{
+		Description: description,
+		Optional:    true,
+		Computed:    true,
+		Attributes:  attributes,
+	}
+}
+
 // DataSourceOptionalListNestedAttribute returns an optional list nested attribute for data sources
 func DataSourceOptionalListNestedAttribute(description string, nestedObject datasourceschema.NestedAttributeObject) datasourceschema.ListNestedAttribute {
 	return datasourceschema.ListNestedAttribute{
