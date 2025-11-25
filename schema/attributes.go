@@ -146,6 +146,17 @@ func ResourceRequiredStringWithPlanModifier(description string, planMods []planm
 	})
 }
 
+// ResourceOptionalStringEnum returns an optional string attribute with enum validation
+func ResourceOptionalStringEnum(description string, enumValues ...string) resourceschema.StringAttribute {
+	return newResourceStringAttribute(stringAttributeConfig{
+		description: description,
+		optional:    true,
+		validators: []validator.String{
+			stringvalidator.OneOf(enumValues...),
+		},
+	})
+}
+
 // ResourceRequiredStringEnum returns a required string attribute with enum validation
 func ResourceRequiredStringEnum(description string, enumValues ...string) resourceschema.StringAttribute {
 	return newResourceStringAttribute(stringAttributeConfig{

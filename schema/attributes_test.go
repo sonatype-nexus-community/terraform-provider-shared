@@ -66,6 +66,26 @@ func TestResourceStringEnum(t *testing.T) {
 	}
 }
 
+func TestResourceOptionalStringEnum(t *testing.T) {
+	attr := ResourceOptionalStringEnum("status", "active", "inactive", "pending")
+	if !attr.IsOptional() || attr.IsRequired() {
+		t.Fatal("ResourceOptionalStringEnum should return an optional attribute")
+	}
+	if attr.GetMarkdownDescription() != "status" {
+		t.Fatal("ResourceOptionalStringEnum should have the provided description")
+	}
+}
+
+func TestResourceRequiredStringEnum(t *testing.T) {
+	attr := ResourceRequiredStringEnum("status", "active", "inactive", "pending")
+	if !attr.IsRequired() || attr.IsOptional() {
+		t.Fatal("ResourceRequiredStringEnum should return a required attribute")
+	}
+	if attr.GetMarkdownDescription() != "status" {
+		t.Fatal("ResourceRequiredStringEnum should have the provided description")
+	}
+}
+
 func TestResourceStringEnumWithDefault(t *testing.T) {
 	attr := ResourceStringEnumWithDefault("status", "active", "active", "inactive")
 	if !attr.IsOptional() || !attr.IsComputed() {
