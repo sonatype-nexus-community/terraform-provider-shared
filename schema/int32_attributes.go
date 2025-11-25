@@ -20,6 +20,8 @@ import (
 	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int32default"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
 
 // ========================================
@@ -84,6 +86,87 @@ func ResourceRequiredInt32WithDefault(description string, defaultValue int32) re
 		description:  description,
 		required:     true,
 		defaultValue: int32default.StaticInt32(defaultValue),
+	})
+}
+
+// ResourceOptionalInt32WithPlanModifier returns an optional int32 attribute with plan modifiers
+func ResourceOptionalInt32WithPlanModifier(description string, planMods ...planmodifier.Int32) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
+		description:   description,
+		optional:      true,
+		planModifiers: planMods,
+	})
+}
+
+// ResourceOptionalInt32WithDefaultAndPlanModifier returns an optional int32 attribute with default and plan modifiers
+func ResourceOptionalInt32WithDefaultAndPlanModifier(description string, defaultValue int32, planMods ...planmodifier.Int32) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		defaultValue:  int32default.StaticInt32(defaultValue),
+		planModifiers: planMods,
+	})
+}
+
+// ResourceComputedOptionalInt32WithPlanModifier returns a computed optional int32 attribute with plan modifiers
+func ResourceComputedOptionalInt32WithPlanModifier(description string, planMods ...planmodifier.Int32) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		planModifiers: planMods,
+	})
+}
+
+// ResourceComputedOptionalInt32WithDefaultAndPlanModifier returns a computed optional int32 attribute with default and plan modifiers
+func ResourceComputedOptionalInt32WithDefaultAndPlanModifier(description string, defaultValue int32, planMods ...planmodifier.Int32) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		defaultValue:  int32default.StaticInt32(defaultValue),
+		planModifiers: planMods,
+	})
+}
+
+// ResourceOptionalInt32WithValidator returns an optional int32 attribute with validators
+func ResourceOptionalInt32WithValidator(description string, validators ...validator.Int32) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
+		description: description,
+		optional:    true,
+		validators:  validators,
+	})
+}
+
+// ResourceRequiredInt32WithValidator returns a required int32 attribute with validators
+func ResourceRequiredInt32WithValidator(description string, validators ...validator.Int32) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
+		description: description,
+		required:    true,
+		validators:  validators,
+	})
+}
+
+// ResourceOptionalInt32WithDefaultAndValidator returns an optional int32 attribute with default and validators
+func ResourceOptionalInt32WithDefaultAndValidator(description string, defaultValue int32, validators ...validator.Int32) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: int32default.StaticInt32(defaultValue),
+		validators:   validators,
+	})
+}
+
+// ResourceComputedOptionalInt32WithDefaultAndValidator returns a computed optional int32 attribute with default and validators
+func ResourceComputedOptionalInt32WithDefaultAndValidator(description string, defaultValue int32, validators ...validator.Int32) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: int32default.StaticInt32(defaultValue),
+		validators:   validators,
 	})
 }
 

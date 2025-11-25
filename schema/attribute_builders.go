@@ -167,12 +167,13 @@ func newDataSourceInt64Attribute(config int64AttributeConfig) datasourceschema.I
 
 // int32AttributeConfig holds configuration for int32 attribute builders
 type int32AttributeConfig struct {
-	description  string
-	required     bool
-	optional     bool
-	computed     bool
-	defaultValue defaults.Int32
-	validators   []validator.Int32
+	description   string
+	required      bool
+	optional      bool
+	computed      bool
+	defaultValue  defaults.Int32
+	validators    []validator.Int32
+	planModifiers []planmodifier.Int32
 }
 
 // newResourceInt32Attribute creates a resource int32 attribute from config
@@ -188,6 +189,9 @@ func newResourceInt32Attribute(config int32AttributeConfig) resourceschema.Int32
 	}
 	if len(config.validators) > 0 {
 		attr.Validators = config.validators
+	}
+	if len(config.planModifiers) > 0 {
+		attr.PlanModifiers = config.planModifiers
 	}
 	return attr
 }

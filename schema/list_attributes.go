@@ -105,6 +105,47 @@ func ResourceComputedOptionalInt64List(description string) resourceschema.ListAt
 }
 
 // ========================================
+// Resource Schema Functions - Int32 Lists
+// ========================================
+
+// ResourceRequiredInt32List returns a required list attribute with int32 elements
+func ResourceRequiredInt32List(description string) resourceschema.ListAttribute {
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int32Type,
+		required:    true,
+	})
+}
+
+// ResourceOptionalInt32List returns an optional list attribute with int32 elements
+func ResourceOptionalInt32List(description string) resourceschema.ListAttribute {
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int32Type,
+		optional:    true,
+	})
+}
+
+// ResourceComputedInt32List returns a computed list attribute with int32 elements
+func ResourceComputedInt32List(description string) resourceschema.ListAttribute {
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int32Type,
+		computed:    true,
+	})
+}
+
+// ResourceComputedOptionalInt32List returns a computed optional list attribute with int32 elements
+func ResourceComputedOptionalInt32List(description string) resourceschema.ListAttribute {
+	return newResourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int32Type,
+		optional:    true,
+		computed:    true,
+	})
+}
+
+// ========================================
 // Resource Schema Functions - Bool Lists
 // ========================================
 
@@ -185,6 +226,28 @@ func DataSourceComputedInt64List(description string) datasourceschema.ListAttrib
 	return newDataSourceListAttribute(collectionConfig{
 		description: description,
 		elementType: types.Int64Type,
+		computed:    true,
+	})
+}
+
+// ========================================
+// Data Source Schema Functions - Int32 Lists
+// ========================================
+
+// DataSourceOptionalInt32List returns an optional list attribute with int32 elements for data sources
+func DataSourceOptionalInt32List(description string) datasourceschema.ListAttribute {
+	return newDataSourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int32Type,
+		optional:    true,
+	})
+}
+
+// DataSourceComputedInt32List returns a computed list attribute with int32 elements for data sources
+func DataSourceComputedInt32List(description string) datasourceschema.ListAttribute {
+	return newDataSourceListAttribute(collectionConfig{
+		description: description,
+		elementType: types.Int32Type,
 		computed:    true,
 	})
 }

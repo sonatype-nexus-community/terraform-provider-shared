@@ -110,6 +110,50 @@ func TestResourceComputedOptionalInt64List(t *testing.T) {
 	}
 }
 
+// Test basic list attribute functions - Int32 Lists
+func TestResourceRequiredInt32List(t *testing.T) {
+	attr := ResourceRequiredInt32List("test description")
+	if !attr.IsRequired() {
+		t.Fatal("ResourceRequiredInt32List should return required attribute")
+	}
+	if attr.ElementType != types.Int32Type {
+		t.Fatal("ResourceRequiredInt32List should have Int32Type element")
+	}
+}
+
+func TestResourceOptionalInt32List(t *testing.T) {
+	attr := ResourceOptionalInt32List("test description")
+	if !attr.IsOptional() {
+		t.Fatal("ResourceOptionalInt32List should return optional attribute")
+	}
+	if attr.ElementType != types.Int32Type {
+		t.Fatal("ResourceOptionalInt32List should have Int32Type element")
+	}
+}
+
+func TestResourceComputedInt32List(t *testing.T) {
+	attr := ResourceComputedInt32List("test description")
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedInt32List should return computed attribute")
+	}
+	if attr.ElementType != types.Int32Type {
+		t.Fatal("ResourceComputedInt32List should have Int32Type element")
+	}
+}
+
+func TestResourceComputedOptionalInt32List(t *testing.T) {
+	attr := ResourceComputedOptionalInt32List("test description")
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedOptionalInt32List should return computed attribute")
+	}
+	if !attr.IsOptional() {
+		t.Fatal("ResourceComputedOptionalInt32List should return optional attribute")
+	}
+	if attr.ElementType != types.Int32Type {
+		t.Fatal("ResourceComputedOptionalInt32List should have Int32Type element")
+	}
+}
+
 // Test basic list attribute functions - Bool Lists
 func TestResourceRequiredBoolList(t *testing.T) {
 	attr := ResourceRequiredBoolList("test description")
@@ -193,6 +237,27 @@ func TestDataSourceComputedInt64List(t *testing.T) {
 	}
 	if attr.ElementType != types.Int64Type {
 		t.Fatal("DataSourceComputedInt64List should have Int64Type element")
+	}
+}
+
+// Test data source list attribute functions - Int32 Lists
+func TestDataSourceOptionalInt32List(t *testing.T) {
+	attr := DataSourceOptionalInt32List("test description")
+	if !attr.IsOptional() {
+		t.Fatal("DataSourceOptionalInt32List should return optional attribute")
+	}
+	if attr.ElementType != types.Int32Type {
+		t.Fatal("DataSourceOptionalInt32List should have Int32Type element")
+	}
+}
+
+func TestDataSourceComputedInt32List(t *testing.T) {
+	attr := DataSourceComputedInt32List("test description")
+	if !attr.IsComputed() {
+		t.Fatal("DataSourceComputedInt32List should return computed attribute")
+	}
+	if attr.ElementType != types.Int32Type {
+		t.Fatal("DataSourceComputedInt32List should have Int32Type element")
 	}
 }
 
