@@ -21,215 +21,277 @@ import (
 	"testing"
 )
 
-// String Validator Tests
+// Resource String Validator Tests
 
-func TestRequiredStringWithRegex(t *testing.T) {
+func TestResourceRequiredStringWithRegex(t *testing.T) {
 	pattern := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
-	attr := RequiredStringWithRegex("test description", pattern, "must be alphanumeric")
+	attr := ResourceRequiredStringWithRegex("test description", pattern, "must be alphanumeric")
 
 	if !attr.IsRequired() || attr.IsOptional() {
-		t.Fatal("RequiredStringWithRegex should return a required attribute")
+		t.Fatal("ResourceRequiredStringWithRegex should return a required attribute")
 	}
 	if attr.GetMarkdownDescription() != "test description" {
 		t.Fatal("description mismatch")
 	}
 }
 
-func TestOptionalStringWithRegex(t *testing.T) {
+func TestResourceOptionalStringWithRegex(t *testing.T) {
 	pattern := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
-	attr := OptionalStringWithRegex("test description", pattern, "must be alphanumeric")
+	attr := ResourceOptionalStringWithRegex("test description", pattern, "must be alphanumeric")
 
 	if !attr.IsOptional() || attr.IsRequired() {
-		t.Fatal("OptionalStringWithRegex should return an optional attribute")
+		t.Fatal("ResourceOptionalStringWithRegex should return an optional attribute")
 	}
 }
 
-func TestComputedStringWithRegex(t *testing.T) {
+func TestResourceComputedStringWithRegex(t *testing.T) {
 	pattern := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
-	attr := ComputedStringWithRegex("test description", pattern, "must be alphanumeric")
+	attr := ResourceComputedStringWithRegex("test description", pattern, "must be alphanumeric")
 
 	if !attr.IsComputed() {
-		t.Fatal("ComputedStringWithRegex should return a computed attribute")
+		t.Fatal("ResourceComputedStringWithRegex should return a computed attribute")
 	}
 }
 
-func TestStringWithValidators(t *testing.T) {
-	attr := StringWithValidators("test description")
+func TestResourceStringWithValidators(t *testing.T) {
+	attr := ResourceStringWithValidators("test description")
 
 	if !attr.IsRequired() || attr.IsOptional() {
-		t.Fatal("StringWithValidators should return a required attribute by default")
+		t.Fatal("ResourceStringWithValidators should return a required attribute by default")
 	}
 	if attr.GetMarkdownDescription() != "test description" {
 		t.Fatal("description mismatch")
 	}
 }
 
-func TestOptionalStringWithValidators(t *testing.T) {
-	attr := OptionalStringWithValidators("test description")
+func TestResourceOptionalStringWithValidators(t *testing.T) {
+	attr := ResourceOptionalStringWithValidators("test description")
 
 	if !attr.IsOptional() || attr.IsRequired() {
-		t.Fatal("OptionalStringWithValidators should return an optional attribute")
+		t.Fatal("ResourceOptionalStringWithValidators should return an optional attribute")
 	}
 }
 
-func TestRequiredStringWithValidators(t *testing.T) {
-	attr := RequiredStringWithValidators("test description")
+func TestResourceRequiredStringWithValidators(t *testing.T) {
+	attr := ResourceRequiredStringWithValidators("test description")
 
 	if !attr.IsRequired() || attr.IsOptional() {
-		t.Fatal("RequiredStringWithValidators should return a required attribute")
+		t.Fatal("ResourceRequiredStringWithValidators should return a required attribute")
 	}
 }
 
-func TestComputedStringWithValidators(t *testing.T) {
-	attr := ComputedStringWithValidators("test description")
+func TestResourceComputedStringWithValidators(t *testing.T) {
+	attr := ResourceComputedStringWithValidators("test description")
 
 	if !attr.IsComputed() {
-		t.Fatal("ComputedStringWithValidators should return a computed attribute")
+		t.Fatal("ResourceComputedStringWithValidators should return a computed attribute")
 	}
 }
 
-func TestRequiredStringWithLengthBetween(t *testing.T) {
-	attr := RequiredStringWithLengthBetween("test description", 1, 100)
+func TestResourceRequiredStringWithLengthBetween(t *testing.T) {
+	attr := ResourceRequiredStringWithLengthBetween("test description", 1, 100)
 
 	if !attr.IsRequired() || attr.IsOptional() {
-		t.Fatal("RequiredStringWithLengthBetween should return a required attribute")
+		t.Fatal("ResourceRequiredStringWithLengthBetween should return a required attribute")
 	}
 }
 
-func TestOptionalStringWithLengthBetween(t *testing.T) {
-	attr := OptionalStringWithLengthBetween("test description", 1, 100)
+func TestResourceOptionalStringWithLengthBetween(t *testing.T) {
+	attr := ResourceOptionalStringWithLengthBetween("test description", 1, 100)
 
 	if !attr.IsOptional() || attr.IsRequired() {
-		t.Fatal("OptionalStringWithLengthBetween should return an optional attribute")
+		t.Fatal("ResourceOptionalStringWithLengthBetween should return an optional attribute")
 	}
 }
 
-func TestRequiredStringWithLengthAtLeast(t *testing.T) {
-	attr := RequiredStringWithLengthAtLeast("test description", 1)
+func TestResourceRequiredStringWithLengthAtLeast(t *testing.T) {
+	attr := ResourceRequiredStringWithLengthAtLeast("test description", 1)
 
 	if !attr.IsRequired() || attr.IsOptional() {
-		t.Fatal("RequiredStringWithLengthAtLeast should return a required attribute")
+		t.Fatal("ResourceRequiredStringWithLengthAtLeast should return a required attribute")
 	}
 }
 
-func TestOptionalStringWithLengthAtLeast(t *testing.T) {
-	attr := OptionalStringWithLengthAtLeast("test description", 1)
+func TestResourceOptionalStringWithLengthAtLeast(t *testing.T) {
+	attr := ResourceOptionalStringWithLengthAtLeast("test description", 1)
 
 	if !attr.IsOptional() || attr.IsRequired() {
-		t.Fatal("OptionalStringWithLengthAtLeast should return an optional attribute")
+		t.Fatal("ResourceOptionalStringWithLengthAtLeast should return an optional attribute")
 	}
 }
 
-func TestRequiredStringWithLengthAtMost(t *testing.T) {
-	attr := RequiredStringWithLengthAtMost("test description", 100)
+func TestResourceRequiredStringWithLengthAtMost(t *testing.T) {
+	attr := ResourceRequiredStringWithLengthAtMost("test description", 100)
 
 	if !attr.IsRequired() || attr.IsOptional() {
-		t.Fatal("RequiredStringWithLengthAtMost should return a required attribute")
+		t.Fatal("ResourceRequiredStringWithLengthAtMost should return a required attribute")
 	}
 }
 
-func TestOptionalStringWithLengthAtMost(t *testing.T) {
-	attr := OptionalStringWithLengthAtMost("test description", 100)
+func TestResourceOptionalStringWithLengthAtMost(t *testing.T) {
+	attr := ResourceOptionalStringWithLengthAtMost("test description", 100)
 
 	if !attr.IsOptional() || attr.IsRequired() {
-		t.Fatal("OptionalStringWithLengthAtMost should return an optional attribute")
+		t.Fatal("ResourceOptionalStringWithLengthAtMost should return an optional attribute")
 	}
 }
 
-func TestOptionalSensitiveStringWithLengthAtLeast(t *testing.T) {
-	attr := OptionalSensitiveStringWithLengthAtLeast("test description", 1)
+func TestResourceOptionalSensitiveStringWithLengthAtLeast(t *testing.T) {
+	attr := ResourceOptionalSensitiveStringWithLengthAtLeast("test description", 1)
 
 	if !attr.IsOptional() || attr.IsRequired() {
-		t.Fatal("OptionalSensitiveStringWithLengthAtLeast should return an optional attribute")
+		t.Fatal("ResourceOptionalSensitiveStringWithLengthAtLeast should return an optional attribute")
 	}
 }
 
-func TestRequiredSensitiveStringWithLengthAtLeast(t *testing.T) {
-	attr := RequiredSensitiveStringWithLengthAtLeast("test description", 1)
+func TestResourceRequiredSensitiveStringWithLengthAtLeast(t *testing.T) {
+	attr := ResourceRequiredSensitiveStringWithLengthAtLeast("test description", 1)
 
 	if !attr.IsRequired() || attr.IsOptional() {
-		t.Fatal("RequiredSensitiveStringWithLengthAtLeast should return a required attribute")
+		t.Fatal("ResourceRequiredSensitiveStringWithLengthAtLeast should return a required attribute")
 	}
 }
 
-func TestRequiredStringWithRegexAndLength(t *testing.T) {
+func TestResourceRequiredStringWithRegexAndLength(t *testing.T) {
 	pattern := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
-	attr := RequiredStringWithRegexAndLength("test description", pattern, "must be alphanumeric", 1, 100)
+	attr := ResourceRequiredStringWithRegexAndLength("test description", pattern, "must be alphanumeric", 1, 100)
 
 	if !attr.IsRequired() || attr.IsOptional() {
-		t.Fatal("RequiredStringWithRegexAndLength should return a required attribute")
+		t.Fatal("ResourceRequiredStringWithRegexAndLength should return a required attribute")
 	}
 }
 
-func TestOptionalStringWithRegexAndLength(t *testing.T) {
+func TestResourceOptionalStringWithRegexAndLength(t *testing.T) {
 	pattern := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
-	attr := OptionalStringWithRegexAndLength("test description", pattern, "must be alphanumeric", 1, 100)
+	attr := ResourceOptionalStringWithRegexAndLength("test description", pattern, "must be alphanumeric", 1, 100)
 
 	if !attr.IsOptional() || attr.IsRequired() {
-		t.Fatal("OptionalStringWithRegexAndLength should return an optional attribute")
+		t.Fatal("ResourceOptionalStringWithRegexAndLength should return an optional attribute")
 	}
 }
 
-// Int64 Validator Tests
+// Resource Int64 Validator Tests
 
-func TestRequiredInt64WithRange(t *testing.T) {
-	attr := RequiredInt64WithRange("test description", 1, 100)
+func TestResourceRequiredInt64WithRange(t *testing.T) {
+	attr := ResourceRequiredInt64WithRange("test description", 1, 100)
 
 	if !attr.IsRequired() || attr.IsOptional() {
-		t.Fatal("RequiredInt64WithRange should return a required attribute")
+		t.Fatal("ResourceRequiredInt64WithRange should return a required attribute")
 	}
 	if attr.GetMarkdownDescription() != "test description" {
 		t.Fatal("description mismatch")
 	}
 }
 
-func TestOptionalInt64WithRange(t *testing.T) {
-	attr := OptionalInt64WithRange("test description", 1, 100)
+func TestResourceOptionalInt64WithRange(t *testing.T) {
+	attr := ResourceOptionalInt64WithRange("test description", 1, 100)
 
 	if !attr.IsOptional() || attr.IsRequired() {
-		t.Fatal("OptionalInt64WithRange should return an optional attribute")
+		t.Fatal("ResourceOptionalInt64WithRange should return an optional attribute")
 	}
 }
 
-func TestComputedInt64WithRange(t *testing.T) {
-	attr := ComputedInt64WithRange("test description", 1, 100)
+func TestResourceComputedInt64WithRange(t *testing.T) {
+	attr := ResourceComputedInt64WithRange("test description", 1, 100)
 
 	if !attr.IsComputed() {
-		t.Fatal("ComputedInt64WithRange should return a computed attribute")
+		t.Fatal("ResourceComputedInt64WithRange should return a computed attribute")
 	}
 }
 
-func TestInt64WithValidators(t *testing.T) {
-	attr := Int64WithValidators("test description")
+func TestResourceInt64WithValidators(t *testing.T) {
+	attr := ResourceInt64WithValidators("test description")
 
 	if !attr.IsRequired() || attr.IsOptional() {
-		t.Fatal("Int64WithValidators should return a required attribute by default")
+		t.Fatal("ResourceInt64WithValidators should return a required attribute by default")
 	}
 	if attr.GetMarkdownDescription() != "test description" {
 		t.Fatal("description mismatch")
 	}
 }
 
-func TestOptionalInt64WithValidators(t *testing.T) {
-	attr := OptionalInt64WithValidators("test description")
+func TestResourceOptionalInt64WithValidators(t *testing.T) {
+	attr := ResourceOptionalInt64WithValidators("test description")
 
 	if !attr.IsOptional() || attr.IsRequired() {
-		t.Fatal("OptionalInt64WithValidators should return an optional attribute")
+		t.Fatal("ResourceOptionalInt64WithValidators should return an optional attribute")
 	}
 }
 
-func TestRequiredInt64WithValidators(t *testing.T) {
-	attr := RequiredInt64WithValidators("test description")
+func TestResourceRequiredInt64WithValidators(t *testing.T) {
+	attr := ResourceRequiredInt64WithValidators("test description")
 
 	if !attr.IsRequired() || attr.IsOptional() {
-		t.Fatal("RequiredInt64WithValidators should return a required attribute")
+		t.Fatal("ResourceRequiredInt64WithValidators should return a required attribute")
 	}
 }
 
-func TestComputedInt64WithValidators(t *testing.T) {
-	attr := ComputedInt64WithValidators("test description")
+func TestResourceComputedInt64WithValidators(t *testing.T) {
+	attr := ResourceComputedInt64WithValidators("test description")
 
 	if !attr.IsComputed() {
-		t.Fatal("ComputedInt64WithValidators should return a computed attribute")
+		t.Fatal("ResourceComputedInt64WithValidators should return a computed attribute")
+	}
+}
+
+// DataSource String Validator Tests
+
+func TestDataSourceRequiredStringWithRegex(t *testing.T) {
+	pattern := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
+	attr := DataSourceRequiredStringWithRegex("test description", pattern, "must be alphanumeric")
+
+	if !attr.IsRequired() || attr.IsOptional() {
+		t.Fatal("DataSourceRequiredStringWithRegex should return a required attribute")
+	}
+	if attr.GetMarkdownDescription() != "test description" {
+		t.Fatal("description mismatch")
+	}
+}
+
+func TestDataSourceOptionalStringWithRegex(t *testing.T) {
+	pattern := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
+	attr := DataSourceOptionalStringWithRegex("test description", pattern, "must be alphanumeric")
+
+	if !attr.IsOptional() || attr.IsRequired() {
+		t.Fatal("DataSourceOptionalStringWithRegex should return an optional attribute")
+	}
+}
+
+func TestDataSourceComputedStringWithRegex(t *testing.T) {
+	pattern := regexp.MustCompile(`^[a-zA-Z0-9]+$`)
+	attr := DataSourceComputedStringWithRegex("test description", pattern, "must be alphanumeric")
+
+	if !attr.IsComputed() {
+		t.Fatal("DataSourceComputedStringWithRegex should return a computed attribute")
+	}
+}
+
+func TestDataSourceStringWithValidators(t *testing.T) {
+	attr := DataSourceStringWithValidators("test description")
+
+	if !attr.IsRequired() || attr.IsOptional() {
+		t.Fatal("DataSourceStringWithValidators should return a required attribute by default")
+	}
+	if attr.GetMarkdownDescription() != "test description" {
+		t.Fatal("description mismatch")
+	}
+}
+
+func TestDataSourceRequiredInt64WithRange(t *testing.T) {
+	attr := DataSourceRequiredInt64WithRange("test description", 1, 100)
+
+	if !attr.IsRequired() || attr.IsOptional() {
+		t.Fatal("DataSourceRequiredInt64WithRange should return a required attribute")
+	}
+	if attr.GetMarkdownDescription() != "test description" {
+		t.Fatal("description mismatch")
+	}
+}
+
+func TestDataSourceOptionalInt64WithRange(t *testing.T) {
+	attr := DataSourceOptionalInt64WithRange("test description", 1, 100)
+
+	if !attr.IsOptional() || attr.IsRequired() {
+		t.Fatal("DataSourceOptionalInt64WithRange should return an optional attribute")
 	}
 }
