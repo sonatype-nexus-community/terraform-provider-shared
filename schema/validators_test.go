@@ -234,6 +234,48 @@ func TestResourceComputedInt64WithValidators(t *testing.T) {
 	}
 }
 
+func TestResourceOptionalInt64WithDefaultAndValidators(t *testing.T) {
+	attr := ResourceOptionalInt64WithDefaultAndValidators("test description", 42)
+
+	if !attr.IsOptional() || !attr.IsComputed() {
+		t.Fatal("ResourceOptionalInt64WithDefaultAndValidators should return optional and computed attribute")
+	}
+	if attr.Default == nil {
+		t.Fatal("ResourceOptionalInt64WithDefaultAndValidators should have default value")
+	}
+	if attr.GetMarkdownDescription() != "test description" {
+		t.Fatal("description mismatch")
+	}
+}
+
+func TestResourceRequiredInt64WithDefaultAndValidators(t *testing.T) {
+	attr := ResourceRequiredInt64WithDefaultAndValidators("test description", 42)
+
+	if !attr.IsRequired() {
+		t.Fatal("ResourceRequiredInt64WithDefaultAndValidators should return required attribute")
+	}
+	if attr.Default == nil {
+		t.Fatal("ResourceRequiredInt64WithDefaultAndValidators should have default value")
+	}
+	if attr.GetMarkdownDescription() != "test description" {
+		t.Fatal("description mismatch")
+	}
+}
+
+func TestResourceComputedInt64WithDefaultAndValidators(t *testing.T) {
+	attr := ResourceComputedInt64WithDefaultAndValidators("test description", 42)
+
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedInt64WithDefaultAndValidators should return computed attribute")
+	}
+	if attr.Default == nil {
+		t.Fatal("ResourceComputedInt64WithDefaultAndValidators should have default value")
+	}
+	if attr.GetMarkdownDescription() != "test description" {
+		t.Fatal("description mismatch")
+	}
+}
+
 // DataSource String Validator Tests
 
 func TestDataSourceRequiredStringWithRegex(t *testing.T) {

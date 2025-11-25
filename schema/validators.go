@@ -24,6 +24,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
 
@@ -365,6 +366,46 @@ func ResourceComputedInt64WithValidators(description string, validators ...valid
 	attr := resourceschema.Int64Attribute{
 		MarkdownDescription: description,
 		Computed:            true,
+	}
+	if len(validators) > 0 {
+		attr.Validators = validators
+	}
+	return attr
+}
+
+// ResourceOptionalInt64WithDefaultAndValidators returns an optional int64 attribute with default value and validators
+func ResourceOptionalInt64WithDefaultAndValidators(description string, defaultValue int64, validators ...validator.Int64) resourceschema.Int64Attribute {
+	attr := resourceschema.Int64Attribute{
+		MarkdownDescription: description,
+		Optional:            true,
+		Computed:            true,
+		Default:             int64default.StaticInt64(defaultValue),
+	}
+	if len(validators) > 0 {
+		attr.Validators = validators
+	}
+	return attr
+}
+
+// ResourceRequiredInt64WithDefaultAndValidators returns a required int64 attribute with default value and validators
+func ResourceRequiredInt64WithDefaultAndValidators(description string, defaultValue int64, validators ...validator.Int64) resourceschema.Int64Attribute {
+	attr := resourceschema.Int64Attribute{
+		MarkdownDescription: description,
+		Required:            true,
+		Default:             int64default.StaticInt64(defaultValue),
+	}
+	if len(validators) > 0 {
+		attr.Validators = validators
+	}
+	return attr
+}
+
+// ResourceComputedInt64WithDefaultAndValidators returns a computed int64 attribute with default value and validators
+func ResourceComputedInt64WithDefaultAndValidators(description string, defaultValue int64, validators ...validator.Int64) resourceschema.Int64Attribute {
+	attr := resourceschema.Int64Attribute{
+		MarkdownDescription: description,
+		Computed:            true,
+		Default:             int64default.StaticInt64(defaultValue),
 	}
 	if len(validators) > 0 {
 		attr.Validators = validators
