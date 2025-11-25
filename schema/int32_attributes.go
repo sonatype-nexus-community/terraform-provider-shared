@@ -19,7 +19,7 @@ package schema
 import (
 	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int32default"
 )
 
 // ========================================
@@ -27,52 +27,51 @@ import (
 // ========================================
 
 // ResourceRequiredInt32 returns a required int32 attribute
-// Note: Terraform uses Int64Attribute internally, so int32 values are wrapped as int64
-func ResourceRequiredInt32(description string) resourceschema.Int64Attribute {
-	return newResourceInt64Attribute(int64AttributeConfig{
+func ResourceRequiredInt32(description string) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
 		description: description,
 		required:    true,
 	})
 }
 
 // ResourceOptionalInt32 returns an optional int32 attribute
-func ResourceOptionalInt32(description string) resourceschema.Int64Attribute {
-	return newResourceInt64Attribute(int64AttributeConfig{
+func ResourceOptionalInt32(description string) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
 		description: description,
 		optional:    true,
 	})
 }
 
 // ResourceComputedInt32 returns a computed int32 attribute
-func ResourceComputedInt32(description string) resourceschema.Int64Attribute {
-	return newResourceInt64Attribute(int64AttributeConfig{
+func ResourceComputedInt32(description string) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
 		description: description,
 		computed:    true,
 	})
 }
 
 // ResourceComputedInt32WithDefault returns a computed int32 attribute with a default value
-func ResourceComputedInt32WithDefault(description string, defaultValue int32) resourceschema.Int64Attribute {
-	return newResourceInt64Attribute(int64AttributeConfig{
+func ResourceComputedInt32WithDefault(description string, defaultValue int32) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
 		description:  description,
 		computed:     true,
-		defaultValue: int64default.StaticInt64(int64(defaultValue)),
+		defaultValue: int32default.StaticInt32(defaultValue),
 	})
 }
 
 // ResourceOptionalInt32WithDefault returns an optional int32 attribute with a default value
-func ResourceOptionalInt32WithDefault(description string, defaultValue int32) resourceschema.Int64Attribute {
-	return newResourceInt64Attribute(int64AttributeConfig{
+func ResourceOptionalInt32WithDefault(description string, defaultValue int32) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
 		description:  description,
 		optional:     true,
 		computed:     true,
-		defaultValue: int64default.StaticInt64(int64(defaultValue)),
+		defaultValue: int32default.StaticInt32(defaultValue),
 	})
 }
 
 // ResourceComputedOptionalInt32 returns a computed optional int32 attribute
-func ResourceComputedOptionalInt32(description string) resourceschema.Int64Attribute {
-	return newResourceInt64Attribute(int64AttributeConfig{
+func ResourceComputedOptionalInt32(description string) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
 		description: description,
 		optional:    true,
 		computed:    true,
@@ -80,11 +79,11 @@ func ResourceComputedOptionalInt32(description string) resourceschema.Int64Attri
 }
 
 // ResourceRequiredInt32WithDefault returns a required int32 attribute with a default value
-func ResourceRequiredInt32WithDefault(description string, defaultValue int32) resourceschema.Int64Attribute {
-	return newResourceInt64Attribute(int64AttributeConfig{
+func ResourceRequiredInt32WithDefault(description string, defaultValue int32) resourceschema.Int32Attribute {
+	return newResourceInt32Attribute(int32AttributeConfig{
 		description:  description,
 		required:     true,
-		defaultValue: int64default.StaticInt64(int64(defaultValue)),
+		defaultValue: int32default.StaticInt32(defaultValue),
 	})
 }
 
@@ -93,16 +92,16 @@ func ResourceRequiredInt32WithDefault(description string, defaultValue int32) re
 // ========================================
 
 // DataSourceComputedInt32 returns a computed int32 attribute for data sources
-func DataSourceComputedInt32(description string) datasourceschema.Int64Attribute {
-	return newDataSourceInt64Attribute(int64AttributeConfig{
+func DataSourceComputedInt32(description string) datasourceschema.Int32Attribute {
+	return newDataSourceInt32Attribute(int32AttributeConfig{
 		description: description,
 		computed:    true,
 	})
 }
 
 // DataSourceOptionalInt32 returns an optional int32 attribute for data sources
-func DataSourceOptionalInt32(description string) datasourceschema.Int64Attribute {
-	return newDataSourceInt64Attribute(int64AttributeConfig{
+func DataSourceOptionalInt32(description string) datasourceschema.Int32Attribute {
+	return newDataSourceInt32Attribute(int32AttributeConfig{
 		description: description,
 		optional:    true,
 	})
