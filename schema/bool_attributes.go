@@ -65,9 +65,9 @@ func ResourceOptionalBoolWithDefault(description string, defaultValue bool) reso
 // ResourceComputedOptionalBool returns a computed optional boolean (persists state for unknown)
 func ResourceComputedOptionalBool(description string) resourceschema.BoolAttribute {
 	return newResourceBoolAttribute(boolAttributeConfig{
-		description:   description,
-		optional:      true,
-		computed:      true,
+		description: description,
+		optional:    true,
+		computed:    true,
 		planModifiers: []planmodifier.Bool{
 			boolplanmodifier.UseStateForUnknown(),
 		},
@@ -170,5 +170,14 @@ func DataSourceOptionalBool(description string) datasourceschema.BoolAttribute {
 	return newDataSourceBoolAttribute(boolAttributeConfig{
 		description: description,
 		optional:    true,
+	})
+}
+
+// DataSourceComputedOptionalBool returns a computed optional boolean attribute for data sources
+func DataSourceComputedOptionalBool(description string) datasourceschema.BoolAttribute {
+	return newDataSourceBoolAttribute(boolAttributeConfig{
+		description: description,
+		optional:    true,
+		computed:    true,
 	})
 }

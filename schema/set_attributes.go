@@ -240,6 +240,15 @@ func ResourceComputedBoolSetWithValidator(description string, validators ...vali
 // Data Source Schema Functions - String Sets
 // ========================================
 
+// DataSourceRequiredStringSet returns a required set attribute with string elements for data sources
+func DataSourceRequiredStringSet(description string) datasourceschema.SetAttribute {
+	return newDataSourceSetAttribute(collectionConfig{
+		description: description,
+		elementType: types.StringType,
+		required:    true,
+	})
+}
+
 // DataSourceOptionalStringSet returns an optional set attribute with string elements for data sources
 func DataSourceOptionalStringSet(description string) datasourceschema.SetAttribute {
 	return newDataSourceSetAttribute(collectionConfig{

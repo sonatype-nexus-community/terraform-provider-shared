@@ -290,8 +290,19 @@ func DataSourceRequiredString(description string) datasourceschema.StringAttribu
 	})
 }
 
-// DataSourceStringEnum returns a string attribute with enum validation for data sources
-func DataSourceStringEnum(description string, enumValues ...string) datasourceschema.StringAttribute {
+// DataSourceRequiredStringEnum returns a required string attribute with enum validation for data sources
+func DataSourceRequiredStringEnum(description string, enumValues ...string) datasourceschema.StringAttribute {
+	return newDataSourceStringAttribute(stringAttributeConfig{
+		description: description,
+		required:    true,
+		validators: []validator.String{
+			stringvalidator.OneOf(enumValues...),
+		},
+	})
+}
+
+// DataSourceOptionalStringEnum returns an optional string attribute with enum validation for data sources
+func DataSourceOptionalStringEnum(description string, enumValues ...string) datasourceschema.StringAttribute {
 	return newDataSourceStringAttribute(stringAttributeConfig{
 		description: description,
 		optional:    true,
