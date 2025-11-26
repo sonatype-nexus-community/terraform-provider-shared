@@ -20,6 +20,7 @@ import (
 	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/float64validator"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int32validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -225,35 +226,34 @@ func ResourceOptionalStringWithRegexAndLength(description string, pattern *regex
 // ============================================================================
 
 // ResourceRequiredInt32WithRange returns a required int32 attribute with range validation
-// Note: int32 values are wrapped as int64 internally
-func ResourceRequiredInt32WithRange(description string, minValue, maxValue int32) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
+func ResourceRequiredInt32WithRange(description string, minValue, maxValue int32) resourceschema.Int32Attribute {
+	return resourceschema.Int32Attribute{
 		MarkdownDescription: description,
 		Required:            true,
-		Validators: []validator.Int64{
-			int64validator.Between(int64(minValue), int64(maxValue)),
+		Validators: []validator.Int32{
+			int32validator.Between(minValue, maxValue),
 		},
 	}
 }
 
 // ResourceOptionalInt32WithRange returns an optional int32 attribute with range validation
-func ResourceOptionalInt32WithRange(description string, minValue, maxValue int32) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
+func ResourceOptionalInt32WithRange(description string, minValue, maxValue int32) resourceschema.Int32Attribute {
+	return resourceschema.Int32Attribute{
 		MarkdownDescription: description,
 		Optional:            true,
-		Validators: []validator.Int64{
-			int64validator.Between(int64(minValue), int64(maxValue)),
+		Validators: []validator.Int32{
+			int32validator.Between(minValue, maxValue),
 		},
 	}
 }
 
 // ResourceComputedInt32WithRange returns a computed int32 attribute with range validation
-func ResourceComputedInt32WithRange(description string, minValue, maxValue int32) resourceschema.Int64Attribute {
-	return resourceschema.Int64Attribute{
+func ResourceComputedInt32WithRange(description string, minValue, maxValue int32) resourceschema.Int32Attribute {
+	return resourceschema.Int32Attribute{
 		MarkdownDescription: description,
 		Computed:            true,
-		Validators: []validator.Int64{
-			int64validator.Between(int64(minValue), int64(maxValue)),
+		Validators: []validator.Int32{
+			int32validator.Between(minValue, maxValue),
 		},
 	}
 }
@@ -664,34 +664,34 @@ func DataSourceOptionalStringWithRegexAndLength(description string, pattern *reg
 // ============================================================================
 
 // DataSourceRequiredInt32WithRange returns a required int32 attribute with range validation for data sources
-func DataSourceRequiredInt32WithRange(description string, minValue, maxValue int32) datasourceschema.Int64Attribute {
-	return datasourceschema.Int64Attribute{
+func DataSourceRequiredInt32WithRange(description string, minValue, maxValue int32) datasourceschema.Int32Attribute {
+	return datasourceschema.Int32Attribute{
 		MarkdownDescription: description,
 		Required:            true,
-		Validators: []validator.Int64{
-			int64validator.Between(int64(minValue), int64(maxValue)),
+		Validators: []validator.Int32{
+			int32validator.Between(minValue, maxValue),
 		},
 	}
 }
 
 // DataSourceOptionalInt32WithRange returns an optional int32 attribute with range validation for data sources
-func DataSourceOptionalInt32WithRange(description string, minValue, maxValue int32) datasourceschema.Int64Attribute {
-	return datasourceschema.Int64Attribute{
+func DataSourceOptionalInt32WithRange(description string, minValue, maxValue int32) datasourceschema.Int32Attribute {
+	return datasourceschema.Int32Attribute{
 		MarkdownDescription: description,
 		Optional:            true,
-		Validators: []validator.Int64{
-			int64validator.Between(int64(minValue), int64(maxValue)),
+		Validators: []validator.Int32{
+			int32validator.Between(minValue, maxValue),
 		},
 	}
 }
 
 // DataSourceComputedInt32WithRange returns a computed int32 attribute with range validation for data sources
-func DataSourceComputedInt32WithRange(description string, minValue, maxValue int32) datasourceschema.Int64Attribute {
-	return datasourceschema.Int64Attribute{
+func DataSourceComputedInt32WithRange(description string, minValue, maxValue int32) datasourceschema.Int32Attribute {
+	return datasourceschema.Int32Attribute{
 		MarkdownDescription: description,
 		Computed:            true,
-		Validators: []validator.Int64{
-			int64validator.Between(int64(minValue), int64(maxValue)),
+		Validators: []validator.Int32{
+			int32validator.Between(minValue, maxValue),
 		},
 	}
 }
