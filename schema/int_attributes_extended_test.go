@@ -85,6 +85,55 @@ func TestResourceRequiredInt64WithDefault(t *testing.T) {
 	}
 }
 
+func TestResourceComputedOptionalInt64WithDefault(t *testing.T) {
+	attr := ResourceComputedOptionalInt64WithDefault("test description", 42)
+	if !attr.IsOptional() {
+		t.Fatal("ResourceComputedOptionalInt64WithDefault should return optional attribute")
+	}
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedOptionalInt64WithDefault should return computed attribute")
+	}
+	if attr.Default == nil {
+		t.Fatal("ResourceComputedOptionalInt64WithDefault should have default value")
+	}
+}
+
+func TestResourceOptionalInt64WithDefaultAndPlanModifier(t *testing.T) {
+	attr := ResourceOptionalInt64WithDefaultAndPlanModifier("test description", 42)
+	if !attr.IsOptional() {
+		t.Fatal("ResourceOptionalInt64WithDefaultAndPlanModifier should return optional attribute")
+	}
+	if !attr.IsComputed() {
+		t.Fatal("ResourceOptionalInt64WithDefaultAndPlanModifier should return computed attribute")
+	}
+	if attr.Default == nil {
+		t.Fatal("ResourceOptionalInt64WithDefaultAndPlanModifier should have default value")
+	}
+}
+
+func TestResourceComputedInt64WithDefaultAndPlanModifier(t *testing.T) {
+	attr := ResourceComputedInt64WithDefaultAndPlanModifier("test description", 42)
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedInt64WithDefaultAndPlanModifier should return computed attribute")
+	}
+	if attr.Default == nil {
+		t.Fatal("ResourceComputedInt64WithDefaultAndPlanModifier should have default value")
+	}
+}
+
+func TestResourceComputedOptionalInt64WithDefaultAndPlanModifier(t *testing.T) {
+	attr := ResourceComputedOptionalInt64WithDefaultAndPlanModifier("test description", 42)
+	if !attr.IsOptional() {
+		t.Fatal("ResourceComputedOptionalInt64WithDefaultAndPlanModifier should return optional attribute")
+	}
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedOptionalInt64WithDefaultAndPlanModifier should return computed attribute")
+	}
+	if attr.Default == nil {
+		t.Fatal("ResourceComputedOptionalInt64WithDefaultAndPlanModifier should have default value")
+	}
+}
+
 func TestResourceOptionalPort(t *testing.T) {
 	attr := ResourceOptionalPort("test port")
 	if !attr.IsOptional() {

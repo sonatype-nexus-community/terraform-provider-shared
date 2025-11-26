@@ -62,6 +62,16 @@ func ResourceOptionalString(description string) resourceschema.StringAttribute {
 	})
 }
 
+// ResourceOptionalStringWithDefault returns an optional string attribute with a default value
+func ResourceOptionalStringWithDefault(description string, defaultValue string) resourceschema.StringAttribute {
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: stringdefault.StaticString(defaultValue),
+	})
+}
+
 // ResourceComputedString returns a computed string attribute with the given description
 func ResourceComputedString(description string) resourceschema.StringAttribute {
 	return newResourceStringAttribute(stringAttributeConfig{

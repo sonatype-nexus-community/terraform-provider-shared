@@ -20,6 +20,7 @@ import (
 	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/float64default"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 )
 
 // ========================================
@@ -84,6 +85,48 @@ func ResourceRequiredFloat64WithDefault(description string, defaultValue float64
 		description:  description,
 		required:     true,
 		defaultValue: float64default.StaticFloat64(defaultValue),
+	})
+}
+
+// ResourceComputedOptionalFloat64WithDefault returns a computed optional float64 attribute with a default value
+func ResourceComputedOptionalFloat64WithDefault(description string, defaultValue float64) resourceschema.Float64Attribute {
+	return newResourceFloat64Attribute(float64AttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: float64default.StaticFloat64(defaultValue),
+	})
+}
+
+// ResourceOptionalFloat64WithDefaultAndPlanModifier returns an optional float64 attribute with default and plan modifiers
+func ResourceOptionalFloat64WithDefaultAndPlanModifier(description string, defaultValue float64, planMods ...planmodifier.Float64) resourceschema.Float64Attribute {
+	return newResourceFloat64Attribute(float64AttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		defaultValue:  float64default.StaticFloat64(defaultValue),
+		planModifiers: planMods,
+	})
+}
+
+// ResourceComputedFloat64WithDefaultAndPlanModifier returns a computed float64 attribute with default and plan modifiers
+func ResourceComputedFloat64WithDefaultAndPlanModifier(description string, defaultValue float64, planMods ...planmodifier.Float64) resourceschema.Float64Attribute {
+	return newResourceFloat64Attribute(float64AttributeConfig{
+		description:   description,
+		computed:      true,
+		defaultValue:  float64default.StaticFloat64(defaultValue),
+		planModifiers: planMods,
+	})
+}
+
+// ResourceComputedOptionalFloat64WithDefaultAndPlanModifier returns a computed optional float64 attribute with default and plan modifiers
+func ResourceComputedOptionalFloat64WithDefaultAndPlanModifier(description string, defaultValue float64, planMods ...planmodifier.Float64) resourceschema.Float64Attribute {
+	return newResourceFloat64Attribute(float64AttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		defaultValue:  float64default.StaticFloat64(defaultValue),
+		planModifiers: planMods,
 	})
 }
 

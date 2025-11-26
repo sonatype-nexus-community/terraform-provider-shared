@@ -20,6 +20,7 @@ import (
 	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64default"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 )
 
 // ========================================
@@ -84,6 +85,48 @@ func ResourceRequiredInt64WithDefault(description string, defaultValue int64) re
 		description:  description,
 		required:     true,
 		defaultValue: int64default.StaticInt64(defaultValue),
+	})
+}
+
+// ResourceComputedOptionalInt64WithDefault returns a computed optional int64 attribute with a default value
+func ResourceComputedOptionalInt64WithDefault(description string, defaultValue int64) resourceschema.Int64Attribute {
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description:  description,
+		optional:     true,
+		computed:     true,
+		defaultValue: int64default.StaticInt64(defaultValue),
+	})
+}
+
+// ResourceOptionalInt64WithDefaultAndPlanModifier returns an optional int64 attribute with default and plan modifiers
+func ResourceOptionalInt64WithDefaultAndPlanModifier(description string, defaultValue int64, planMods ...planmodifier.Int64) resourceschema.Int64Attribute {
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		defaultValue:  int64default.StaticInt64(defaultValue),
+		planModifiers: planMods,
+	})
+}
+
+// ResourceComputedInt64WithDefaultAndPlanModifier returns a computed int64 attribute with default and plan modifiers
+func ResourceComputedInt64WithDefaultAndPlanModifier(description string, defaultValue int64, planMods ...planmodifier.Int64) resourceschema.Int64Attribute {
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description:   description,
+		computed:      true,
+		defaultValue:  int64default.StaticInt64(defaultValue),
+		planModifiers: planMods,
+	})
+}
+
+// ResourceComputedOptionalInt64WithDefaultAndPlanModifier returns a computed optional int64 attribute with default and plan modifiers
+func ResourceComputedOptionalInt64WithDefaultAndPlanModifier(description string, defaultValue int64, planMods ...planmodifier.Int64) resourceschema.Int64Attribute {
+	return newResourceInt64Attribute(int64AttributeConfig{
+		description:   description,
+		optional:      true,
+		computed:      true,
+		defaultValue:  int64default.StaticInt64(defaultValue),
+		planModifiers: planMods,
 	})
 }
 

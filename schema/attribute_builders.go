@@ -123,12 +123,13 @@ func newDataSourceBoolAttribute(config boolAttributeConfig) datasourceschema.Boo
 
 // int64AttributeConfig holds configuration for int64 attribute builders
 type int64AttributeConfig struct {
-	description  string
-	required     bool
-	optional     bool
-	computed     bool
-	defaultValue defaults.Int64
-	validators   []validator.Int64
+	description   string
+	required      bool
+	optional      bool
+	computed      bool
+	defaultValue  defaults.Int64
+	validators    []validator.Int64
+	planModifiers []planmodifier.Int64
 }
 
 // newResourceInt64Attribute creates a resource int64 attribute from config
@@ -144,6 +145,9 @@ func newResourceInt64Attribute(config int64AttributeConfig) resourceschema.Int64
 	}
 	if len(config.validators) > 0 {
 		attr.Validators = config.validators
+	}
+	if len(config.planModifiers) > 0 {
+		attr.PlanModifiers = config.planModifiers
 	}
 	return attr
 }
@@ -215,12 +219,13 @@ func newDataSourceInt32Attribute(config int32AttributeConfig) datasourceschema.I
 
 // float64AttributeConfig holds configuration for float64 attribute builders
 type float64AttributeConfig struct {
-	description  string
-	required     bool
-	optional     bool
-	computed     bool
-	defaultValue defaults.Float64
-	validators   []validator.Float64
+	description   string
+	required      bool
+	optional      bool
+	computed      bool
+	defaultValue  defaults.Float64
+	validators    []validator.Float64
+	planModifiers []planmodifier.Float64
 }
 
 // newResourceFloat64Attribute creates a resource float64 attribute from config
@@ -236,6 +241,9 @@ func newResourceFloat64Attribute(config float64AttributeConfig) resourceschema.F
 	}
 	if len(config.validators) > 0 {
 		attr.Validators = config.validators
+	}
+	if len(config.planModifiers) > 0 {
+		attr.PlanModifiers = config.planModifiers
 	}
 	return attr
 }

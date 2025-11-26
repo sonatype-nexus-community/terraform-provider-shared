@@ -51,6 +51,16 @@ func TestResourceOptionalString(t *testing.T) {
 	}
 }
 
+func TestResourceOptionalStringWithDefault(t *testing.T) {
+	attr := ResourceOptionalStringWithDefault("test description", "default value")
+	if !attr.IsOptional() || !attr.IsComputed() {
+		t.Fatal("ResourceOptionalStringWithDefault should return an optional and computed string attribute")
+	}
+	if attr.GetMarkdownDescription() != "test description" {
+		t.Fatal("ResourceOptionalStringWithDefault should have the provided description")
+	}
+}
+
 func TestResourceSensitiveString(t *testing.T) {
 	attr := ResourceSensitiveString("password")
 	if !attr.IsOptional() {
