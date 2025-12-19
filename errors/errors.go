@@ -136,6 +136,27 @@ func AddTimeoutDiagnostic(diags *diag.Diagnostics, operation string, resourceTyp
 	diags.AddError(title, message)
 }
 
+// AddForbiddenDiagnostic adds a standardized 403 Forbidden error to diagnostics
+func AddForbiddenDiagnostic(diags *diag.Diagnostics, operation string) {
+	title := fmt.Sprintf("Forbidden %s", operation)
+	message := fmt.Sprintf("You do not have permission to %s (HTTP 403). Please check your access credentials and permissions.", operation)
+	diags.AddError(title, message)
+}
+
+// AddServerErrorDiagnostic adds a standardized 5xx error to diagnostics
+func AddServerErrorDiagnostic(diags *diag.Diagnostics, message string, statusCode int) {
+	title := fmt.Sprintf("Server Error (%d)", statusCode)
+	details := fmt.Sprintf("The server returned an error (HTTP %d). Details: %s", statusCode, message)
+	diags.AddError(title, details)
+}
+
+// AddClientErrorDiagnostic adds a standardized 4xx error to diagnostics
+func AddClientErrorDiagnostic(diags *diag.Diagnostics, message string, statusCode int) {
+	title := fmt.Sprintf("Client Error (%d)", statusCode)
+	details := fmt.Sprintf("The request could not be processed (HTTP %d). Details: %s", statusCode, message)
+	diags.AddError(title, details)
+}
+
 // IsNotFound checks if an HTTP response is a 404
 func IsNotFound(statusCode int) bool {
 	return statusCode == http.StatusNotFound

@@ -275,6 +275,16 @@ func ResourceComputedStringWithPlanModifier(description string, planMods ...plan
 	})
 }
 
+// ResourceComputedStringWithDefaultAndPlanModifier returns a computed string attribute with default and plan modifiers
+func ResourceComputedStringWithDefaultAndPlanModifier(description string, defaultValue string, planMods ...planmodifier.String) resourceschema.StringAttribute {
+	return newResourceStringAttribute(stringAttributeConfig{
+		description:   description,
+		computed:      true,
+		defaultValue:  stringdefault.StaticString(defaultValue),
+		planModifiers: planMods,
+	})
+}
+
 // ========================================
 // Data Source Schema Functions
 // ========================================

@@ -203,3 +203,48 @@ func TestSourceAndReadOnlyAttributesFunc(t *testing.T) {
 		t.Fatal("SourceAndReadOnlyAttributes should return at least one attribute")
 	}
 }
+
+func TestResourceOptionalStringWithDefaultAndPlanModifier(t *testing.T) {
+	attr := ResourceOptionalStringWithDefaultAndPlanModifier("test description", "default value")
+	if !attr.IsOptional() {
+		t.Fatal("ResourceOptionalStringWithDefaultAndPlanModifier should return optional attribute")
+	}
+	if !attr.IsComputed() {
+		t.Fatal("ResourceOptionalStringWithDefaultAndPlanModifier should return computed attribute")
+	}
+	if attr.GetMarkdownDescription() != "test description" {
+		t.Fatal("ResourceOptionalStringWithDefaultAndPlanModifier should have the provided description")
+	}
+	if attr.Default == nil {
+		t.Fatal("ResourceOptionalStringWithDefaultAndPlanModifier should have a default value")
+	}
+}
+
+func TestResourceComputedStringWithDefaultAndPlanModifier(t *testing.T) {
+	attr := ResourceComputedStringWithDefaultAndPlanModifier("test description", "default value")
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedStringWithDefaultAndPlanModifier should return computed attribute")
+	}
+	if attr.GetMarkdownDescription() != "test description" {
+		t.Fatal("ResourceComputedStringWithDefaultAndPlanModifier should have the provided description")
+	}
+	if attr.Default == nil {
+		t.Fatal("ResourceComputedStringWithDefaultAndPlanModifier should have a default value")
+	}
+}
+
+func TestResourceComputedOptionalStringWithDefaultAndPlanModifier(t *testing.T) {
+	attr := ResourceComputedOptionalStringWithDefaultAndPlanModifier("test description", "default value")
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedOptionalStringWithDefaultAndPlanModifier should return computed attribute")
+	}
+	if !attr.IsOptional() {
+		t.Fatal("ResourceComputedOptionalStringWithDefaultAndPlanModifier should return optional attribute")
+	}
+	if attr.GetMarkdownDescription() != "test description" {
+		t.Fatal("ResourceComputedOptionalStringWithDefaultAndPlanModifier should have the provided description")
+	}
+	if attr.Default == nil {
+		t.Fatal("ResourceComputedOptionalStringWithDefaultAndPlanModifier should have a default value")
+	}
+}

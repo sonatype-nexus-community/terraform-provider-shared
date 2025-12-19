@@ -101,3 +101,69 @@ func TestResourceComputedListNestedAttribute(t *testing.T) {
 		t.Fatal("ResourceComputedListNestedAttribute should return computed attribute")
 	}
 }
+
+func TestResourceComputedOptionalListNestedAttribute(t *testing.T) {
+	nestedObject := resourceschema.NestedAttributeObject{
+		Attributes: map[string]resourceschema.Attribute{
+			"test": ResourceComputedString("test attr"),
+		},
+	}
+	attr := ResourceComputedOptionalListNestedAttribute("test description", nestedObject)
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedOptionalListNestedAttribute should return computed attribute")
+	}
+	if !attr.IsOptional() {
+		t.Fatal("ResourceComputedOptionalListNestedAttribute should return optional attribute")
+	}
+}
+
+func TestResourceRequiredSetNestedAttribute(t *testing.T) {
+	nestedObject := resourceschema.NestedAttributeObject{
+		Attributes: map[string]resourceschema.Attribute{
+			"test": ResourceRequiredString("test attr"),
+		},
+	}
+	attr := ResourceRequiredSetNestedAttribute("test description", nestedObject)
+	if !attr.IsRequired() {
+		t.Fatal("ResourceRequiredSetNestedAttribute should return required attribute")
+	}
+}
+
+func TestResourceOptionalSetNestedAttribute(t *testing.T) {
+	nestedObject := resourceschema.NestedAttributeObject{
+		Attributes: map[string]resourceschema.Attribute{
+			"test": ResourceOptionalString("test attr"),
+		},
+	}
+	attr := ResourceOptionalSetNestedAttribute("test description", nestedObject)
+	if !attr.IsOptional() {
+		t.Fatal("ResourceOptionalSetNestedAttribute should return optional attribute")
+	}
+}
+
+func TestResourceComputedSetNestedAttribute(t *testing.T) {
+	nestedObject := resourceschema.NestedAttributeObject{
+		Attributes: map[string]resourceschema.Attribute{
+			"test": ResourceComputedString("test attr"),
+		},
+	}
+	attr := ResourceComputedSetNestedAttribute("test description", nestedObject)
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedSetNestedAttribute should return computed attribute")
+	}
+}
+
+func TestResourceComputedOptionalSetNestedAttribute(t *testing.T) {
+	nestedObject := resourceschema.NestedAttributeObject{
+		Attributes: map[string]resourceschema.Attribute{
+			"test": ResourceComputedString("test attr"),
+		},
+	}
+	attr := ResourceComputedOptionalSetNestedAttribute("test description", nestedObject)
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedOptionalSetNestedAttribute should return computed attribute")
+	}
+	if !attr.IsOptional() {
+		t.Fatal("ResourceComputedOptionalSetNestedAttribute should return optional attribute")
+	}
+}
