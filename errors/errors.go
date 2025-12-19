@@ -136,6 +136,27 @@ func AddTimeoutDiagnostic(diags *diag.Diagnostics, operation string, resourceTyp
 	diags.AddError(title, message)
 }
 
+// AddForbiddenDiagnostic adds a standardized 403 Forbidden error to diagnostics
+func AddForbiddenDiagnostic(diags *diag.Diagnostics, operation string) {
+	title := fmt.Sprintf("Forbidden %s", operation)
+	message := fmt.Sprintf("You do not have permission to %s (HTTP 403). Please check your access credentials and permissions.", operation)
+	diags.AddError(title, message)
+}
+
+// AddServerErrorDiagnostic adds a standardized 5xx error to diagnostics
+func AddServerErrorDiagnostic(diags *diag.Diagnostics, message string, statusCode int) {
+	title := fmt.Sprintf("Server Error (%d)", statusCode)
+	details := fmt.Sprintf("The server returned an error (HTTP %d). Details: %s", statusCode, message)
+	diags.AddError(title, details)
+}
+
+// AddClientErrorDiagnostic adds a standardized 4xx error to diagnostics
+func AddClientErrorDiagnostic(diags *diag.Diagnostics, message string, statusCode int) {
+	title := fmt.Sprintf("Client Error (%d)", statusCode)
+	details := fmt.Sprintf("The request could not be processed (HTTP %d). Details: %s", statusCode, message)
+	diags.AddError(title, details)
+}
+
 // IsNotFound checks if an HTTP response is a 404
 func IsNotFound(statusCode int) bool {
 	return statusCode == http.StatusNotFound
@@ -195,9 +216,13 @@ func HandleAPIError(message string, err *error, httpResponse *http.Response, res
 // HandleAPIWarning processes API warnings and adds them to diagnostics.
 // Use this for non-critical API issues that should be reported to the user.
 func HandleAPIWarning(message string, err *error, httpResponse *http.Response, respDiags *diag.Diagnostics) {
+	status := ""
+	if httpResponse != nil {
+		status = httpResponse.Status
+	}
 	respDiags.AddWarning(
 		message,
-		fmt.Sprintf("%s: %s: %s", *err, httpResponse.Status, extractResponseBody(httpResponse)),
+		fmt.Sprintf("%s: %s: %s", *err, status, extractResponseBody(httpResponse)),
 	)
 }
 
@@ -231,6 +256,9 @@ func detectNetworkError(err error) (bool, string) {
 // extractResponseBody reads and returns the body from an HTTP response.
 // This is a helper function for error reporting.
 func extractResponseBody(httpResponse *http.Response) []byte {
+	if httpResponse == nil || httpResponse.Body == nil {
+		return []byte{}
+	}
 	body, _ := io.ReadAll(httpResponse.Body)
 	err := httpResponse.Body.Close()
 	if err != nil {

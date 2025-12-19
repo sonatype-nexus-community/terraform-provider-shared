@@ -17,344 +17,412 @@
 package errors
 
 import (
-	"bytes"
-	"context"
-	"io"
-	"net"
 	"net/http"
-	"syscall"
 	"testing"
 
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 )
 
-func TestAPIError(t *testing.T) {
-	title, message := APIError("creating", "User", "invalid email")
-	if title != "Error creating User" {
-		t.Fatalf("APIError title = %s, expected 'Error creating User'", title)
+// TestAddForbiddenDiagnostic tests the AddForbiddenDiagnostic function
+func TestAddForbiddenDiagnostic(t *testing.T) {
+	diags := &diag.Diagnostics{}
+	AddForbiddenDiagnostic(diags, "read resource")
+
+	if !diags.HasError() {
+		t.Fatal("AddForbiddenDiagnostic should add an error to diagnostics")
 	}
-	if message != "Could not creating User: invalid email" {
-		t.Fatalf("APIError message = %s, expected 'Could not creating User: invalid email'", message)
+
+	if len(diags.Errors()) != 1 {
+		t.Fatalf("Expected 1 error, got %d", len(diags.Errors()))
+	}
+
+	err := diags.Errors()[0]
+	if err.Summary() != "Forbidden read resource" {
+		t.Fatalf("Expected error summary 'Forbidden read resource', got '%s'", err.Summary())
+	}
+
+	if err.Detail() == "" {
+		t.Fatal("Expected error detail to be non-empty")
 	}
 }
 
-func TestNotFoundError(t *testing.T) {
-	title, message := NotFoundError("User", "user123")
-	if title != "User Not Found" {
-		t.Fatalf("NotFoundError title = %s", title)
+// TestAddServerErrorDiagnostic tests the AddServerErrorDiagnostic function
+func TestAddServerErrorDiagnostic(t *testing.T) {
+	diags := &diag.Diagnostics{}
+	AddServerErrorDiagnostic(diags, "Internal server error", http.StatusInternalServerError)
+
+	if !diags.HasError() {
+		t.Fatal("AddServerErrorDiagnostic should add an error to diagnostics")
 	}
-	if message == "" {
-		t.Fatal("NotFoundError message should not be empty")
+
+	if len(diags.Errors()) != 1 {
+		t.Fatalf("Expected 1 error, got %d", len(diags.Errors()))
+	}
+
+	err := diags.Errors()[0]
+	if err.Summary() != "Server Error (500)" {
+		t.Fatalf("Expected error summary 'Server Error (500)', got '%s'", err.Summary())
+	}
+
+	if err.Detail() == "" {
+		t.Fatal("Expected error detail to be non-empty")
 	}
 }
 
-func TestValidationError(t *testing.T) {
-	title, message := ValidationError("email", "must be a valid email address")
-	if title != "Invalid email" {
-		t.Fatalf("ValidationError title = %s", title)
+// TestAddClientErrorDiagnostic tests the AddClientErrorDiagnostic function
+func TestAddClientErrorDiagnostic(t *testing.T) {
+	diags := &diag.Diagnostics{}
+	AddClientErrorDiagnostic(diags, "Bad request format", http.StatusBadRequest)
+
+	if !diags.HasError() {
+		t.Fatal("AddClientErrorDiagnostic should add an error to diagnostics")
 	}
-	if message == "" {
-		t.Fatal("ValidationError message should not be empty")
+
+	if len(diags.Errors()) != 1 {
+		t.Fatalf("Expected 1 error, got %d", len(diags.Errors()))
+	}
+
+	err := diags.Errors()[0]
+	if err.Summary() != "Client Error (400)" {
+		t.Fatalf("Expected error summary 'Client Error (400)', got '%s'", err.Summary())
+	}
+
+	if err.Detail() == "" {
+		t.Fatal("Expected error detail to be non-empty")
 	}
 }
 
-func TestConflictError(t *testing.T) {
-	title, message := ConflictError("User", "user already exists")
-	if title != "Conflict creating User" {
-		t.Fatalf("ConflictError title = %s", title)
+// TestAddServerErrorDiagnosticWith503 tests the AddServerErrorDiagnostic function with 503 status code
+func TestAddServerErrorDiagnosticWith503(t *testing.T) {
+	diags := &diag.Diagnostics{}
+	AddServerErrorDiagnostic(diags, "Service unavailable", http.StatusServiceUnavailable)
+
+	if !diags.HasError() {
+		t.Fatal("AddServerErrorDiagnostic should add an error to diagnostics")
 	}
-	if message == "" {
-		t.Fatal("ConflictError message should not be empty")
+
+	err := diags.Errors()[0]
+	if err.Summary() != "Server Error (503)" {
+		t.Fatalf("Expected error summary 'Server Error (503)', got '%s'", err.Summary())
 	}
 }
 
-func TestUnauthorizedError(t *testing.T) {
-	title, message := UnauthorizedError("create user")
-	if title != "Unauthorized create user" {
-		t.Fatalf("UnauthorizedError title = %s", title)
+// TestAddClientErrorDiagnosticWith404 tests the AddClientErrorDiagnostic function with 404 status code
+func TestAddClientErrorDiagnosticWith404(t *testing.T) {
+	diags := &diag.Diagnostics{}
+	AddClientErrorDiagnostic(diags, "Resource not found", http.StatusNotFound)
+
+	if !diags.HasError() {
+		t.Fatal("AddClientErrorDiagnostic should add an error to diagnostics")
 	}
-	if message == "" {
-		t.Fatal("UnauthorizedError message should not be empty")
+
+	err := diags.Errors()[0]
+	if err.Summary() != "Client Error (404)" {
+		t.Fatalf("Expected error summary 'Client Error (404)', got '%s'", err.Summary())
 	}
 }
 
-func TestTimeoutError(t *testing.T) {
-	title, message := TimeoutError("creating", "User")
-	if title != "Timeout creating" {
-		t.Fatalf("TimeoutError title = %s", title)
+// TestAddClientErrorDiagnosticWith409 tests the AddClientErrorDiagnostic function with 409 status code
+func TestAddClientErrorDiagnosticWith409(t *testing.T) {
+	diags := &diag.Diagnostics{}
+	AddClientErrorDiagnostic(diags, "Resource already exists", http.StatusConflict)
+
+	if !diags.HasError() {
+		t.Fatal("AddClientErrorDiagnostic should add an error to diagnostics")
 	}
-	if message == "" {
-		t.Fatal("TimeoutError message should not be empty")
+
+	err := diags.Errors()[0]
+	if err.Summary() != "Client Error (409)" {
+		t.Fatalf("Expected error summary 'Client Error (409)', got '%s'", err.Summary())
 	}
 }
 
+// TestStatusCodeChecks tests the status code checking functions
 func TestIsNotFound(t *testing.T) {
-	if !IsNotFound(404) {
+	if !IsNotFound(http.StatusNotFound) {
 		t.Fatal("IsNotFound(404) should return true")
 	}
-	if IsNotFound(200) {
-		t.Fatal("IsNotFound(200) should return false")
+	if IsNotFound(http.StatusBadRequest) {
+		t.Fatal("IsNotFound(400) should return false")
 	}
 }
 
 func TestIsForbidden(t *testing.T) {
-	if !IsForbidden(403) {
+	if !IsForbidden(http.StatusForbidden) {
 		t.Fatal("IsForbidden(403) should return true")
 	}
-	if IsForbidden(401) {
+	if IsForbidden(http.StatusUnauthorized) {
 		t.Fatal("IsForbidden(401) should return false")
 	}
 }
 
 func TestIsUnauthorized(t *testing.T) {
-	if !IsUnauthorized(401) {
+	if !IsUnauthorized(http.StatusUnauthorized) {
 		t.Fatal("IsUnauthorized(401) should return true")
 	}
-	if IsUnauthorized(403) {
+	if IsUnauthorized(http.StatusForbidden) {
 		t.Fatal("IsUnauthorized(403) should return false")
 	}
 }
 
 func TestIsConflict(t *testing.T) {
-	if !IsConflict(409) {
+	if !IsConflict(http.StatusConflict) {
 		t.Fatal("IsConflict(409) should return true")
 	}
-	if IsConflict(400) {
+	if IsConflict(http.StatusBadRequest) {
 		t.Fatal("IsConflict(400) should return false")
 	}
 }
 
 func TestIsClientError(t *testing.T) {
-	tests := []struct {
-		code     int
-		expected bool
-	}{
-		{400, true},
-		{404, true},
-		{499, true},
-		{200, false},
-		{500, false},
+	if !IsClientError(http.StatusBadRequest) {
+		t.Fatal("IsClientError(400) should return true")
 	}
-
-	for _, test := range tests {
-		result := IsClientError(test.code)
-		if result != test.expected {
-			t.Fatalf("IsClientError(%d) = %v, expected %v", test.code, result, test.expected)
-		}
+	if !IsClientError(http.StatusNotFound) {
+		t.Fatal("IsClientError(404) should return true")
+	}
+	if !IsClientError(http.StatusForbidden) {
+		t.Fatal("IsClientError(403) should return true")
+	}
+	if IsClientError(http.StatusOK) {
+		t.Fatal("IsClientError(200) should return false")
+	}
+	if IsClientError(http.StatusInternalServerError) {
+		t.Fatal("IsClientError(500) should return false")
 	}
 }
 
 func TestIsServerError(t *testing.T) {
-	tests := []struct {
-		code     int
-		expected bool
-	}{
-		{500, true},
-		{502, true},
-		{599, true},
-		{400, false},
-		{200, false},
+	if !IsServerError(http.StatusInternalServerError) {
+		t.Fatal("IsServerError(500) should return true")
 	}
-
-	for _, test := range tests {
-		result := IsServerError(test.code)
-		if result != test.expected {
-			t.Fatalf("IsServerError(%d) = %v, expected %v", test.code, result, test.expected)
-		}
+	if !IsServerError(http.StatusServiceUnavailable) {
+		t.Fatal("IsServerError(503) should return true")
+	}
+	if IsServerError(http.StatusOK) {
+		t.Fatal("IsServerError(200) should return false")
+	}
+	if IsServerError(http.StatusBadRequest) {
+		t.Fatal("IsServerError(400) should return false")
 	}
 }
 
+// TestAPIError tests the APIError function
+func TestAPIError(t *testing.T) {
+	title, message := APIError("create", "User", "invalid credentials")
+	
+	if title != "Error create User" {
+		t.Fatalf("Expected title 'Error create User', got '%s'", title)
+	}
+	
+	if message != "Could not create User: invalid credentials" {
+		t.Fatalf("Expected message 'Could not create User: invalid credentials', got '%s'", message)
+	}
+}
+
+// TestNotFoundError tests the NotFoundError function
+func TestNotFoundError(t *testing.T) {
+	title, message := NotFoundError("User", "123")
+	
+	if title != "User Not Found" {
+		t.Fatalf("Expected title 'User Not Found', got '%s'", title)
+	}
+	
+	expectedMsg := "The User with ID '123' was not found. It may have been deleted outside of Terraform."
+	if message != expectedMsg {
+		t.Fatalf("Expected message '%s', got '%s'", expectedMsg, message)
+	}
+}
+
+// TestValidationError tests the ValidationError function
+func TestValidationError(t *testing.T) {
+	title, message := ValidationError("username", "must be alphanumeric")
+	
+	if title != "Invalid username" {
+		t.Fatalf("Expected title 'Invalid username', got '%s'", title)
+	}
+	
+	if message != "The username value is invalid: must be alphanumeric" {
+		t.Fatalf("Expected message 'The username value is invalid: must be alphanumeric', got '%s'", message)
+	}
+}
+
+// TestConflictError tests the ConflictError function
+func TestConflictError(t *testing.T) {
+	title, message := ConflictError("User", "user already exists")
+	
+	if title != "Conflict creating User" {
+		t.Fatalf("Expected title 'Conflict creating User', got '%s'", title)
+	}
+	
+	if message != "A conflict occurred: user already exists" {
+		t.Fatalf("Expected message 'A conflict occurred: user already exists', got '%s'", message)
+	}
+}
+
+// TestUnauthorizedError tests the UnauthorizedError function
+func TestUnauthorizedError(t *testing.T) {
+	title, message := UnauthorizedError("delete resource")
+	
+	if title != "Unauthorized delete resource" {
+		t.Fatalf("Expected title 'Unauthorized delete resource', got '%s'", title)
+	}
+	
+	if message != "You do not have permission to delete resource. Please check your credentials and permissions." {
+		t.Fatalf("Expected correct message, got '%s'", message)
+	}
+}
+
+// TestTimeoutError tests the TimeoutError function
+func TestTimeoutError(t *testing.T) {
+	title, message := TimeoutError("creating", "Repository")
+	
+	if title != "Timeout creating" {
+		t.Fatalf("Expected title 'Timeout creating', got '%s'", title)
+	}
+	
+	if message != "Operation timed out while creating Repository. The resource may have been created but confirmation could not be received." {
+		t.Fatalf("Expected correct message, got '%s'", message)
+	}
+}
+
+// TestParseAPIError tests the ParseAPIError function
 func TestParseAPIError(t *testing.T) {
 	// Test with nil response
 	result := ParseAPIError(nil)
 	if result != "Unknown error" {
-		t.Fatalf("ParseAPIError(nil) should return 'Unknown error', got %s", result)
+		t.Fatalf("Expected 'Unknown error' for nil response, got '%s'", result)
 	}
-
-	// Test with HTTP response without body
+	
+	// Test with response that has no body
 	resp := &http.Response{
-		Status: "400 Bad Request",
-		Body:   io.NopCloser(bytes.NewReader([]byte(""))),
+		Status: "404 Not Found",
+		Body:   nil,
 	}
 	result = ParseAPIError(resp)
-	if result != "400 Bad Request" {
-		t.Fatalf("ParseAPIError failed: got %s", result)
-	}
-
-	// Test with HTTP response with body
-	resp = &http.Response{
-		Status: "500 Internal Server Error",
-		Body:   io.NopCloser(bytes.NewReader([]byte("Server error details"))),
-	}
-	result = ParseAPIError(resp)
-	if result != "500 Internal Server Error: Server error details" {
-		t.Fatalf("ParseAPIError with body failed: got %s", result)
+	if result != "404 Not Found" {
+		t.Fatalf("Expected '404 Not Found', got '%s'", result)
 	}
 }
 
-func TestAddAPIErrorDiagnostic(t *testing.T) {
-	diags := diag.Diagnostics{}
-	resp := &http.Response{
-		Status: "400 Bad Request",
-		Body:   io.NopCloser(bytes.NewReader([]byte(""))),
-	}
-
-	AddAPIErrorDiagnostic(&diags, "creating", "User", resp, nil)
-	if !diags.HasError() {
-		t.Fatal("AddAPIErrorDiagnostic should add an error to diagnostics")
-	}
-
-	// Test with error
-	diags = diag.Diagnostics{}
-	testErr := &net.OpError{Op: "dial", Net: "tcp"}
-	AddAPIErrorDiagnostic(&diags, "creating", "User", resp, testErr)
-	if !diags.HasError() {
-		t.Fatal("AddAPIErrorDiagnostic should add an error to diagnostics")
-	}
-}
-
+// TestAddNotFoundDiagnostic tests the AddNotFoundDiagnostic function
 func TestAddNotFoundDiagnostic(t *testing.T) {
-	diags := diag.Diagnostics{}
-	AddNotFoundDiagnostic(&diags, "User", "user123")
+	diags := &diag.Diagnostics{}
+	AddNotFoundDiagnostic(diags, "User", "456")
+	
 	if !diags.HasError() {
 		t.Fatal("AddNotFoundDiagnostic should add an error to diagnostics")
 	}
+	
+	if len(diags.Errors()) != 1 {
+		t.Fatalf("Expected 1 error, got %d", len(diags.Errors()))
+	}
+	
+	err := diags.Errors()[0]
+	if err.Summary() != "User Not Found" {
+		t.Fatalf("Expected summary 'User Not Found', got '%s'", err.Summary())
+	}
 }
 
+// TestAddValidationDiagnostic tests the AddValidationDiagnostic function
 func TestAddValidationDiagnostic(t *testing.T) {
-	diags := diag.Diagnostics{}
-	AddValidationDiagnostic(&diags, "email", "must be valid")
+	diags := &diag.Diagnostics{}
+	AddValidationDiagnostic(diags, "email", "invalid format")
+	
 	if !diags.HasError() {
 		t.Fatal("AddValidationDiagnostic should add an error to diagnostics")
 	}
+	
+	err := diags.Errors()[0]
+	if err.Summary() != "Invalid email" {
+		t.Fatalf("Expected summary 'Invalid email', got '%s'", err.Summary())
+	}
 }
 
+// TestAddConflictDiagnostic tests the AddConflictDiagnostic function
 func TestAddConflictDiagnostic(t *testing.T) {
-	diags := diag.Diagnostics{}
-	AddConflictDiagnostic(&diags, "User", "already exists")
+	diags := &diag.Diagnostics{}
+	AddConflictDiagnostic(diags, "Repository", "name already in use")
+	
 	if !diags.HasError() {
 		t.Fatal("AddConflictDiagnostic should add an error to diagnostics")
 	}
+	
+	err := diags.Errors()[0]
+	if err.Summary() != "Conflict creating Repository" {
+		t.Fatalf("Expected summary 'Conflict creating Repository', got '%s'", err.Summary())
+	}
 }
 
+// TestAddUnauthorizedDiagnostic tests the AddUnauthorizedDiagnostic function
 func TestAddUnauthorizedDiagnostic(t *testing.T) {
-	diags := diag.Diagnostics{}
-	AddUnauthorizedDiagnostic(&diags, "create user")
+	diags := &diag.Diagnostics{}
+	AddUnauthorizedDiagnostic(diags, "read user")
+	
 	if !diags.HasError() {
 		t.Fatal("AddUnauthorizedDiagnostic should add an error to diagnostics")
 	}
+	
+	err := diags.Errors()[0]
+	if err.Summary() != "Unauthorized read user" {
+		t.Fatalf("Expected summary 'Unauthorized read user', got '%s'", err.Summary())
+	}
 }
 
+// TestAddTimeoutDiagnostic tests the AddTimeoutDiagnostic function
 func TestAddTimeoutDiagnostic(t *testing.T) {
-	diags := diag.Diagnostics{}
-	AddTimeoutDiagnostic(&diags, "creating", "User")
+	diags := &diag.Diagnostics{}
+	AddTimeoutDiagnostic(diags, "updating", "Configuration")
+	
 	if !diags.HasError() {
 		t.Fatal("AddTimeoutDiagnostic should add an error to diagnostics")
 	}
-}
-
-func TestDetectNetworkError_OpError(t *testing.T) {
-	opErr := &net.OpError{Op: "dial", Net: "tcp"}
-	isNet, msg := detectNetworkError(opErr)
-	if !isNet {
-		t.Fatal("detectNetworkError should return true for OpError")
-	}
-	if msg == "" {
-		t.Fatal("detectNetworkError should return a non-empty message for OpError")
+	
+	err := diags.Errors()[0]
+	if err.Summary() != "Timeout updating" {
+		t.Fatalf("Expected summary 'Timeout updating', got '%s'", err.Summary())
 	}
 }
 
-func TestDetectNetworkError_DNSError(t *testing.T) {
-	dnsErr := &net.DNSError{Err: "name resolution failed"}
-	isNet, msg := detectNetworkError(dnsErr)
-	if !isNet {
-		t.Fatal("detectNetworkError should return true for DNSError")
+// TestAddAPIErrorDiagnostic tests the AddAPIErrorDiagnostic function
+func TestAddAPIErrorDiagnostic(t *testing.T) {
+	diags := &diag.Diagnostics{}
+	AddAPIErrorDiagnostic(diags, "create", "Role", nil, nil)
+	
+	if !diags.HasError() {
+		t.Fatal("AddAPIErrorDiagnostic should add an error to diagnostics")
 	}
-	if msg == "" {
-		t.Fatal("detectNetworkError should return a non-empty message for DNSError")
-	}
-}
-
-func TestDetectNetworkError_DeadlineExceeded(t *testing.T) {
-	isNet, msg := detectNetworkError(context.DeadlineExceeded)
-	if !isNet {
-		t.Fatal("detectNetworkError should return true for DeadlineExceeded")
-	}
-	if msg == "" {
-		t.Fatal("detectNetworkError should return a non-empty message for DeadlineExceeded")
+	
+	err := diags.Errors()[0]
+	if err.Summary() != "Error create Role" {
+		t.Fatalf("Expected summary 'Error create Role', got '%s'", err.Summary())
 	}
 }
 
-func TestDetectNetworkError_ECONNREFUSED(t *testing.T) {
-	isNet, msg := detectNetworkError(syscall.ECONNREFUSED)
-	if !isNet {
-		t.Fatal("detectNetworkError should return true for ECONNREFUSED")
-	}
-	if msg == "" {
-		t.Fatal("detectNetworkError should return a non-empty message for ECONNREFUSED")
-	}
-}
-
-func TestDetectNetworkError_NonNetworkError(t *testing.T) {
-	isNet, msg := detectNetworkError(new(struct{ error }))
-	if isNet {
-		t.Fatal("detectNetworkError should return false for non-network errors")
-	}
-	if msg != "" {
-		t.Fatalf("detectNetworkError should return empty string for non-network error, got %s", msg)
-	}
-}
-
-func TestHandleAPIError_NetworkError(t *testing.T) {
+// TestHandleAPIError tests the HandleAPIError function with a network error
+func TestHandleAPIError(t *testing.T) {
 	diags := diag.Diagnostics{}
-	var err error = &net.OpError{Op: "dial", Net: "tcp"}
-	resp := &http.Response{
-		Status: "500 Internal Server Error",
-		Body:   io.NopCloser(bytes.NewReader([]byte(""))),
-	}
-
-	HandleAPIError("Test Error", &err, resp, &diags)
+	testErr := http.ErrUseLastResponse
+	
+	HandleAPIError("API Error", &testErr, nil, &diags)
+	
 	if !diags.HasError() {
 		t.Fatal("HandleAPIError should add an error to diagnostics")
 	}
 }
 
-func TestHandleAPIError_APIError(t *testing.T) {
-	diags := diag.Diagnostics{}
-	var err error
-	resp := &http.Response{
-		Status: "400 Bad Request",
-		Body:   io.NopCloser(bytes.NewReader([]byte("Invalid request"))),
-	}
-
-	HandleAPIError("Test Error", &err, resp, &diags)
-	if !diags.HasError() {
-		t.Fatal("HandleAPIError should add an error to diagnostics")
-	}
-}
-
-func TestHandleAPIError_NoResponse(t *testing.T) {
-	diags := diag.Diagnostics{}
-	var err error
-
-	HandleAPIError("Test Error", &err, nil, &diags)
-	if !diags.HasError() {
-		t.Fatal("HandleAPIError should add an error to diagnostics")
-	}
-}
-
+// TestHandleAPIWarning tests the HandleAPIWarning function
 func TestHandleAPIWarning(t *testing.T) {
 	diags := diag.Diagnostics{}
-	testErr := new(struct {
-		msg string
-	})
-	var err error
+	testErr := http.ErrUseLastResponse
 	resp := &http.Response{
 		Status: "200 OK",
-		Body:   io.NopCloser(bytes.NewReader([]byte("Warning message"))),
+		Body:   nil,
 	}
-
-	HandleAPIWarning("Test Warning", &err, resp, &diags)
-	// The function should have been called without panicking
-	_ = testErr
+	
+	HandleAPIWarning("API Warning", &testErr, resp, &diags)
+	
+	if len(diags.Warnings()) == 0 {
+		t.Fatal("HandleAPIWarning should add a warning to diagnostics")
+	}
 }

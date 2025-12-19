@@ -156,6 +156,7 @@ func newResourceInt64Attribute(config int64AttributeConfig) resourceschema.Int64
 func newDataSourceInt64Attribute(config int64AttributeConfig) datasourceschema.Int64Attribute {
 	attr := datasourceschema.Int64Attribute{
 		MarkdownDescription: config.description,
+		Required:            config.required,
 		Optional:            config.optional,
 		Computed:            config.computed,
 	}
@@ -204,6 +205,7 @@ func newResourceInt32Attribute(config int32AttributeConfig) resourceschema.Int32
 func newDataSourceInt32Attribute(config int32AttributeConfig) datasourceschema.Int32Attribute {
 	attr := datasourceschema.Int32Attribute{
 		MarkdownDescription: config.description,
+		Required:            config.required,
 		Optional:            config.optional,
 		Computed:            config.computed,
 	}
@@ -252,6 +254,7 @@ func newResourceFloat64Attribute(config float64AttributeConfig) resourceschema.F
 func newDataSourceFloat64Attribute(config float64AttributeConfig) datasourceschema.Float64Attribute {
 	attr := datasourceschema.Float64Attribute{
 		MarkdownDescription: config.description,
+		Required:            config.required,
 		Optional:            config.optional,
 		Computed:            config.computed,
 	}
