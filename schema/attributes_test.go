@@ -18,6 +18,9 @@ package schema
 
 import (
 	"testing"
+
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 )
 
 func TestResourceStandardID(t *testing.T) {
@@ -246,5 +249,139 @@ func TestResourceComputedOptionalStringWithDefaultAndPlanModifier(t *testing.T) 
 	}
 	if attr.Default == nil {
 		t.Fatal("ResourceComputedOptionalStringWithDefaultAndPlanModifier should have a default value")
+	}
+}
+
+// Test missing sensitive string functions
+func TestResourceSensitiveOptionalStringWithPlanModifier(t *testing.T) {
+	attr := ResourceSensitiveOptionalStringWithPlanModifier("password description")
+	if !attr.IsOptional() {
+		t.Fatal("ResourceSensitiveOptionalStringWithPlanModifier should return optional attribute")
+	}
+	if attr.GetMarkdownDescription() != "password description" {
+		t.Fatal("ResourceSensitiveOptionalStringWithPlanModifier should have the provided description")
+	}
+}
+
+func TestResourceSensitiveRequiredString(t *testing.T) {
+	attr := ResourceSensitiveRequiredString("password description")
+	if !attr.IsRequired() {
+		t.Fatal("ResourceSensitiveRequiredString should return required attribute")
+	}
+	if attr.GetMarkdownDescription() != "password description" {
+		t.Fatal("ResourceSensitiveRequiredString should have the provided description")
+	}
+}
+
+func TestResourceComputedSensitiveString(t *testing.T) {
+	attr := ResourceComputedSensitiveString("computed password description")
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedSensitiveString should return computed attribute")
+	}
+	if attr.GetMarkdownDescription() != "computed password description" {
+		t.Fatal("ResourceComputedSensitiveString should have the provided description")
+	}
+}
+
+// Test plan modifier string functions
+func TestResourceOptionalStringWithPlanModifier(t *testing.T) {
+	attr := ResourceOptionalStringWithPlanModifier("optional description")
+	if !attr.IsOptional() {
+		t.Fatal("ResourceOptionalStringWithPlanModifier should return optional attribute")
+	}
+	if attr.GetMarkdownDescription() != "optional description" {
+		t.Fatal("ResourceOptionalStringWithPlanModifier should have the provided description")
+	}
+}
+
+func TestResourceRequiredStringWithPlanModifier(t *testing.T) {
+	attr := ResourceRequiredStringWithPlanModifier("required description", []planmodifier.String{
+		stringplanmodifier.RequiresReplace(),
+	})
+	if !attr.IsRequired() {
+		t.Fatal("ResourceRequiredStringWithPlanModifier should return required attribute")
+	}
+	if attr.GetMarkdownDescription() != "required description" {
+		t.Fatal("ResourceRequiredStringWithPlanModifier should have the provided description")
+	}
+}
+
+func TestResourceComputedStringWithPlanModifier(t *testing.T) {
+	attr := ResourceComputedStringWithPlanModifier("computed description")
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedStringWithPlanModifier should return computed attribute")
+	}
+	if attr.GetMarkdownDescription() != "computed description" {
+		t.Fatal("ResourceComputedStringWithPlanModifier should have the provided description")
+	}
+}
+
+func TestResourceComputedOptionalStringWithPlanModifier(t *testing.T) {
+	attr := ResourceComputedOptionalStringWithPlanModifier("computed optional description")
+	if !attr.IsComputed() {
+		t.Fatal("ResourceComputedOptionalStringWithPlanModifier should return computed attribute")
+	}
+	if !attr.IsOptional() {
+		t.Fatal("ResourceComputedOptionalStringWithPlanModifier should return optional attribute")
+	}
+	if attr.GetMarkdownDescription() != "computed optional description" {
+		t.Fatal("ResourceComputedOptionalStringWithPlanModifier should have the provided description")
+	}
+}
+
+// Test data source functions not covered
+func TestDataSourceComputedSensitiveString(t *testing.T) {
+	attr := DataSourceComputedSensitiveString("sensitive description")
+	if !attr.IsComputed() {
+		t.Fatal("DataSourceComputedSensitiveString should return computed attribute")
+	}
+	if attr.GetMarkdownDescription() != "sensitive description" {
+		t.Fatal("DataSourceComputedSensitiveString should have the provided description")
+	}
+}
+
+func TestDataSourceSensitiveString(t *testing.T) {
+	attr := DataSourceSensitiveString("sensitive description")
+	if !attr.IsOptional() {
+		t.Fatal("DataSourceSensitiveString should return optional attribute")
+	}
+	if attr.GetMarkdownDescription() != "sensitive description" {
+		t.Fatal("DataSourceSensitiveString should have the provided description")
+	}
+}
+
+// Test string with default function
+func TestResourceStringWithDefault(t *testing.T) {
+	attr := ResourceStringWithDefault("description", "default")
+	if !attr.IsOptional() {
+		t.Fatal("ResourceStringWithDefault should return optional attribute")
+	}
+	if !attr.IsComputed() {
+		t.Fatal("ResourceStringWithDefault should return computed attribute")
+	}
+}
+
+// Test string enum functions with plan modifiers
+func TestResourceRequiredStringEnumWithPlanModifier(t *testing.T) {
+	attr := ResourceRequiredStringEnumWithPlanModifier("status", []planmodifier.String{
+		stringplanmodifier.RequiresReplace(),
+	}, "active", "inactive")
+	if !attr.IsRequired() {
+		t.Fatal("ResourceRequiredStringEnumWithPlanModifier should return required attribute")
+	}
+}
+
+// Test optional string enum functions
+func TestDataSourceRequiredStringEnum(t *testing.T) {
+	attr := DataSourceRequiredStringEnum("status", "active", "inactive")
+	if !attr.IsRequired() {
+		t.Fatal("DataSourceRequiredStringEnum should return required attribute")
+	}
+}
+
+func TestDataSourceOptionalStringEnum(t *testing.T) {
+	attr := DataSourceOptionalStringEnum("status", "active", "inactive")
+	if !attr.IsOptional() {
+		t.Fatal("DataSourceOptionalStringEnum should return optional attribute")
 	}
 }

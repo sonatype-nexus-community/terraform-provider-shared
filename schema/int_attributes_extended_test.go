@@ -154,3 +154,63 @@ func TestDataSourceComputedInt64(t *testing.T) {
 		t.Fatal("DataSourceComputedInt64 should return computed attribute")
 	}
 }
+
+// Test missing int64 attribute functions
+func TestResourceRequiredPort(t *testing.T) {
+	attr := ResourceRequiredPort("port number")
+	if !attr.IsRequired() {
+		t.Fatal("ResourceRequiredPort should return required attribute")
+	}
+}
+
+func TestResourcePortWithDefault(t *testing.T) {
+	attr := ResourcePortWithDefault("port description", 8080)
+	if !attr.IsOptional() {
+		t.Fatal("ResourcePortWithDefault should return optional attribute")
+	}
+	if !attr.IsComputed() {
+		t.Fatal("ResourcePortWithDefault should return computed attribute")
+	}
+}
+
+func TestResourcePercentageInt(t *testing.T) {
+	attr := ResourcePercentageInt("percentage description")
+	if !attr.IsOptional() {
+		t.Fatal("ResourcePercentageInt should return optional attribute")
+	}
+}
+
+func TestResourceRequiredPercentageInt(t *testing.T) {
+	attr := ResourceRequiredPercentageInt("required percentage description")
+	if !attr.IsRequired() {
+		t.Fatal("ResourceRequiredPercentageInt should return required attribute")
+	}
+}
+
+func TestResourceDurationInt(t *testing.T) {
+	attr := ResourceDurationInt("duration description")
+	if !attr.IsOptional() {
+		t.Fatal("ResourceDurationInt should return optional attribute")
+	}
+}
+
+func TestResourceRequiredDurationInt(t *testing.T) {
+	attr := ResourceRequiredDurationInt("required duration description")
+	if !attr.IsRequired() {
+		t.Fatal("ResourceRequiredDurationInt should return required attribute")
+	}
+}
+
+func TestResourceTimeoutInt(t *testing.T) {
+	attr := ResourceTimeoutInt("timeout description", 300)
+	if !attr.IsOptional() {
+		t.Fatal("ResourceTimeoutInt should return optional attribute")
+	}
+}
+
+func TestResourceCountInt(t *testing.T) {
+	attr := ResourceCountInt("count description")
+	if !attr.IsOptional() {
+		t.Fatal("ResourceCountInt should return optional attribute")
+	}
+}

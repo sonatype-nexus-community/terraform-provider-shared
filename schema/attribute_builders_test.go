@@ -18,105 +18,264 @@ package schema
 
 import (
 	"testing"
+
+	"github.com/hashicorp/terraform-plugin-framework/attr"
+	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
 
-// Test attribute builder functions that create various combinations
-func TestNewResourceStringAttribute(t *testing.T) {
-	attr := newResourceStringAttribute(stringAttributeConfig{
-		description: "test",
+// ========================================
+// Resource Int64 Attribute Builder Tests
+// ========================================
+
+func TestNewResourceInt64Attribute_Required(t *testing.T) {
+	config := int64AttributeConfig{
+		description: "test description",
 		required:    true,
-	})
+	}
+	attr := newResourceInt64Attribute(config)
 	if !attr.IsRequired() {
-		t.Fatal("newResourceStringAttribute with required:true should return required attribute")
+		t.Fatal("newResourceInt64Attribute with required=true should return required attribute")
+	}
+	if attr.GetMarkdownDescription() != "test description" {
+		t.Fatal("newResourceInt64Attribute should preserve description")
 	}
 }
 
-func TestNewDataSourceStringAttribute(t *testing.T) {
-	attr := newDataSourceStringAttribute(stringAttributeConfig{
-		description: "test",
-		computed:    true,
-	})
-	if !attr.IsComputed() {
-		t.Fatal("newDataSourceStringAttribute with computed:true should return computed attribute")
-	}
-}
-
-func TestNewResourceBoolAttribute(t *testing.T) {
-	attr := newResourceBoolAttribute(boolAttributeConfig{
-		description: "test",
+func TestNewResourceInt64Attribute_Optional(t *testing.T) {
+	config := int64AttributeConfig{
+		description: "test description",
 		optional:    true,
-	})
+	}
+	attr := newResourceInt64Attribute(config)
 	if !attr.IsOptional() {
-		t.Fatal("newResourceBoolAttribute with optional:true should return optional attribute")
+		t.Fatal("newResourceInt64Attribute with optional=true should return optional attribute")
 	}
 }
 
-func TestNewDataSourceBoolAttribute(t *testing.T) {
-	attr := newDataSourceBoolAttribute(boolAttributeConfig{
-		description: "test",
+func TestNewResourceInt64Attribute_Computed(t *testing.T) {
+	config := int64AttributeConfig{
+		description: "test description",
 		computed:    true,
-	})
+	}
+	attr := newResourceInt64Attribute(config)
 	if !attr.IsComputed() {
-		t.Fatal("newDataSourceBoolAttribute with computed:true should return computed attribute")
+		t.Fatal("newResourceInt64Attribute with computed=true should return computed attribute")
 	}
 }
 
-func TestNewResourceInt64Attribute(t *testing.T) {
-	attr := newResourceInt64Attribute(int64AttributeConfig{
-		description: "test",
+func TestNewResourceInt64Attribute_WithValidators(t *testing.T) {
+	config := int64AttributeConfig{
+		description: "test description",
+		optional:    true,
+	}
+	attr := newResourceInt64Attribute(config)
+	if !attr.IsOptional() {
+		t.Fatal("newResourceInt64Attribute should respect optional flag")
+	}
+}
+
+// ========================================
+// DataSource Int64 Attribute Builder Tests
+// ========================================
+
+func TestNewDataSourceInt64Attribute_Required(t *testing.T) {
+	config := int64AttributeConfig{
+		description: "test description",
 		required:    true,
-	})
+	}
+	attr := newDataSourceInt64Attribute(config)
 	if !attr.IsRequired() {
-		t.Fatal("newResourceInt64Attribute with required:true should return required attribute")
+		t.Fatal("newDataSourceInt64Attribute with required=true should return required attribute")
 	}
 }
 
-func TestNewDataSourceInt64Attribute(t *testing.T) {
-	attr := newDataSourceInt64Attribute(int64AttributeConfig{
-		description: "test",
+func TestNewDataSourceInt64Attribute_Optional(t *testing.T) {
+	config := int64AttributeConfig{
+		description: "test description",
 		optional:    true,
-	})
+	}
+	attr := newDataSourceInt64Attribute(config)
 	if !attr.IsOptional() {
-		t.Fatal("newDataSourceInt64Attribute with optional:true should return optional attribute")
+		t.Fatal("newDataSourceInt64Attribute with optional=true should return optional attribute")
 	}
 }
 
-func TestNewResourceInt32Attribute(t *testing.T) {
-	attr := newResourceInt32Attribute(int32AttributeConfig{
-		description: "test",
-		required:    true,
-	})
-	if !attr.IsRequired() {
-		t.Fatal("newResourceInt32Attribute with required:true should return required attribute")
-	}
-}
-
-func TestNewDataSourceInt32Attribute(t *testing.T) {
-	attr := newDataSourceInt32Attribute(int32AttributeConfig{
-		description: "test",
-		optional:    true,
-	})
-	if !attr.IsOptional() {
-		t.Fatal("newDataSourceInt32Attribute with optional:true should return optional attribute")
-	}
-}
-
-func TestNewResourceFloat64Attribute(t *testing.T) {
-	attr := newResourceFloat64Attribute(float64AttributeConfig{
-		description: "test",
+func TestNewDataSourceInt64Attribute_Computed(t *testing.T) {
+	config := int64AttributeConfig{
+		description: "test description",
 		computed:    true,
-	})
+	}
+	attr := newDataSourceInt64Attribute(config)
 	if !attr.IsComputed() {
-		t.Fatal("newResourceFloat64Attribute with computed:true should return computed attribute")
+		t.Fatal("newDataSourceInt64Attribute with computed=true should return computed attribute")
 	}
 }
 
-func TestNewDataSourceFloat64Attribute(t *testing.T) {
-	attr := newDataSourceFloat64Attribute(float64AttributeConfig{
-		description: "test",
+// ========================================
+// Resource Int32 Attribute Builder Tests
+// ========================================
+
+func TestNewResourceInt32Attribute_Required(t *testing.T) {
+	config := int32AttributeConfig{
+		description: "test description",
+		required:    true,
+	}
+	attr := newResourceInt32Attribute(config)
+	if !attr.IsRequired() {
+		t.Fatal("newResourceInt32Attribute with required=true should return required attribute")
+	}
+}
+
+func TestNewResourceInt32Attribute_Optional(t *testing.T) {
+	config := int32AttributeConfig{
+		description: "test description",
 		optional:    true,
-	})
+	}
+	attr := newResourceInt32Attribute(config)
 	if !attr.IsOptional() {
-		t.Fatal("newDataSourceFloat64Attribute with optional:true should return optional attribute")
+		t.Fatal("newResourceInt32Attribute with optional=true should return optional attribute")
+	}
+}
+
+func TestNewResourceInt32Attribute_Computed(t *testing.T) {
+	config := int32AttributeConfig{
+		description: "test description",
+		computed:    true,
+	}
+	attr := newResourceInt32Attribute(config)
+	if !attr.IsComputed() {
+		t.Fatal("newResourceInt32Attribute with computed=true should return computed attribute")
+	}
+}
+
+// ========================================
+// DataSource Int32 Attribute Builder Tests
+// ========================================
+
+func TestNewDataSourceInt32Attribute_Required(t *testing.T) {
+	config := int32AttributeConfig{
+		description: "test description",
+		required:    true,
+	}
+	attr := newDataSourceInt32Attribute(config)
+	if !attr.IsRequired() {
+		t.Fatal("newDataSourceInt32Attribute with required=true should return required attribute")
+	}
+}
+
+func TestNewDataSourceInt32Attribute_Optional(t *testing.T) {
+	config := int32AttributeConfig{
+		description: "test description",
+		optional:    true,
+	}
+	attr := newDataSourceInt32Attribute(config)
+	if !attr.IsOptional() {
+		t.Fatal("newDataSourceInt32Attribute with optional=true should return optional attribute")
+	}
+}
+
+func TestNewDataSourceInt32Attribute_Computed(t *testing.T) {
+	config := int32AttributeConfig{
+		description: "test description",
+		computed:    true,
+	}
+	attr := newDataSourceInt32Attribute(config)
+	if !attr.IsComputed() {
+		t.Fatal("newDataSourceInt32Attribute with computed=true should return computed attribute")
+	}
+}
+
+// ========================================
+// Resource Float64 Attribute Builder Tests
+// ========================================
+
+func TestNewResourceFloat64Attribute_Required(t *testing.T) {
+	config := float64AttributeConfig{
+		description: "test description",
+		required:    true,
+	}
+	attr := newResourceFloat64Attribute(config)
+	if !attr.IsRequired() {
+		t.Fatal("newResourceFloat64Attribute with required=true should return required attribute")
+	}
+}
+
+func TestNewResourceFloat64Attribute_Optional(t *testing.T) {
+	config := float64AttributeConfig{
+		description: "test description",
+		optional:    true,
+	}
+	attr := newResourceFloat64Attribute(config)
+	if !attr.IsOptional() {
+		t.Fatal("newResourceFloat64Attribute with optional=true should return optional attribute")
+	}
+}
+
+func TestNewResourceFloat64Attribute_Computed(t *testing.T) {
+	config := float64AttributeConfig{
+		description: "test description",
+		computed:    true,
+	}
+	attr := newResourceFloat64Attribute(config)
+	if !attr.IsComputed() {
+		t.Fatal("newResourceFloat64Attribute with computed=true should return computed attribute")
+	}
+}
+
+// ========================================
+// DataSource Float64 Attribute Builder Tests
+// ========================================
+
+func TestNewDataSourceFloat64Attribute_Required(t *testing.T) {
+	config := float64AttributeConfig{
+		description: "test description",
+		required:    true,
+	}
+	attr := newDataSourceFloat64Attribute(config)
+	if !attr.IsRequired() {
+		t.Fatal("newDataSourceFloat64Attribute with required=true should return required attribute")
+	}
+}
+
+func TestNewDataSourceFloat64Attribute_Optional(t *testing.T) {
+	config := float64AttributeConfig{
+		description: "test description",
+		optional:    true,
+	}
+	attr := newDataSourceFloat64Attribute(config)
+	if !attr.IsOptional() {
+		t.Fatal("newDataSourceFloat64Attribute with optional=true should return optional attribute")
+	}
+}
+
+func TestNewDataSourceFloat64Attribute_Computed(t *testing.T) {
+	config := float64AttributeConfig{
+		description: "test description",
+		computed:    true,
+	}
+	attr := newDataSourceFloat64Attribute(config)
+	if !attr.IsComputed() {
+		t.Fatal("newDataSourceFloat64Attribute with computed=true should return computed attribute")
+	}
+}
+
+// ========================================
+// Set Attribute Builder Tests
+// ========================================
+
+func TestNewDataSourceSetAttribute_WithValidators(t *testing.T) {
+	config := collectionConfig{
+		description: "test set",
+		elementType: types.StringType,
+		optional:    true,
+	}
+	attr := newDataSourceSetAttribute(config)
+	if !attr.IsOptional() {
+		t.Fatal("newDataSourceSetAttribute should return optional attribute")
+	}
+	if attr.ElementType != types.StringType {
+		t.Fatal("newDataSourceSetAttribute should preserve element type")
 	}
 }

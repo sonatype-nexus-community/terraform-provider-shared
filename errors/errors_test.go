@@ -206,3 +206,223 @@ func TestIsServerError(t *testing.T) {
 		t.Fatal("IsServerError(400) should return false")
 	}
 }
+
+// TestAPIError tests the APIError function
+func TestAPIError(t *testing.T) {
+	title, message := APIError("create", "User", "invalid credentials")
+	
+	if title != "Error create User" {
+		t.Fatalf("Expected title 'Error create User', got '%s'", title)
+	}
+	
+	if message != "Could not create User: invalid credentials" {
+		t.Fatalf("Expected message 'Could not create User: invalid credentials', got '%s'", message)
+	}
+}
+
+// TestNotFoundError tests the NotFoundError function
+func TestNotFoundError(t *testing.T) {
+	title, message := NotFoundError("User", "123")
+	
+	if title != "User Not Found" {
+		t.Fatalf("Expected title 'User Not Found', got '%s'", title)
+	}
+	
+	expectedMsg := "The User with ID '123' was not found. It may have been deleted outside of Terraform."
+	if message != expectedMsg {
+		t.Fatalf("Expected message '%s', got '%s'", expectedMsg, message)
+	}
+}
+
+// TestValidationError tests the ValidationError function
+func TestValidationError(t *testing.T) {
+	title, message := ValidationError("username", "must be alphanumeric")
+	
+	if title != "Invalid username" {
+		t.Fatalf("Expected title 'Invalid username', got '%s'", title)
+	}
+	
+	if message != "The username value is invalid: must be alphanumeric" {
+		t.Fatalf("Expected message 'The username value is invalid: must be alphanumeric', got '%s'", message)
+	}
+}
+
+// TestConflictError tests the ConflictError function
+func TestConflictError(t *testing.T) {
+	title, message := ConflictError("User", "user already exists")
+	
+	if title != "Conflict creating User" {
+		t.Fatalf("Expected title 'Conflict creating User', got '%s'", title)
+	}
+	
+	if message != "A conflict occurred: user already exists" {
+		t.Fatalf("Expected message 'A conflict occurred: user already exists', got '%s'", message)
+	}
+}
+
+// TestUnauthorizedError tests the UnauthorizedError function
+func TestUnauthorizedError(t *testing.T) {
+	title, message := UnauthorizedError("delete resource")
+	
+	if title != "Unauthorized delete resource" {
+		t.Fatalf("Expected title 'Unauthorized delete resource', got '%s'", title)
+	}
+	
+	if message != "You do not have permission to delete resource. Please check your credentials and permissions." {
+		t.Fatalf("Expected correct message, got '%s'", message)
+	}
+}
+
+// TestTimeoutError tests the TimeoutError function
+func TestTimeoutError(t *testing.T) {
+	title, message := TimeoutError("creating", "Repository")
+	
+	if title != "Timeout creating" {
+		t.Fatalf("Expected title 'Timeout creating', got '%s'", title)
+	}
+	
+	if message != "Operation timed out while creating Repository. The resource may have been created but confirmation could not be received." {
+		t.Fatalf("Expected correct message, got '%s'", message)
+	}
+}
+
+// TestParseAPIError tests the ParseAPIError function
+func TestParseAPIError(t *testing.T) {
+	// Test with nil response
+	result := ParseAPIError(nil)
+	if result != "Unknown error" {
+		t.Fatalf("Expected 'Unknown error' for nil response, got '%s'", result)
+	}
+	
+	// Test with response that has no body
+	resp := &http.Response{
+		Status: "404 Not Found",
+		Body:   nil,
+	}
+	result = ParseAPIError(resp)
+	if result != "404 Not Found" {
+		t.Fatalf("Expected '404 Not Found', got '%s'", result)
+	}
+}
+
+// TestAddNotFoundDiagnostic tests the AddNotFoundDiagnostic function
+func TestAddNotFoundDiagnostic(t *testing.T) {
+	diags := &diag.Diagnostics{}
+	AddNotFoundDiagnostic(diags, "User", "456")
+	
+	if !diags.HasError() {
+		t.Fatal("AddNotFoundDiagnostic should add an error to diagnostics")
+	}
+	
+	if len(diags.Errors()) != 1 {
+		t.Fatalf("Expected 1 error, got %d", len(diags.Errors()))
+	}
+	
+	err := diags.Errors()[0]
+	if err.Summary() != "User Not Found" {
+		t.Fatalf("Expected summary 'User Not Found', got '%s'", err.Summary())
+	}
+}
+
+// TestAddValidationDiagnostic tests the AddValidationDiagnostic function
+func TestAddValidationDiagnostic(t *testing.T) {
+	diags := &diag.Diagnostics{}
+	AddValidationDiagnostic(diags, "email", "invalid format")
+	
+	if !diags.HasError() {
+		t.Fatal("AddValidationDiagnostic should add an error to diagnostics")
+	}
+	
+	err := diags.Errors()[0]
+	if err.Summary() != "Invalid email" {
+		t.Fatalf("Expected summary 'Invalid email', got '%s'", err.Summary())
+	}
+}
+
+// TestAddConflictDiagnostic tests the AddConflictDiagnostic function
+func TestAddConflictDiagnostic(t *testing.T) {
+	diags := &diag.Diagnostics{}
+	AddConflictDiagnostic(diags, "Repository", "name already in use")
+	
+	if !diags.HasError() {
+		t.Fatal("AddConflictDiagnostic should add an error to diagnostics")
+	}
+	
+	err := diags.Errors()[0]
+	if err.Summary() != "Conflict creating Repository" {
+		t.Fatalf("Expected summary 'Conflict creating Repository', got '%s'", err.Summary())
+	}
+}
+
+// TestAddUnauthorizedDiagnostic tests the AddUnauthorizedDiagnostic function
+func TestAddUnauthorizedDiagnostic(t *testing.T) {
+	diags := &diag.Diagnostics{}
+	AddUnauthorizedDiagnostic(diags, "read user")
+	
+	if !diags.HasError() {
+		t.Fatal("AddUnauthorizedDiagnostic should add an error to diagnostics")
+	}
+	
+	err := diags.Errors()[0]
+	if err.Summary() != "Unauthorized read user" {
+		t.Fatalf("Expected summary 'Unauthorized read user', got '%s'", err.Summary())
+	}
+}
+
+// TestAddTimeoutDiagnostic tests the AddTimeoutDiagnostic function
+func TestAddTimeoutDiagnostic(t *testing.T) {
+	diags := &diag.Diagnostics{}
+	AddTimeoutDiagnostic(diags, "updating", "Configuration")
+	
+	if !diags.HasError() {
+		t.Fatal("AddTimeoutDiagnostic should add an error to diagnostics")
+	}
+	
+	err := diags.Errors()[0]
+	if err.Summary() != "Timeout updating" {
+		t.Fatalf("Expected summary 'Timeout updating', got '%s'", err.Summary())
+	}
+}
+
+// TestAddAPIErrorDiagnostic tests the AddAPIErrorDiagnostic function
+func TestAddAPIErrorDiagnostic(t *testing.T) {
+	diags := &diag.Diagnostics{}
+	AddAPIErrorDiagnostic(diags, "create", "Role", nil, nil)
+	
+	if !diags.HasError() {
+		t.Fatal("AddAPIErrorDiagnostic should add an error to diagnostics")
+	}
+	
+	err := diags.Errors()[0]
+	if err.Summary() != "Error create Role" {
+		t.Fatalf("Expected summary 'Error create Role', got '%s'", err.Summary())
+	}
+}
+
+// TestHandleAPIError tests the HandleAPIError function with a network error
+func TestHandleAPIError(t *testing.T) {
+	diags := diag.Diagnostics{}
+	testErr := http.ErrUseLastResponse
+	
+	HandleAPIError("API Error", &testErr, nil, &diags)
+	
+	if !diags.HasError() {
+		t.Fatal("HandleAPIError should add an error to diagnostics")
+	}
+}
+
+// TestHandleAPIWarning tests the HandleAPIWarning function
+func TestHandleAPIWarning(t *testing.T) {
+	diags := diag.Diagnostics{}
+	testErr := http.ErrUseLastResponse
+	resp := &http.Response{
+		Status: "200 OK",
+		Body:   nil,
+	}
+	
+	HandleAPIWarning("API Warning", &testErr, resp, &diags)
+	
+	if len(diags.Warnings()) == 0 {
+		t.Fatal("HandleAPIWarning should add a warning to diagnostics")
+	}
+}
