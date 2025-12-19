@@ -216,9 +216,13 @@ func HandleAPIError(message string, err *error, httpResponse *http.Response, res
 // HandleAPIWarning processes API warnings and adds them to diagnostics.
 // Use this for non-critical API issues that should be reported to the user.
 func HandleAPIWarning(message string, err *error, httpResponse *http.Response, respDiags *diag.Diagnostics) {
+	status := ""
+	if httpResponse != nil {
+		status = httpResponse.Status
+	}
 	respDiags.AddWarning(
 		message,
-		fmt.Sprintf("%s: %s: %s", *err, httpResponse.Status, extractResponseBody(httpResponse)),
+		fmt.Sprintf("%s: %s: %s", *err, status, extractResponseBody(httpResponse)),
 	)
 }
 
@@ -252,6 +256,9 @@ func detectNetworkError(err error) (bool, string) {
 // extractResponseBody reads and returns the body from an HTTP response.
 // This is a helper function for error reporting.
 func extractResponseBody(httpResponse *http.Response) []byte {
+	if httpResponse == nil || httpResponse.Body == nil {
+		return []byte{}
+	}
 	body, _ := io.ReadAll(httpResponse.Body)
 	err := httpResponse.Body.Close()
 	if err != nil {

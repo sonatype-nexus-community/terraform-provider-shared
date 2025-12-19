@@ -20,7 +20,6 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/hashicorp/terraform-plugin-framework-validators/int32validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/float64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -257,28 +256,28 @@ func TestDataSourceComputedInt32WithRange(t *testing.T) {
 // ========================================
 
 func TestDataSourceInt32WithValidators(t *testing.T) {
-	attr := DataSourceInt32WithValidators("int32 with validators", int32validator.Between(0, 100))
+	attr := DataSourceInt32WithValidators("int32 with validators", int64validator.Between(0, 100))
 	if !attr.IsRequired() {
 		t.Fatal("DataSourceInt32WithValidators should return required attribute by default")
 	}
 }
 
 func TestDataSourceOptionalInt32WithValidators(t *testing.T) {
-	attr := DataSourceOptionalInt32WithValidators("optional int32 with validators", int32validator.Between(0, 100))
+	attr := DataSourceOptionalInt32WithValidators("optional int32 with validators", int64validator.Between(0, 100))
 	if !attr.IsOptional() {
 		t.Fatal("DataSourceOptionalInt32WithValidators should return optional attribute")
 	}
 }
 
 func TestDataSourceRequiredInt32WithValidators(t *testing.T) {
-	attr := DataSourceRequiredInt32WithValidators("required int32 with validators", int32validator.Between(0, 100))
+	attr := DataSourceRequiredInt32WithValidators("required int32 with validators", int64validator.Between(0, 100))
 	if !attr.IsRequired() {
 		t.Fatal("DataSourceRequiredInt32WithValidators should return required attribute")
 	}
 }
 
 func TestDataSourceComputedInt32WithValidators(t *testing.T) {
-	attr := DataSourceComputedInt32WithValidators("computed int32 with validators", int32validator.Between(0, 100))
+	attr := DataSourceComputedInt32WithValidators("computed int32 with validators", int64validator.Between(0, 100))
 	if !attr.IsComputed() {
 		t.Fatal("DataSourceComputedInt32WithValidators should return computed attribute")
 	}

@@ -21,7 +21,6 @@ import (
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int32planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int32validator"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
 
 // Test ResourceOptionalInt32WithPlanModifier
