@@ -19,6 +19,7 @@ package schema
 import (
 	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/defaults"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
@@ -94,6 +95,27 @@ func ResourceComputedStringSetWithValidator(description string, validators ...va
 	})
 }
 
+// ResourceOptionalStringSetWithDefault returns an optional set attribute with string elements and a default value
+func ResourceOptionalStringSetWithDefault(description string, defaultValue defaults.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description:  description,
+		elementType:  types.StringType,
+		optional:     true,
+		defaultValue: defaultValue,
+	})
+}
+
+// ResourceOptionalStringSetWithDefaultAndValidator returns an optional set attribute with string elements, a default value, and validators
+func ResourceOptionalStringSetWithDefaultAndValidator(description string, defaultValue defaults.Set, validators ...validator.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description:  description,
+		elementType:  types.StringType,
+		optional:     true,
+		defaultValue: defaultValue,
+		validators:   validators,
+	})
+}
+
 // ========================================
 // Resource Schema Functions - Int64 Sets
 // ========================================
@@ -165,6 +187,27 @@ func ResourceComputedInt64SetWithValidator(description string, validators ...val
 	})
 }
 
+// ResourceOptionalInt64SetWithDefault returns an optional set attribute with int64 elements and a default value
+func ResourceOptionalInt64SetWithDefault(description string, defaultValue defaults.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description:  description,
+		elementType:  types.Int64Type,
+		optional:     true,
+		defaultValue: defaultValue,
+	})
+}
+
+// ResourceOptionalInt64SetWithDefaultAndValidator returns an optional set attribute with int64 elements, a default value, and validators
+func ResourceOptionalInt64SetWithDefaultAndValidator(description string, defaultValue defaults.Set, validators ...validator.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description:  description,
+		elementType:  types.Int64Type,
+		optional:     true,
+		defaultValue: defaultValue,
+		validators:   validators,
+	})
+}
+
 // ========================================
 // Resource Schema Functions - Bool Sets
 // ========================================
@@ -233,6 +276,27 @@ func ResourceComputedBoolSetWithValidator(description string, validators ...vali
 		elementType: types.BoolType,
 		computed:    true,
 		validators:  validators,
+	})
+}
+
+// ResourceOptionalBoolSetWithDefault returns an optional set attribute with bool elements and a default value
+func ResourceOptionalBoolSetWithDefault(description string, defaultValue defaults.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description:  description,
+		elementType:  types.BoolType,
+		optional:     true,
+		defaultValue: defaultValue,
+	})
+}
+
+// ResourceOptionalBoolSetWithDefaultAndValidator returns an optional set attribute with bool elements, a default value, and validators
+func ResourceOptionalBoolSetWithDefaultAndValidator(description string, defaultValue defaults.Set, validators ...validator.Set) resourceschema.SetAttribute {
+	return newResourceSetAttribute(collectionConfig{
+		description:  description,
+		elementType:  types.BoolType,
+		optional:     true,
+		defaultValue: defaultValue,
+		validators:   validators,
 	})
 }
 

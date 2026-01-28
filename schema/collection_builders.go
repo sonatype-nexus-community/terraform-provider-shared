@@ -20,6 +20,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	datasourceschema "github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	resourceschema "github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/defaults"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )
 
@@ -35,6 +36,7 @@ type collectionConfig struct {
 	optional    bool
 	computed    bool
 	validators  []validator.Set
+	defaultValue defaults.Set
 }
 
 // ========================================
@@ -74,6 +76,9 @@ func newResourceSetAttribute(config collectionConfig) resourceschema.SetAttribut
 	}
 	if len(config.validators) > 0 {
 		attr.Validators = config.validators
+	}
+	if config.defaultValue != nil {
+		attr.Default = config.defaultValue
 	}
 	return attr
 }
@@ -116,5 +121,6 @@ func newDataSourceSetAttribute(config collectionConfig) datasourceschema.SetAttr
 	if len(config.validators) > 0 {
 		attr.Validators = config.validators
 	}
+	// Note: defaults are not supported on data source attributes
 	return attr
 }
