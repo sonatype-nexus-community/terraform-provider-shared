@@ -19,8 +19,8 @@ package schema
 import (
 	"testing"
 
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int32planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework-validators/int32validator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int32planmodifier"
 )
 
 // Test ResourceOptionalInt32WithPlanModifier

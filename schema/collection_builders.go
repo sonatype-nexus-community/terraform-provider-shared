@@ -30,12 +30,12 @@ import (
 
 // collectionConfig holds common configuration for collection attributes (list, map, set)
 type collectionConfig struct {
-	description string
-	elementType attr.Type
-	required    bool
-	optional    bool
-	computed    bool
-	validators  []validator.Set
+	description  string
+	elementType  attr.Type
+	required     bool
+	optional     bool
+	computed     bool
+	validators   []validator.Set
 	defaultValue defaults.Set
 }
 

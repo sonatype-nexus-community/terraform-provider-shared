@@ -101,6 +101,7 @@ func ResourceOptionalStringSetWithDefault(description string, defaultValue defau
 		description:  description,
 		elementType:  types.StringType,
 		optional:     true,
+		computed:     true,
 		defaultValue: defaultValue,
 	})
 }
@@ -111,6 +112,7 @@ func ResourceOptionalStringSetWithDefaultAndValidator(description string, defaul
 		description:  description,
 		elementType:  types.StringType,
 		optional:     true,
+		computed:     true,
 		defaultValue: defaultValue,
 		validators:   validators,
 	})

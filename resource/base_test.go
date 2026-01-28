@@ -25,9 +25,9 @@ import (
 )
 
 type MockProvider struct {
-	auth      interface{}
-	baseURL   string
-	client    interface{}
+	auth    interface{}
+	baseURL string
+	client  interface{}
 }
 
 func (m *MockProvider) GetAuth() interface{} {
