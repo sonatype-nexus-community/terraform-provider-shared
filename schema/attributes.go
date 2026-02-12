@@ -43,6 +43,9 @@ func ResourceLastUpdated() resourceschema.StringAttribute {
 	return resourceschema.StringAttribute{
 		MarkdownDescription: "String representation of the date/time the resource was last changed",
 		Computed:            true,
+		PlanModifiers: []planmodifier.String{
+			stringplanmodifier.UseStateForUnknown(),
+		},
 	}
 }
 
